@@ -8,11 +8,7 @@ export async function POST(
   { params }: { params: Promise<{ usersId: string }> }
 ) {
   const usersId = (await params).usersId;
-  const form = await req.formData();
-
-  const name = await form.get("name");
-  const age = await form.get("age");
-  const password = await form.get("password");
+  const { name, age, password } = await req.json();
 
   const conn = await getConnection();
   const updateUser = await conn.query(
@@ -20,7 +16,11 @@ export async function POST(
     [name, age, password, usersId]
   );
 
-  if (updateUser) return NextResponse.json({ message: "Sucessful" });
+  if (updateUser)
+    return NextResponse.json({
+      redirect: `http://localhost:3000/user/${usersId}`,
+      message: "Sucessful",
+    });
   return NextResponse.json({ message: "Not updated" });
 }
 
