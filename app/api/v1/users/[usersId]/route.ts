@@ -3,6 +3,19 @@ import { UserTypes } from "@/types/Users";
 import { RowDataPacket } from "mysql2";
 import { NextResponse } from "next/server";
 
+export async function DELETE(
+  req: Request,
+  { params }: { params: Promise<{ usersId: number }> }
+) {
+  const usersId = (await params).usersId;
+  const conn = await getConnection();
+  const [deleteUser] = await conn.query("DELETE FROM users WHERE id = ? ", [
+    usersId,
+  ]);
+  if (deleteUser)
+    return NextResponse.json({ message: `Deleted Successfully: ${usersId}` });
+}
+
 export async function POST(
   req: Request,
   { params }: { params: Promise<{ usersId: string }> }
