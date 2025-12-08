@@ -7,3 +7,9 @@ export async function GET() {
 
   return NextResponse.json(data);
 }
+
+export async function POST(req: Request) {
+  const { name, age, password } = await req.json();
+
+  return NextResponse.json({ name, age, password });
+}
