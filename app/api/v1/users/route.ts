@@ -10,6 +10,12 @@ export async function GET() {
 
 export async function POST(req: Request) {
   const { name, age, password } = await req.json();
+  const conn = await getConnection();
+  const [registerRequest] = await conn.query(
+    "INSERT INTO users (`name`, `age`, `password`) VALUES (?, ?, ?)",
+    [name, age, password]
+  );
 
-  return NextResponse.json({ name, age, password });
+  if (registerRequest)
+    return NextResponse.json({ message: "Successfully Registered" });
 }

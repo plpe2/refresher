@@ -1,3 +1,4 @@
+"use client";
 import React, { SetStateAction } from "react";
 
 const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -9,6 +10,7 @@ const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
   const age = formData.get("age");
   const password = formData.get("password");
 
+  if (name === "") return;
   const registerRequest = await fetch(`http://localhost:3000/api/v1/users`, {
     method: "POST",
     body: JSON.stringify({ name, age, password }),
@@ -16,6 +18,7 @@ const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
 
   const registerResponse = await registerRequest.json();
   console.log(registerResponse);
+  console.log("proceeded");
 };
 
 export const RegisterFields = ({
@@ -26,7 +29,7 @@ export const RegisterFields = ({
   return (
     <form method="POST" onSubmit={handleRegister}>
       <p>Name:</p>
-      <input type="text" name="name" />
+      <input type="text" name="name" min={6} />
       <p>Age:</p>
       <input type="text" name="age" />
       <p>Password:</p>
@@ -50,7 +53,6 @@ export const RegisterFields = ({
             }}
             onClick={() => {
               setShown((prev) => !prev);
-              console.log("Register");
             }}
           >
             Already have an account?

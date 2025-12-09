@@ -21,7 +21,7 @@ const LogRegContainer = ({
         color: "white",
       }}
     >
-      {!isShown ? (
+      {isShown ? (
         <>
           <h2>Login</h2>
           <LoginFields setShown={setShown} />
