@@ -9,11 +9,11 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  const { name, age, password } = await req.json();
+  const { nameValue, ageValue, passwordValue } = await req.json();
   const conn = await getConnection();
   const [registerRequest] = await conn.query(
     "INSERT INTO users (`name`, `age`, `password`) VALUES (?, ?, ?)",
-    [name, age, password]
+    [nameValue, ageValue, passwordValue]
   );
 
   if (registerRequest)

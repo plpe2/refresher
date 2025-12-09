@@ -1,6 +1,6 @@
 import { inputValidationTypes } from "../Register";
 
-type FieldName = "Name" | "Age" | "Password";
+type FieldName = "Name" | "Age" | "Password" | "CPassword";
 
 export default function RegisterInput({
   type,
@@ -13,7 +13,7 @@ export default function RegisterInput({
 }) {
   return (
     <>
-      <p>{type}:</p>
+      <p>{type != "CPassword" ? type : "Confirm Password"}:</p>
       <input
         type="text"
         name={type}
@@ -25,7 +25,7 @@ export default function RegisterInput({
           display: inputValidation[type] ? "block" : "none",
         }}
       >
-        {type} is required!
+        {type != "CPassword" ? type : "Confirm Password"} is required!
       </p>
     </>
   );
