@@ -6,6 +6,26 @@ export type inputValidationTypes = {
   Name: boolean;
   Age: boolean;
   Password: boolean;
+  CPassword: boolean;
+};
+
+const ResetState = (
+  setStatus: React.Dispatch<
+    React.SetStateAction<{
+      Name: boolean;
+      Age: boolean;
+      Password: boolean;
+      CPassword: boolean;
+    }>
+  >
+) => {
+  setStatus((prev) => ({
+    ...prev,
+    Name: false,
+    Age: false,
+    Password: false,
+    CPassword: false,
+  }));
 };
 
 const handleRegister = async ({
@@ -21,28 +41,50 @@ const handleRegister = async ({
 
   const formData = new FormData(e.currentTarget);
 
-  const nameValue = formData.get("Name");
-  const ageValue = formData.get("Age");
-  const passwordValue = formData.get("Password");
+  const nameValue = formData.get("Name")?.valueOf() as string;
+  const ageValue = formData.get("Age")?.valueOf() as number;
+  const passwordValue = formData.get("Password")?.valueOf() as string;
+  const cpasswordValue = formData.get("CPassword")?.valueOf() as string;
 
-  if (!passwordValue) {
-    setStatus((prev) => ({ ...prev, Password: true }));
+  const nameValidation = nameValue === "" || nameValue.length <= 6;
+  const ageValidation = ageValue <= 0;
+  const passwordValidation = passwordValue.length <= 7;
+  const cpasswordValidation =
+    cpasswordValue !== passwordValue || cpasswordValue === "";
+
+  if (cpasswordValidation) {
+    setStatus((prev) => ({ ...prev, CPassword: false }));
   }
 
-  if (!ageValue) {
-    setStatus((prev) => ({ ...prev, Age: true }));
+  if (passwordValidation) {
+    setStatus((prev) => ({ ...prev, Password: false }));
   }
 
-  if (!nameValue) {
-    setStatus((prev) => ({ ...prev, Name: true }));
+  if (ageValidation) {
+    setStatus((prev) => ({ ...prev, Age: false }));
   }
-  // const registerRequest = await fetch(`http://localhost:3000/api/v1/users`, {
-  //   method: "POST",
-  //   body: JSON.stringify({ name, age, password }),
-  // });
 
-  // const registerResponse = await registerRequest.json();
-  // console.log(registerResponse);
+  if (nameValidation) {
+    setStatus((prev) => ({ ...prev, Name: false }));
+  }
+
+  if (
+    !(
+      nameValidation ||
+      ageValidation ||
+      passwordValidation ||
+      cpasswordValidation
+    )
+  ) {
+    const registerRequest = await fetch(`http://localhost:3000/api/v1/users`, {
+      method: "POST",
+      body: JSON.stringify({ nameValue, ageValue, passwordValue }),
+    });
+    const registerResponse = await registerRequest.json();
+    console.log(registerResponse);
+  }
+
+  // return console.log({ name: inputValidation.Name, namefield: nameValue });
 };
 
 export const RegisterFields = ({
@@ -51,9 +93,10 @@ export const RegisterFields = ({
   setShown: React.Dispatch<SetStateAction<boolean>>;
 }) => {
   const [inputValidation, setStatus] = useState({
-    Name: false,
-    Age: false,
-    Password: false,
+    Name: true,
+    Age: true,
+    Password: true,
+    CPassword: true,
   });
 
   return (
@@ -78,7 +121,11 @@ export const RegisterFields = ({
         inputValidation={inputValidation}
         setStatus={setStatus}
       />
-
+      <RegisterInput
+        type="CPassword"
+        inputValidation={inputValidation}
+        setStatus={setStatus}
+      />
       <div style={{ margin: "10px" }}>
         <button type="submit">Register</button>
         <hr />

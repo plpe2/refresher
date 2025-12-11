@@ -17,12 +17,12 @@ export default function RegisterInput({
       <input
         type="text"
         name={type}
-        onClick={() => setStatus({ ...inputValidation, [type]: false })}
+        onClick={() => setStatus({ ...inputValidation, [type]: true })}
       />
       <p
         style={{
           color: "red",
-          display: inputValidation[type] ? "block" : "none",
+          display: !inputValidation[type] ? "block" : "none",
         }}
       >
         {type != "CPassword" ? type : "Confirm Password"} is required!
