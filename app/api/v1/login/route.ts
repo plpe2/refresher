@@ -1,5 +1,4 @@
 import getConnection from "@/lib/db_connection";
-import { UserTypes } from "@/types/Users";
 import { RowDataPacket } from "mysql2";
 import { NextResponse } from "next/server";
 
@@ -15,10 +14,11 @@ export async function POST(req: Request) {
     return NextResponse.json({ message: "No registered account found" });
   }
 
-  const fetchedRecord = LoginRequest[0] as UserTypes;
-
-  if (!(password === fetchedRecord.password))
+  if (!(password === LoginRequest[0].password))
     return NextResponse.json({ message: "Wrong password" });
 
-  return NextResponse.json({ fetched: fetchedRecord });
+  return NextResponse.json({
+    redirect: "http://localhost:3000/userslist",
+    message: "Logged In Successfully",
+  });
 }
