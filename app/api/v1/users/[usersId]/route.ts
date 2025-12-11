@@ -13,7 +13,10 @@ export async function DELETE(
     usersId,
   ]);
   if (deleteUser)
-    return NextResponse.json({ message: `Deleted Successfully: ${usersId}` });
+    return NextResponse.json({
+      redirect: "http://localhost:3000/userslist",
+      message: `Deleted Successfully: ${usersId}`,
+    });
 }
 
 export async function POST(

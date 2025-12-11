@@ -17,5 +17,8 @@ export async function POST(req: Request) {
   );
 
   if (registerRequest)
-    return NextResponse.json({ message: "Successfully Registered" });
+    return NextResponse.json({
+      redirect: "http://localhost:3000/",
+      message: "Successfully Registered",
+    });
 }

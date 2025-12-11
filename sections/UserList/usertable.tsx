@@ -18,7 +18,9 @@ const handleDelete = async (
   );
 
   const response = await delSelectedUser.json();
-  console.log(response);
+
+  alert(response.message);
+  window.location.href = response.redirect;
 };
 
 const ModalElement = ({

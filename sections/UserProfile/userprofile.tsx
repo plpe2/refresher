@@ -32,9 +32,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 
   alert(response.message);
 
-  setTimeout(() => {
-    redirect(response.redirect);
-  }, 1.5);
+  window.location.href = response.redirect;
 };
 
 const Updatefields = ({ Data }: { Data: UpdateType }) => {

@@ -1,6 +1,7 @@
 "use client";
 import React, { SetStateAction, useState } from "react";
 import RegisterInput from "./components/RegisterInput";
+import { NextResponse } from "next/server";
 
 export type inputValidationTypes = {
   Name: boolean;
@@ -9,32 +10,12 @@ export type inputValidationTypes = {
   CPassword: boolean;
 };
 
-const ResetState = (
-  setStatus: React.Dispatch<
-    React.SetStateAction<{
-      Name: boolean;
-      Age: boolean;
-      Password: boolean;
-      CPassword: boolean;
-    }>
-  >
-) => {
-  setStatus((prev) => ({
-    ...prev,
-    Name: false,
-    Age: false,
-    Password: false,
-    CPassword: false,
-  }));
-};
-
 const handleRegister = async ({
   e,
-  inputValidation,
+
   setStatus,
 }: {
   e: React.FormEvent<HTMLFormElement>;
-  inputValidation: inputValidationTypes;
   setStatus: React.Dispatch<React.SetStateAction<inputValidationTypes>>;
 }) => {
   e.preventDefault();
@@ -81,7 +62,9 @@ const handleRegister = async ({
       body: JSON.stringify({ nameValue, ageValue, passwordValue }),
     });
     const registerResponse = await registerRequest.json();
-    console.log(registerResponse);
+
+    alert(registerResponse.message);
+    window.location.href = registerResponse.redirect;
   }
 
   // return console.log({ name: inputValidation.Name, namefield: nameValue });
@@ -103,7 +86,7 @@ export const RegisterFields = ({
     <form
       method="POST"
       onSubmit={(e) => {
-        handleRegister({ e, inputValidation, setStatus });
+        handleRegister({ e, setStatus });
       }}
     >
       <RegisterInput
