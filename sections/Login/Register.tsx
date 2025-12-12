@@ -1,73 +1,13 @@
 "use client";
 import React, { SetStateAction, useState } from "react";
 import RegisterInput from "./components/RegisterInput";
-import { NextResponse } from "next/server";
+import { handleRegister } from "@/hooks/api/users";
 
 export type inputValidationTypes = {
   Name: boolean;
   Age: boolean;
   Password: boolean;
   CPassword: boolean;
-};
-
-const handleRegister = async ({
-  e,
-
-  setStatus,
-}: {
-  e: React.FormEvent<HTMLFormElement>;
-  setStatus: React.Dispatch<React.SetStateAction<inputValidationTypes>>;
-}) => {
-  e.preventDefault();
-
-  const formData = new FormData(e.currentTarget);
-
-  const nameValue = formData.get("Name")?.valueOf() as string;
-  const ageValue = formData.get("Age")?.valueOf() as number;
-  const passwordValue = formData.get("Password")?.valueOf() as string;
-  const cpasswordValue = formData.get("CPassword")?.valueOf() as string;
-
-  const nameValidation = nameValue === "" || nameValue.length <= 6;
-  const ageValidation = ageValue <= 0;
-  const passwordValidation = passwordValue.length <= 7;
-  const cpasswordValidation =
-    cpasswordValue !== passwordValue || cpasswordValue === "";
-
-  if (cpasswordValidation) {
-    setStatus((prev) => ({ ...prev, CPassword: false }));
-  }
-
-  if (passwordValidation) {
-    setStatus((prev) => ({ ...prev, Password: false }));
-  }
-
-  if (ageValidation) {
-    setStatus((prev) => ({ ...prev, Age: false }));
-  }
-
-  if (nameValidation) {
-    setStatus((prev) => ({ ...prev, Name: false }));
-  }
-
-  if (
-    !(
-      nameValidation ||
-      ageValidation ||
-      passwordValidation ||
-      cpasswordValidation
-    )
-  ) {
-    const registerRequest = await fetch(`http://localhost:3000/api/v1/users`, {
-      method: "POST",
-      body: JSON.stringify({ nameValue, ageValue, passwordValue }),
-    });
-    const registerResponse = await registerRequest.json();
-
-    alert(registerResponse.message);
-    window.location.href = registerResponse.redirect;
-  }
-
-  // return console.log({ name: inputValidation.Name, namefield: nameValue });
 };
 
 export const RegisterFields = ({

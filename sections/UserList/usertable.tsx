@@ -1,27 +1,8 @@
 "use client";
+import { handleDelete } from "@/hooks/api/users";
 import { UserTypes } from "@/types/Users";
 import Link from "next/link";
 import { SetStateAction, useState } from "react";
-
-const handleDelete = async (
-  e: React.FormEvent<HTMLFormElement>,
-  id: number
-) => {
-  e.preventDefault();
-
-  const delSelectedUser = await fetch(
-    `http://localhost:3000/api/v1/users/${id}`,
-    {
-      method: "DELETE",
-      body: JSON.stringify(id),
-    }
-  );
-
-  const response = await delSelectedUser.json();
-
-  alert(response.message);
-  window.location.href = response.redirect;
-};
 
 const ModalElement = ({
   delId,

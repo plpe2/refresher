@@ -1,22 +1,5 @@
+import { handleLogin } from "@/hooks/api/users";
 import React, { SetStateAction } from "react";
-
-const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
-
-  const formData = new FormData(e.currentTarget);
-
-  const name = formData.get("Name");
-  const password = formData.get("Password");
-
-  const loginRequest = await fetch("http://localhost:3000/api/v1/login/", {
-    method: "POST",
-    body: JSON.stringify({ name, password }),
-  });
-
-  const loginResponse = await loginRequest.json();
-  alert(loginResponse.message);
-  window.location.href = loginResponse.redirect;
-};
 
 export const LoginFields = ({
   setShown,
