@@ -3,13 +3,6 @@ import React, { SetStateAction, useState } from "react";
 import RegisterInput from "./components/RegisterInput";
 import { handleRegister } from "@/hooks/api/users";
 
-export type inputValidationTypes = {
-  Name: boolean;
-  Age: boolean;
-  Password: boolean;
-  CPassword: boolean;
-};
-
 export const RegisterFields = ({
   setShown,
 }: {

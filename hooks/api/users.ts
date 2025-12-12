@@ -1,4 +1,4 @@
-import { inputValidationTypes } from "@/sections/Login/Register";
+import { inputValidationTypes } from "@/types/Users";
 
 export const handleDelete = async (
   e: React.FormEvent<HTMLFormElement>,

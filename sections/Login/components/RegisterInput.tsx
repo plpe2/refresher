@@ -1,4 +1,4 @@
-import { inputValidationTypes } from "../Register";
+import { inputValidationTypes } from "@/types/Users";
 
 type FieldName = "Name" | "Age" | "Password" | "CPassword";
 

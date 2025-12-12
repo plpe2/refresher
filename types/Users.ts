@@ -4,3 +4,10 @@ export type UserTypes = {
   age: number;
   password: string;
 };
+
+export type inputValidationTypes = {
+  Name: boolean;
+  Age: boolean;
+  Password: boolean;
+  CPassword: boolean;
+};

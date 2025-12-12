@@ -1,7 +1,6 @@
 "use client";
 import { handleSubmit } from "@/hooks/api/users";
 import { UserTypes } from "@/types/Users";
-import { redirect } from "next/navigation";
 import React, { useState } from "react";
 
 type UpdateType = {
