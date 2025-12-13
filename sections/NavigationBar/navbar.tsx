@@ -4,32 +4,44 @@ import { LoginFields } from "../Login/Login";
 import { RegisterFields } from "../Login/Register";
 
 export const LogRegContainer = ({
-  isShown,
-  setShown,
+  loginDisplay,
+  modalDisplay,
 }: {
-  isShown: boolean;
-  setShown: React.Dispatch<SetStateAction<boolean>>;
+  loginDisplay: {
+    isLogin: boolean;
+    setDisplay: React.Dispatch<SetStateAction<boolean>>;
+  };
+  modalDisplay: {
+    isShown: boolean;
+    setStatus: React.Dispatch<SetStateAction<boolean>>;
+  };
 }) => {
   return (
     <div
       style={{
-        backgroundColor: isShown ? "green" : "teal",
+        backgroundColor: modalDisplay.isShown ? "green" : "teal",
         width: "30%",
         textAlign: "center",
         padding: "10px",
-        display: "block",
+        display: loginDisplay.isLogin ? "block" : "none",
         color: "white",
       }}
     >
-      {!isShown ? (
+      <button
+        style={{ padding: "1%" }}
+        onClick={() => loginDisplay.setDisplay(!loginDisplay.isLogin)}
+      >
+        x
+      </button>
+      {!modalDisplay.isShown ? (
         <>
           <h2>Login</h2>
-          <LoginFields setShown={setShown} />
+          <LoginFields setShown={modalDisplay.setStatus} />
         </>
       ) : (
         <>
           <h2>Register</h2>
-          <RegisterFields setShown={setShown} />
+          <RegisterFields setShown={modalDisplay.setStatus} />
         </>
       )}
     </div>
@@ -38,6 +50,7 @@ export const LogRegContainer = ({
 
 export default function Navbar() {
   const [isShown, setStatus] = useState<boolean>(false);
+  const [isLogin, setDisplay] = useState<boolean>(false);
   return (
     <>
       <div
@@ -60,11 +73,22 @@ export default function Navbar() {
           <div style={{ display: "flex" }}>
             <ul>About Us</ul>
             <ul>Contact Us</ul>
-            <ul>Login/Register</ul>
+            <ul>
+              <button
+                style={{ padding: "10px" }}
+                type="button"
+                onClick={() => setDisplay((prev) => !prev)}
+              >
+                Login/Register
+              </button>
+            </ul>
           </div>
         </div>
       </div>
-      <LogRegContainer isShown={isShown} setShown={setStatus} />
+      <LogRegContainer
+        loginDisplay={{ isLogin, setDisplay }}
+        modalDisplay={{ isShown, setStatus }}
+      />
     </>
   );
 }
