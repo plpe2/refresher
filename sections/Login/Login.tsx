@@ -2,9 +2,9 @@ import { handleLogin } from "@/hooks/api/users";
 import React, { SetStateAction } from "react";
 
 export const LoginFields = ({
-  setShown,
+  setDisplay,
 }: {
-  setShown: React.Dispatch<SetStateAction<boolean>>;
+  setDisplay: React.Dispatch<SetStateAction<boolean>>;
 }) => {
   return (
     <form onSubmit={handleLogin}>
@@ -28,7 +28,7 @@ export const LoginFields = ({
               padding: 0,
             }}
             onClick={() => {
-              setShown((prev) => !prev);
+              setDisplay((prev) => !prev);
               console.log("Login");
             }}
           >

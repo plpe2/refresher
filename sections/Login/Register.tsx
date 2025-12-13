@@ -4,9 +4,9 @@ import RegisterInput from "./components/RegisterInput";
 import { handleRegister } from "@/hooks/api/users";
 
 export const RegisterFields = ({
-  setShown,
+  setDisplay,
 }: {
-  setShown: React.Dispatch<SetStateAction<boolean>>;
+  setDisplay: React.Dispatch<SetStateAction<boolean>>;
 }) => {
   const [inputValidation, setStatus] = useState({
     Name: true,
@@ -58,7 +58,7 @@ export const RegisterFields = ({
               padding: 0,
             }}
             onClick={() => {
-              setShown((prev) => !prev);
+              setDisplay((prev) => !prev);
             }}
           >
             Already have an account?

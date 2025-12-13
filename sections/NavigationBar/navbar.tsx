@@ -19,29 +19,29 @@ export const LogRegContainer = ({
   return (
     <div
       style={{
-        backgroundColor: modalDisplay.isShown ? "green" : "teal",
+        backgroundColor: loginDisplay.isLogin ? "green" : "teal",
         width: "30%",
         textAlign: "center",
         padding: "10px",
-        display: loginDisplay.isLogin ? "block" : "none",
+        display: modalDisplay.isShown ? "block" : "none",
         color: "white",
       }}
     >
       <button
         style={{ padding: "1%" }}
-        onClick={() => loginDisplay.setDisplay(!loginDisplay.isLogin)}
+        onClick={() => modalDisplay.setStatus(!modalDisplay.isShown)}
       >
         x
       </button>
-      {!modalDisplay.isShown ? (
+      {!loginDisplay.isLogin ? (
         <>
           <h2>Login</h2>
-          <LoginFields setShown={modalDisplay.setStatus} />
+          <LoginFields setDisplay={loginDisplay.setDisplay} />
         </>
       ) : (
         <>
           <h2>Register</h2>
-          <RegisterFields setShown={modalDisplay.setStatus} />
+          <RegisterFields setDisplay={loginDisplay.setDisplay} />
         </>
       )}
     </div>
@@ -77,7 +77,7 @@ export default function Navbar() {
               <button
                 style={{ padding: "10px" }}
                 type="button"
-                onClick={() => setDisplay((prev) => !prev)}
+                onClick={() => setStatus((prev) => !prev)}
               >
                 Login/Register
               </button>
