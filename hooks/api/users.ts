@@ -1,4 +1,3 @@
-import { jwtVerify } from "@/lib/auth";
 import { inputValidationTypes } from "@/types/Users";
 
 export const handleDelete = async (
@@ -122,6 +121,5 @@ export const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
   });
 
   const loginResponse = await loginRequest.json();
-  console.log(loginResponse.token);
-  // window.location.href = loginResponse.redirect;
+  window.location.href = loginResponse.redirect;
 };

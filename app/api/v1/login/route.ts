@@ -7,7 +7,7 @@ export async function POST(req: Request) {
   const conn = await getConnection();
   const { name, password } = await req.json();
   const [LoginRequest] = await conn.query<RowDataPacket[]>(
-    "SELECT name, password FROM users WHERE name = ?",
+    "SELECT id, name, password FROM users WHERE name = ?",
     [name]
   );
 
@@ -18,7 +18,7 @@ export async function POST(req: Request) {
   if (!(password === LoginRequest[0].password))
     return NextResponse.json({ message: "Wrong password" });
 
-  const token = await jwtSign({ user: LoginRequest[0] });
+  const token = await jwtSign({ id: LoginRequest[0].id });
 
   return NextResponse.json({
     redirect: "http://localhost:3000/userslist",
