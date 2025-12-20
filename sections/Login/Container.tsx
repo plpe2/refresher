@@ -24,6 +24,8 @@ export const LogRegContainer = ({
         padding: "10px",
         display: modalDisplay.isShown ? "block" : "none",
         color: "white",
+        position: "fixed",
+        margin: "2% 35% 0 35% ",
       }}
     >
       <button

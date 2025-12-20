@@ -2,6 +2,7 @@
 import { useState } from "react";
 
 import { LogRegContainer } from "../Login/Container";
+import Link from "next/link";
 
 export default function Navbar() {
   const [isShown, setStatus] = useState<boolean>(false);
@@ -22,12 +23,22 @@ export default function Navbar() {
       >
         <div style={{ display: "flex", width: "90%" }}>
           <div style={{ display: "flex" }}>
-            <p>Home</p>
+            <Link href={`http://localhost:3000/`}>
+              <p>Home</p>
+            </Link>
           </div>
           <div style={{ flexGrow: 1 }}></div>
           <div style={{ display: "flex" }}>
-            <ul>About Us</ul>
-            <ul>Contact Us</ul>
+            <ul>
+              <button style={{ padding: "10px" }} type="button">
+                About Us
+              </button>
+            </ul>
+            <ul>
+              <button style={{ padding: "10px" }} type="button">
+                Contact Us
+              </button>
+            </ul>
             <ul>
               <button
                 style={{ padding: "10px" }}
