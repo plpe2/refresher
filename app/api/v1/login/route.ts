@@ -11,18 +11,14 @@ export async function POST(req: Request) {
     [name]
   );
 
-  if (LoginRequest.length <= 0) {
-    return NextResponse.json({ message: "No registered account found" });
-  }
-
-  if (!(password === LoginRequest[0].password))
-    return NextResponse.json({ message: "Wrong password" });
+  if (LoginRequest.length <= 0 || !(password === LoginRequest[0].password))
+    return NextResponse.json({ status: "failed" });
 
   const token = await jwtSign({ id: LoginRequest[0].id });
 
   return NextResponse.json({
+    status: "success",
     redirect: "http://localhost:3000/userslist",
-    message: "Logged In Successfully",
     token: token,
   });
 }

@@ -1,17 +1,37 @@
 import { handleLogin } from "@/hooks/api/users";
-import React, { SetStateAction } from "react";
+import React, { SetStateAction, useState } from "react";
 
 export const LoginFields = ({
   setDisplay,
 }: {
   setDisplay: React.Dispatch<SetStateAction<boolean>>;
 }) => {
+  const [logStatus, setStatus] = useState<boolean>(false);
   return (
-    <form onSubmit={handleLogin}>
+    <form
+      onSubmit={(e) => {
+        handleLogin({ e, setStatus });
+      }}
+    >
+      <p style={{ color: "red" }}>
+        {logStatus ? "Email or Password is incorrect" : ""}
+      </p>
       <p>Email:</p>
-      <input type="text" name="Name" />
+      <input
+        type="text"
+        name="Name"
+        onFocus={() => {
+          setStatus(false);
+        }}
+      />
       <p>Password:</p>
-      <input type="text" name="Password" />
+      <input
+        type="text"
+        name="Password"
+        onFocus={() => {
+          setStatus(false);
+        }}
+      />
       <div style={{ margin: "10px" }}>
         <button type="submit">Login</button>
         <hr />

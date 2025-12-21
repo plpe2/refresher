@@ -49,7 +49,6 @@ export const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 
 export const handleRegister = async ({
   e,
-
   setStatus,
 }: {
   e: React.FormEvent<HTMLFormElement>;
@@ -107,13 +106,26 @@ export const handleRegister = async ({
   // return console.log({ name: inputValidation.Name, namefield: nameValue });
 };
 
-export const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+export const handleLogin = async ({
+  e,
+  setStatus,
+}: {
+  e: React.FormEvent<HTMLFormElement>;
+  setStatus: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   e.preventDefault();
 
   const formData = new FormData(e.currentTarget);
 
-  const name = formData.get("Name");
-  const password = formData.get("Password");
+  const name = formData.get("Name")?.valueOf() as string;
+  const password = formData.get("Password")?.valueOf() as string;
+
+  const nameValue = name.length <= 0;
+  const passValue = password.length <= 0;
+
+  if (nameValue || passValue) {
+    setStatus(true);
+  }
 
   const loginRequest = await fetch("http://localhost:3000/api/v1/login/", {
     method: "POST",
@@ -121,6 +133,12 @@ export const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
   });
 
   const loginResponse = await loginRequest.json();
+  if (loginResponse.status != "success") {
+    setStatus(true);
+    return console.log("gello");
+  }
+
+  setStatus(false);
   localStorage.setItem("token", loginResponse.token);
   window.location.href = loginResponse.redirect;
 };
