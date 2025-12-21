@@ -121,5 +121,6 @@ export const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
   });
 
   const loginResponse = await loginRequest.json();
+  localStorage.setItem("token", loginResponse.token);
   window.location.href = loginResponse.redirect;
 };

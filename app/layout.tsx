@@ -1,3 +1,4 @@
+import { AuthProvider } from "@/context/jwt/auth-provider";
 import Navbar from "@/sections/NavigationBar/navbar";
 
 export default function RootLayout({
@@ -8,8 +9,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body style={{ margin: 0, padding: 0 }}>
-        <Navbar />
-        {children}
+        <AuthProvider>
+          <Navbar />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );
