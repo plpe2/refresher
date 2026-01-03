@@ -2,6 +2,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../auth-context";
 import { UserTypes } from "@/types/Users";
+import { AuthContextTypes } from "@/types/Context";
 
 type Props = {
   children: React.ReactNode;
@@ -21,11 +22,14 @@ async function getDecodedToken(token: string) {
 
 export function AuthProvider({ children }: Props) {
   const [token, setToken] = useState<string | null>(null);
-  const [userData, setData] = useState<UserTypes>({
-    id: 0,
-    name: "",
-    age: 0,
-    password: "",
+  const [userData, setData] = useState<AuthContextTypes>({
+    user: {
+      id: 0,
+      name: "",
+      age: 0,
+      password: "",
+    },
+    isAuthenticated: false,
   });
 
   useEffect(() => {
@@ -46,8 +50,13 @@ export function AuthProvider({ children }: Props) {
       const userdataFetch = await fetch(
         `http://localhost:3000/api/v1/users/${id}`
       );
-
-      setData(await userdataFetch.json());
+      const fetchedData = await userdataFetch.json();
+      setData((prev) => ({
+        ...prev,
+        user: fetchedData,
+        isAuthenticated: true,
+      }));
+      console.log(userData);
     };
     decode();
   }, []);

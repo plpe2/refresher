@@ -1,4 +1,6 @@
-import { UserTypes } from "@/types/Users";
+import { AuthContextTypes } from "@/types/Context";
 import { createContext } from "react";
 
-export const AuthContext = createContext<UserTypes | undefined>(undefined);
+export const AuthContext = createContext<AuthContextTypes | undefined>(
+  undefined
+);
