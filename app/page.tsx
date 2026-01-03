@@ -4,6 +4,7 @@ import { useAuthProvider } from "@/context/jwt/auth-provider";
 
 export default function Home() {
   const userData = useAuthProvider();
+
   return (
     <>
       <div
@@ -14,7 +15,7 @@ export default function Home() {
           border: "1px solid ",
         }}
       >
-        <h1>Dashboard</h1>
+        <h1>Dashboard {userData?.name}</h1>
       </div>
     </>
   );

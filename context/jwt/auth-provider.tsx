@@ -1,6 +1,7 @@
 "use client";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../auth-context";
+import { UserTypes } from "@/types/Users";
 
 type Props = {
   children: React.ReactNode;
@@ -20,6 +21,12 @@ async function getDecodedToken(token: string) {
 
 export function AuthProvider({ children }: Props) {
   const [token, setToken] = useState<string | null>(null);
+  const [userData, setData] = useState<UserTypes>({
+    id: 0,
+    name: "",
+    age: 0,
+    password: "",
+  });
 
   useEffect(() => {
     const LocalToken = localStorage.getItem("token");
@@ -33,13 +40,20 @@ export function AuthProvider({ children }: Props) {
 
     const decode = async () => {
       const callTokenVerifier = await getDecodedToken(LocalToken);
-      console.log(callTokenVerifier);
+      const {
+        decoded: { id },
+      } = callTokenVerifier;
+      const userdataFetch = await fetch(
+        `http://localhost:3000/api/v1/users/${id}`
+      );
+
+      setData(await userdataFetch.json());
     };
     decode();
   }, []);
 
   return (
-    <AuthContext.Provider value={undefined}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={userData}>{children}</AuthContext.Provider>
   );
 }
 
