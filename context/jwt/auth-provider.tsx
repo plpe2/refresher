@@ -44,19 +44,23 @@ export function AuthProvider({ children }: Props) {
 
     const decode = async () => {
       const callTokenVerifier = await getDecodedToken(LocalToken);
-      const {
-        decoded: { id },
-      } = callTokenVerifier;
-      const userdataFetch = await fetch(
-        `http://localhost:3000/api/v1/users/${id}`
-      );
-      const fetchedData = await userdataFetch.json();
-      setData((prev) => ({
-        ...prev,
-        user: fetchedData,
-        isAuthenticated: true,
-      }));
-      console.log(userData);
+      if (!(callTokenVerifier?.status == 401)) {
+        const {
+          decoded: { id },
+        } = callTokenVerifier;
+        const userdataFetch = await fetch(
+          `http://localhost:3000/api/v1/users/${id}`
+        );
+        const fetchedData = await userdataFetch.json();
+        setData((prev) => ({
+          ...prev,
+          user: fetchedData,
+          isAuthenticated: true,
+        }));
+        console.log(userData);
+      } else {
+        localStorage.removeItem("token");
+      }
     };
     decode();
   }, []);
