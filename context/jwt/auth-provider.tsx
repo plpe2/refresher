@@ -1,5 +1,5 @@
 "use client";
-import { useContext, useEffect, useState } from "react";
+import { SetStateAction, useContext, useEffect, useState } from "react";
 import { AuthContext } from "../auth-context";
 import { UserTypes } from "@/types/Users";
 import { AuthContextTypes } from "@/types/Context";
@@ -20,27 +20,38 @@ async function getDecodedToken(token: string) {
   return await checkToken.json();
 }
 
+export function logout({
+  setUser,
+  setStatus,
+}: {
+  setUser: React.Dispatch<SetStateAction<UserTypes>>;
+  setStatus: React.Dispatch<SetStateAction<boolean>>;
+}) {
+  localStorage.removeItem("token");
+  setUser((prev) => ({ ...prev, user: null }));
+  setStatus(false);
+  window.location.href = "http://localhost:3000/";
+}
+
 export function AuthProvider({ children }: Props) {
-  const [token, setToken] = useState<string | null>(null);
-  const [userData, setData] = useState<AuthContextTypes>({
-    user: {
-      id: 0,
-      name: "",
-      age: 0,
-      password: "",
-    },
-    isAuthenticated: false,
+  const [user, setUser] = useState<UserTypes>({
+    id: 0,
+    name: "",
+    age: 0,
+    password: "",
   });
+  const [isAuthenticated, setStatus] = useState<boolean>(false);
 
   useEffect(() => {
     const LocalToken = localStorage.getItem("token");
 
+    //Checking if Token is available
     if (!LocalToken) {
-      console.log("No Token");
+      // logout({ setData });
       return;
     }
 
-    console.log("Has Token");
+    // console.log("Has Token"); If has token
 
     const decode = async () => {
       const callTokenVerifier = await getDecodedToken(LocalToken);
@@ -52,21 +63,25 @@ export function AuthProvider({ children }: Props) {
           `http://localhost:3000/api/v1/users/${id}`
         );
         const fetchedData = await userdataFetch.json();
-        setData((prev) => ({
-          ...prev,
-          user: fetchedData,
-          isAuthenticated: true,
-        }));
-        console.log(userData);
+        setUser(fetchedData);
+        setStatus(true);
       } else {
-        localStorage.removeItem("token");
+        logout({ setUser, setStatus });
       }
     };
     decode();
   }, []);
 
   return (
-    <AuthContext.Provider value={userData}>{children}</AuthContext.Provider>
+    <AuthContext.Provider
+      value={{
+        user,
+        isAuthenticated,
+        logout: () => logout({ setUser, setStatus }),
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
   );
 }
 

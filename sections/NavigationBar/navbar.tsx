@@ -23,8 +23,12 @@ export default function Navbar() {
       );
     } else {
       return (
-        <button style={{ padding: "10px" }} type="button">
-          Profile
+        <button
+          style={{ padding: "10px" }}
+          type="button"
+          onClick={userData.logout}
+        >
+          Logout
         </button>
       );
     }
