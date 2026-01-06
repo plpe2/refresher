@@ -2,7 +2,6 @@
 import { SetStateAction, useContext, useEffect, useState } from "react";
 import { AuthContext } from "../auth-context";
 import { UserTypes } from "@/types/Users";
-import { AuthContextTypes } from "@/types/Context";
 
 type Props = {
   children: React.ReactNode;
