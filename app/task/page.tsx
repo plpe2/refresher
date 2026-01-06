@@ -24,8 +24,21 @@ export default function TaskView() {
     <div>
       TaskView
       {taskList.map((task) => (
-        <div key={task.taskId}>
-          <p>{task.taskTitle}</p>
+        <div
+          key={task.taskId}
+          style={{
+            backgroundColor: "gray",
+            display: "inline-block",
+            padding: "10px",
+            border: "1px solid black",
+            margin: "10px",
+            borderRadius: "10px 10px",
+          }}
+        >
+          <h4>{task.taskTitle}</h4>
+          <p>- {task.taskDesc}</p>
+          <p>Status: {task.status}</p>
+          <p>{task.timeAdded.toString()}</p>
         </div>
       ))}
     </div>
