@@ -39,7 +39,7 @@ export function AuthProvider({ children }: Props) {
     password: "",
   });
   const [isAuthenticated, setStatus] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [isLoading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const LocalToken = localStorage.getItem("token");
@@ -81,7 +81,7 @@ export function AuthProvider({ children }: Props) {
       value={{
         user,
         isAuthenticated,
-        loading,
+        isLoading,
         logout: () => logout({ setUser, setStatus }),
       }}
     >

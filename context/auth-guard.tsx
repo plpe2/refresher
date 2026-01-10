@@ -7,17 +7,34 @@ import { useRouter } from "next/navigation";
 type AuthGuardProps = { children: React.ReactNode };
 
 export default function AuthGuard({ children }: AuthGuardProps) {
-  const { isAuthenticated, loading } = useAuthProvider()!;
+  const { isAuthenticated, isLoading } = useAuthProvider()!;
   const router = useRouter();
   useEffect(() => {
-    if (loading) {
+    if (isLoading) {
       return;
     }
 
-    if (!isAuthenticated) {
-      alert("Not logged in");
+    if (!isAuthenticated && !isLoading) {
       router.replace("/");
     }
-  }, [isAuthenticated, loading]);
+  }, [isAuthenticated, isLoading]);
+
+  if (isLoading) {
+    return (
+      <div
+        style={{
+          border: "1px solid black",
+          width: "10vh",
+          height: "10vh",
+          borderRadius: "50%",
+          position: "relative",
+          textAlign: "center",
+          left: "50%",
+        }}
+      >
+        <p>Loading...</p>
+      </div>
+    );
+  }
   return <>{children}</>;
 }

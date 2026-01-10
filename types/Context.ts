@@ -3,6 +3,6 @@ import { UserTypes } from "./Users";
 export type AuthContextTypes = {
   user: UserTypes | null;
   isAuthenticated: boolean;
-  loading: boolean;
+  isLoading: boolean;
   logout: () => void;
 };
