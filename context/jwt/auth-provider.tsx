@@ -23,30 +23,30 @@ export function logout({
   setUser,
   setStatus,
 }: {
-  setUser: React.Dispatch<SetStateAction<UserTypes>>;
+  setUser: React.Dispatch<SetStateAction<UserTypes | null>>;
   setStatus: React.Dispatch<SetStateAction<boolean>>;
 }) {
   localStorage.removeItem("token");
-  setUser((prev) => ({ ...prev, user: null }));
+  setUser(null);
   setStatus(false);
-  window.location.href = "http://localhost:3000/";
 }
 
 export function AuthProvider({ children }: Props) {
-  const [user, setUser] = useState<UserTypes>({
+  const [user, setUser] = useState<UserTypes | null>({
     id: 0,
     name: "",
     age: 0,
     password: "",
   });
   const [isAuthenticated, setStatus] = useState<boolean>(false);
+  const [isLoading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const LocalToken = localStorage.getItem("token");
 
     //Checking if Token is available
     if (!LocalToken) {
-      // logout({ setData });
+      setLoading(false);
       return;
     }
 
@@ -54,18 +54,23 @@ export function AuthProvider({ children }: Props) {
 
     const decode = async () => {
       const callTokenVerifier = await getDecodedToken(LocalToken);
-      if (!(callTokenVerifier?.status == 401)) {
-        const {
-          decoded: { id },
-        } = callTokenVerifier;
-        const userdataFetch = await fetch(
-          `http://localhost:3000/api/v1/users/${id}`
-        );
-        const fetchedData = await userdataFetch.json();
-        setUser(fetchedData);
-        setStatus(true);
-      } else {
-        logout({ setUser, setStatus });
+      setLoading(true);
+      try {
+        if (!(callTokenVerifier?.status == 401)) {
+          const {
+            decoded: { id },
+          } = callTokenVerifier;
+          const userdataFetch = await fetch(
+            `http://localhost:3000/api/v1/users/${id}`
+          );
+          const fetchedData = await userdataFetch.json();
+          setUser(fetchedData);
+          setStatus(true);
+        } else {
+          logout({ setUser, setStatus });
+        }
+      } finally {
+        setLoading(false);
       }
     };
     decode();
@@ -76,6 +81,7 @@ export function AuthProvider({ children }: Props) {
       value={{
         user,
         isAuthenticated,
+        isLoading,
         logout: () => logout({ setUser, setStatus }),
       }}
     >
