@@ -7,17 +7,21 @@ import { useEffect, useState } from "react";
 export default function TaskView() {
   const userData = useAuthProvider();
   const [taskList, setTasks] = useState<Task[]>([]);
-  const fetchingTask = async () => {
-    if (!userData?.user?.id) return;
-    const taskRequest = await fetch(`http://localhost:3000/api/v1/task/`, {
-      method: "POST",
-      body: JSON.stringify({ id: userData?.user?.id }),
-    });
 
-    const fetchedTasks = await taskRequest.json();
-    setTasks(fetchedTasks.taskList);
-  };
   useEffect(() => {
+    const fetchingTask = async () => {
+      if (!userData?.user?.id) return;
+      const taskRequest = await fetch(`http://localhost:3000/api/v1/task/`, {
+        method: "POST",
+        body: JSON.stringify({ id: userData?.user?.id }),
+      });
+
+      const fetchedTasks = await taskRequest.json();
+      if (!fetchedTasks.status) {
+        return;
+      }
+      setTasks(fetchedTasks.taskList);
+    };
     fetchingTask();
   }, [userData]);
   return (
@@ -35,8 +39,8 @@ export default function TaskView() {
             borderRadius: "10px 10px",
           }}
         >
-          <h4>{task.taskTitle}</h4>
-          <p>- {task.taskDesc}</p>
+          <h4>{task.title}</h4>
+          <p>- {task.body}</p>
           <p>Status: {task.status}</p>
           <p>{task.timeAdded.toString()}</p>
         </div>
