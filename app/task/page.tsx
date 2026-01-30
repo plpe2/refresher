@@ -1,12 +1,50 @@
 "use client";
 
+import { AuthContext } from "@/context/auth-context";
 import { useAuthProvider } from "@/context/jwt/auth-provider";
 import { Task } from "@/types/Tasks";
+import { authPlugins } from "mysql2";
 import { useEffect, useState } from "react";
 
 export default function TaskView() {
   const userData = useAuthProvider();
   const [taskList, setTasks] = useState<Task[]>([]);
+  const [isCreating, setStatusCreate] = useState<boolean>(false);
+
+  const createWindow = () => {
+    return (
+      <div
+        style={{
+          display: "flex",
+          padding: "10px",
+          margin: "10px",
+          backgroundColor: "red",
+          width: "auto",
+        }}
+      >
+        <form onSubmit={() => alert("submitted")}>
+          <button
+            type="button"
+            onClick={() => setStatusCreate((prev) => !prev)}
+          >
+            x
+          </button>
+          <p>Create Task</p>
+          Title:
+          <input type="text" />
+          <br />
+          Description:
+          <input type="text" />
+          <br />
+          <button type="submit">Create</button>
+        </form>
+      </div>
+    );
+  };
+
+  const createTask = () => {
+    setStatusCreate((prev) => !prev);
+  };
 
   useEffect(() => {
     const fetchingTask = async () => {
@@ -26,7 +64,14 @@ export default function TaskView() {
   }, [userData]);
   return (
     <div>
-      TaskView
+      {isCreating && createWindow()}
+      <div>
+        <button>Manage</button>
+        <button onClick={createTask}>Create + </button>
+      </div>
+      <p>Task View</p>
+
+      <p>Status: {isCreating ? "creating task" : "not creating task"}</p>
       {taskList.map((task) => (
         <div
           key={task.taskId}
@@ -42,7 +87,8 @@ export default function TaskView() {
           <h4>{task.title}</h4>
           <p>- {task.body}</p>
           <p>Status: {task.status}</p>
-          <p>{task.timeAdded.toString()}</p>
+          <p>Added: {task.timeAdded.toString()}</p>
+          <p>Finished: {task.timeFinished.toString()}</p>
         </div>
       ))}
     </div>
