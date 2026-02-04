@@ -1,6 +1,7 @@
 "use client";
 
 import { useAuthProvider } from "@/context/jwt/auth-provider";
+import { CreateWindow } from "@/sections/Task/CreateTask";
 import { Task } from "@/types/Tasks";
 import { useEffect, useState } from "react";
 
@@ -8,63 +9,6 @@ export default function TaskView() {
   const userData = useAuthProvider();
   const [taskList, setTasks] = useState<Task[]>([]);
   const [isCreating, setStatusCreate] = useState<boolean>(false);
-
-  const handleCreateTask = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const formData = new FormData(e.currentTarget);
-    const taskTitle = formData.get("Title");
-    const taskBody = formData.get("Body");
-
-    const createRequest = await fetch(
-      `http://localhost:3000/api/v1/task/${userData?.user?.id}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({ title: taskTitle, body: taskBody }),
-      },
-    );
-
-    const createResponse = await createRequest.json();
-    if (!createResponse.status) {
-      console.log("Error creating task");
-    }
-
-    window.location.href = "http://localhost:3000/task";
-  };
-
-  const createWindow = () => {
-    return (
-      <div
-        style={{
-          display: "flex",
-          padding: "10px",
-          margin: "10px",
-          backgroundColor: "red",
-          width: "auto",
-        }}
-      >
-        <form onSubmit={handleCreateTask}>
-          <button
-            type="button"
-            onClick={() => setStatusCreate((prev) => !prev)}
-          >
-            x
-          </button>
-          <p>Create Task</p>
-          Title:
-          <input name="Title" type="text" />
-          <br />
-          Description:
-          <input name="Body" type="text" />
-          <br />
-          <button type="submit">Create</button>
-        </form>
-      </div>
-    );
-  };
 
   const createTask = () => {
     setStatusCreate((prev) => !prev);
@@ -88,7 +32,7 @@ export default function TaskView() {
   }, [userData]);
   return (
     <div>
-      {isCreating && createWindow()}
+      {isCreating && <CreateWindow setStatusCreate={setStatusCreate} />}
       <div>
         <button>Manage</button>
         <button onClick={createTask}>Create + </button>
@@ -108,8 +52,8 @@ export default function TaskView() {
             borderRadius: "10px 10px",
           }}
         >
-          <h4>{task.title}</h4>
-          <p>- {task.body}</p>
+          <h4>{task.taskTitle}</h4>
+          <p>- {task.taskDesc}</p>
           <p>Status: {task.status}</p>
           <p>Date Added: {new Date(task.timeAdded).toLocaleDateString()}</p>
           <p>Time Added: {new Date(task.timeAdded).toLocaleTimeString()}</p>

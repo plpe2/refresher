@@ -18,7 +18,7 @@ export async function POST(
   const taskId = (await params).taskId;
   const conn = await getConnection();
   const insertTask = await conn.query(
-    "INSERT INTO tasktbl (`title`, `body`, `userId`) VALUES (?,?,?)",
+    "INSERT INTO tasktbl (`taskTitle`, `taskDesc`, `userId`) VALUES (?,?,?)",
     [title, body, taskId],
   );
 

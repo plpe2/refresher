@@ -1,7 +1,7 @@
 export type Task = {
   taskId: number;
-  title: string;
-  body: string;
+  taskTitle: string;
+  taskDesc: string;
   status: string;
   timeAdded: Date;
   timeFinished: Date;
