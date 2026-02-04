@@ -13,10 +13,14 @@ export const CreateWindow = ({
     <div
       style={{
         display: "flex",
-        padding: "10px",
+        padding: "100px",
         margin: "10px",
         backgroundColor: "red",
         width: "auto",
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
       }}
     >
       <form
@@ -27,15 +31,20 @@ export const CreateWindow = ({
           })
         }
       >
-        <button type="button" onClick={() => setStatusCreate((prev) => !prev)}>
+        <button
+          type="button"
+          style={{ float: "right" }}
+          onClick={() => setStatusCreate((prev) => !prev)}
+        >
           x
         </button>
         <p>Create Task</p>
-        Title:
-        <input name="Title" type="text" />
+        <p>Title:</p>
+        <input name="Title" type="text" autoFocus />
         <br />
-        Description:
+        <p>Description:</p>
         <input name="Body" type="text" />
+        <br />
         <br />
         <button type="submit">Create</button>
       </form>
