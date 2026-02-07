@@ -1,3 +1,7 @@
+import React, { SetStateAction } from "react";
+import { Task } from "@/types/Tasks";
+
+// function that calls when creating Task
 export async function handleCreateTask({
   e,
   id,
@@ -28,4 +32,27 @@ export async function handleCreateTask({
   }
 
   window.location.href = "http://localhost:3000/task";
+}
+
+//----------------------------------------------------------------------
+
+//function that displays the task in Viewing Task page
+export async function fetchingTask({
+  userId,
+  setTask,
+}: {
+  userId: number | undefined;
+  setTask: React.Dispatch<SetStateAction<Task[]>>;
+}) {
+  if (!userId) return;
+  const taskRequest = await fetch(`http://localhost:3000/api/v1/task/`, {
+    method: "POST",
+    body: JSON.stringify({ id: userId }),
+  });
+
+  const fetchedTasks = await taskRequest.json();
+  if (!fetchedTasks.status) {
+    return;
+  }
+  setTask(fetchedTasks.taskList);
 }
