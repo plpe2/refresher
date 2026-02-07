@@ -1,4 +1,4 @@
-import { UpdatingTaskType } from "@/app/task/page";
+import { UpdatingTaskType } from "@/types/Tasks";
 import { Task } from "@/types/Tasks";
 import React, { SetStateAction, useState } from "react";
 
