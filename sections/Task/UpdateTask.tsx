@@ -13,6 +13,7 @@ export default function UpdateTask({
 }) {
   const [taskDetails, setDetails] = useState<UpdatingTaskType>(passedTask);
   const userData = useAuthProvider();
+  const userId = userData?.user?.id;
   return (
     <div
       style={{
@@ -27,7 +28,11 @@ export default function UpdateTask({
         transform: "translate(-50%, -50%)",
       }}
     >
-      <form onSubmit={(e) => handleUpdateTask(e)}>
+      <form
+        onSubmit={(e) => {
+          handleUpdateTask({ e, userId });
+        }}
+      >
         <button
           onClick={() => {
             setStatusUpdate((prev) => !prev);
@@ -44,8 +49,14 @@ export default function UpdateTask({
           x
         </button>
         <p>UpdateTask</p>
-        {/* <input type="text" name="userId" defaultValue={userData?.user?.id} /> */}
-        <input type="text" name="taskId" defaultValue={taskDetails.taskId} />
+        {/* Hiddent Task Id */}
+        <input
+          type="text"
+          name="taskId"
+          hidden
+          defaultValue={taskDetails.taskId}
+        />
+
         <p>Title: </p>
         <input
           type="text"
