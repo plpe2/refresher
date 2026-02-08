@@ -71,6 +71,7 @@ export async function handleUpdateTask({
   e.preventDefault();
 
   const formData = new FormData(e.currentTarget);
+  const taskId = formData.get("taskId");
   const newTaskTitle = formData.get("newTitle");
   const newTaskBody = formData.get("newBody");
 
@@ -81,7 +82,7 @@ export async function handleUpdateTask({
       headers: {
         "Content-type": "application/json",
       },
-      body: JSON.stringify({ newTaskTitle, newTaskBody }),
+      body: JSON.stringify({ newTaskTitle, newTaskBody, taskId }),
     },
   );
 

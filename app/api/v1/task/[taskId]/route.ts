@@ -38,8 +38,7 @@ export async function PATCH(
   req: Request,
   { params }: { params: Promise<{ taskId: string }> },
 ) {
-  const { newTaskTitle, newTaskBody } = await req.json();
-  const taskId = (await params).taskId;
+  const { taskId, newTaskTitle, newTaskBody } = await req.json();
   const conn = await getConnection();
   const updateTask = await conn.query(
     "UPDATE `tasktbl` SET `taskTitle`=?, `taskDesc`=? WHERE `taskId`=?",

@@ -50,12 +50,7 @@ export default function UpdateTask({
         </button>
         <p>UpdateTask</p>
         {/* Hiddent Task Id */}
-        <input
-          type="text"
-          name="taskId"
-          hidden
-          defaultValue={taskDetails.taskId}
-        />
+        <input type="text" name="taskId" defaultValue={taskDetails.taskId} />
 
         <p>Title: </p>
         <input
