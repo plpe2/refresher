@@ -17,7 +17,7 @@ export default function TaskView() {
     taskId: 0,
     taskTitle: "",
     taskDesc: "",
-    ownerId: 0,
+    userId: 0,
   });
 
   // fetching task using hook

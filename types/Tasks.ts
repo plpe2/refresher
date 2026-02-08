@@ -5,7 +5,7 @@ export type Task = {
   status: string;
   timeAdded: Date;
   timeFinished: Date;
-  ownerId: number;
+  userId: number;
 };
 
 export type UpdatingTaskType = Partial<Task>;

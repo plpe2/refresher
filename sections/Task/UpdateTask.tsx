@@ -1,3 +1,5 @@
+import { useAuthProvider } from "@/context/jwt/auth-provider";
+import { handleUpdateTask } from "@/hooks/api/task/task";
 import { UpdatingTaskType } from "@/types/Tasks";
 import { Task } from "@/types/Tasks";
 import React, { SetStateAction, useState } from "react";
@@ -10,6 +12,7 @@ export default function UpdateTask({
   setStatusUpdate: React.Dispatch<SetStateAction<boolean>>;
 }) {
   const [taskDetails, setDetails] = useState<UpdatingTaskType>(passedTask);
+  const userData = useAuthProvider();
   return (
     <div
       style={{
@@ -24,7 +27,7 @@ export default function UpdateTask({
         transform: "translate(-50%, -50%)",
       }}
     >
-      <form>
+      <form onSubmit={(e) => handleUpdateTask(e)}>
         <button
           onClick={() => {
             setStatusUpdate((prev) => !prev);
@@ -33,13 +36,16 @@ export default function UpdateTask({
               taskId: 0,
               taskTitle: "",
               taskDesc: "",
-              ownerId: 0,
+              userId: 0,
             });
           }}
+          style={{ float: "right" }}
         >
           x
         </button>
         <p>UpdateTask</p>
+        {/* <input type="text" name="userId" defaultValue={userData?.user?.id} /> */}
+        <input type="text" name="taskId" defaultValue={taskDetails.taskId} />
         <p>Title: </p>
         <input
           type="text"
@@ -58,6 +64,10 @@ export default function UpdateTask({
             setDetails({ ...taskDetails, taskDesc: e.target.value })
           }
         />
+        <br />
+        <button style={{ marginTop: "10px", padding: "5px", float: "right" }}>
+          Update
+        </button>
       </form>
     </div>
   );
