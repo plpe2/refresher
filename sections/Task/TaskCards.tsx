@@ -1,5 +1,6 @@
 import { UpdatingTaskType, Task } from "@/types/Tasks";
-import React, { SetStateAction } from "react";
+import React, { SetStateAction, useState } from "react";
+import ValidationWindow from "./ValidationWindow";
 
 export default function TaskCards({
   task,
@@ -12,6 +13,7 @@ export default function TaskCards({
   UpdatingTask: UpdatingTaskType;
   setTaskDetails: React.Dispatch<SetStateAction<Partial<Task>>>;
 }) {
+  const [DoneTask, setStatus] = useState<boolean>(false);
   return (
     <div
       style={{
@@ -30,6 +32,13 @@ export default function TaskCards({
       <p>Time Added: {new Date(task.timeAdded).toLocaleTimeString()}</p>
       <p>Finished: {task.timeFinished.toString()}</p>
       <button
+        type="button"
+        style={{ float: "right", padding: "10px" }}
+        onClick={() => setStatus((prev) => !prev)}
+      >
+        Done
+      </button>
+      <button
         style={{ float: "right", padding: "10px" }}
         onClick={() => {
           setStatusUpdate((prev) => !prev);
@@ -38,12 +47,13 @@ export default function TaskCards({
             taskId: task.taskId,
             taskTitle: task.taskTitle,
             taskDesc: task.taskDesc,
-            ownerId: task.ownerId,
+            userId: task.userId,
           });
         }}
       >
         Update
       </button>
+      {DoneTask && <ValidationWindow setStatus={setStatus} />}
     </div>
   );
 }
