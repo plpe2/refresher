@@ -4,19 +4,40 @@ import ValidationWindow from "./ValidationWindow";
 
 const ChangeStatusArea = ({
   changeConfirming,
+  updateMessage,
 }: {
   changeConfirming: React.Dispatch<SetStateAction<boolean>>;
+  updateMessage: React.Dispatch<SetStateAction<string>>;
 }) => {
   return (
     <div style={{ position: "absolute", display: "grid" }}>
       <button
-        style={{ padding: "10px", width: "137%" }}
-        onClick={() => changeConfirming((prev) => !prev)}
+        style={{ padding: "10px", width: "150%" }}
+        onClick={() => {
+          changeConfirming((prev) => !prev);
+          updateMessage("Ongoing");
+        }}
       >
         Ongoing
       </button>
-      <button style={{ padding: "10px", width: "137%" }}>Finished</button>
-      <button style={{ padding: "10px", width: "137%" }}>Cancel</button>
+      <button
+        style={{ padding: "10px", width: "150%" }}
+        onClick={() => {
+          changeConfirming((prev) => !prev);
+          updateMessage("Finished");
+        }}
+      >
+        Finished
+      </button>
+      <button
+        style={{ padding: "10px", width: "150%" }}
+        onClick={() => {
+          changeConfirming((prev) => !prev);
+          updateMessage("Cancel");
+        }}
+      >
+        Cancel
+      </button>
     </div>
   );
 };
@@ -34,6 +55,8 @@ export default function TaskCards({
 }) {
   const [isConfirming, changeConfirming] = useState<boolean>(false);
   const [isStatusChanging, changeDisplayStatus] = useState<boolean>(false);
+  const [passedMessage, updateMessage] = useState<string>("");
+  const [taskAction, changAction] = useState<() => void>(() => {});
 
   return (
     <div
@@ -75,7 +98,12 @@ export default function TaskCards({
         >
           Update
         </button>
-        {isConfirming && <ValidationWindow setStatus={changeConfirming} />}
+        {isConfirming && (
+          <ValidationWindow
+            changeConfirming={changeConfirming}
+            message={passedMessage}
+          />
+        )}
         <div>
           <button
             style={{ padding: "10px" }}
@@ -84,7 +112,10 @@ export default function TaskCards({
             Change Status
           </button>
           {isStatusChanging && (
-            <ChangeStatusArea changeConfirming={changeConfirming} />
+            <ChangeStatusArea
+              changeConfirming={changeConfirming}
+              updateMessage={updateMessage}
+            />
           )}
         </div>
       </div>

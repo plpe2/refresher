@@ -1,7 +1,11 @@
 export default function ValidationWindow({
-  setStatus,
+  changeConfirming,
+  message,
+  // onSubmitFunction,
 }: {
-  setStatus: React.Dispatch<React.SetStateAction<boolean>>;
+  changeConfirming: React.Dispatch<React.SetStateAction<boolean>>;
+  message: string;
+  // onSubmitFunction: () => void;
 }) {
   return (
     <div
@@ -14,11 +18,15 @@ export default function ValidationWindow({
         padding: "5%",
       }}
     >
-      <h3>Window validation</h3>
-      <p>Are you sure want to `message`</p>
-      <button>Yes `message`</button>
-      <button onClick={() => setStatus((prev) => !prev)}>
-        No cancel `message`
+      <h3>
+        Are you sure you want to
+        <br /> put Task into {message}?
+      </h3>
+      <button onClick={() => changeConfirming((prev) => !prev)}>
+        Yes, put <br /> Task into {message}
+      </button>
+      <button onClick={() => changeConfirming((prev) => !prev)}>
+        Do not put <br /> Task into {message}
       </button>
     </div>
   );
