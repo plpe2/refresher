@@ -1,4 +1,4 @@
-import { UpdatingTaskType, Task } from "@/types/Tasks";
+import { UpdatingTaskType, Task, taskCardState } from "@/types/Tasks";
 import React, { SetStateAction, useState } from "react";
 import ValidationWindow from "./ValidationWindow";
 import {
@@ -57,13 +57,6 @@ const ChangeStatusArea = ({
       </button>
     </div>
   );
-};
-
-export type taskCardState = {
-  isConfirming: boolean;
-  isStatusChanging: boolean;
-  passedMessage: string;
-  taskAction: () => void;
 };
 
 export default function TaskCards({

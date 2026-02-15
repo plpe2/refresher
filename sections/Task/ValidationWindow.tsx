@@ -1,5 +1,5 @@
 import { SetStateAction } from "react";
-import { taskCardState } from "./TaskCards";
+import { taskCardState } from "@/types/Tasks";
 
 export default function ValidationWindow({
   taskCardValues,

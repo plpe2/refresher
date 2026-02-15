@@ -11,3 +11,10 @@ export type Task = {
 export type UpdatingTaskType = Partial<Task>;
 
 export type CreatingTaskType = Partial<Task>;
+
+export type taskCardState = {
+  isConfirming: boolean;
+  isStatusChanging: boolean;
+  passedMessage: string;
+  taskAction: () => void;
+};
