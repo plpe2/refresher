@@ -1,40 +1,55 @@
 import { UpdatingTaskType, Task } from "@/types/Tasks";
 import React, { SetStateAction, useState } from "react";
 import ValidationWindow from "./ValidationWindow";
+import { ChangeStatusFunction } from "@/hooks/api/task/statusChange";
 
 const ChangeStatusArea = ({
   changeConfirming,
   updateMessage,
+  changeAction,
 }: {
   changeConfirming: React.Dispatch<SetStateAction<boolean>>;
   updateMessage: React.Dispatch<SetStateAction<string>>;
+  changeAction: React.Dispatch<SetStateAction<() => void>>;
 }) => {
   return (
     <div style={{ position: "absolute", display: "grid" }}>
       <button
         style={{ padding: "10px", width: "150%" }}
-        onClick={() => {
-          changeConfirming((prev) => !prev);
-          updateMessage("Ongoing");
-        }}
+        onClick={() =>
+          ChangeStatusFunction({
+            changeConfirming,
+            updateMessage,
+            DisplayedMessage: "Ongoing",
+            changeAction: changeAction,
+          })
+        }
       >
         Ongoing
       </button>
       <button
         style={{ padding: "10px", width: "150%" }}
-        onClick={() => {
-          changeConfirming((prev) => !prev);
-          updateMessage("Finished");
-        }}
+        onClick={() =>
+          ChangeStatusFunction({
+            changeConfirming,
+            updateMessage,
+            DisplayedMessage: "Finished",
+            changeAction: changeAction,
+          })
+        }
       >
         Finished
       </button>
       <button
         style={{ padding: "10px", width: "150%" }}
-        onClick={() => {
-          changeConfirming((prev) => !prev);
-          updateMessage("Cancel");
-        }}
+        onClick={() =>
+          ChangeStatusFunction({
+            changeConfirming,
+            updateMessage,
+            DisplayedMessage: "Cancel",
+            changeAction: changeAction,
+          })
+        }
       >
         Cancel
       </button>
@@ -56,7 +71,7 @@ export default function TaskCards({
   const [isConfirming, changeConfirming] = useState<boolean>(false);
   const [isStatusChanging, changeDisplayStatus] = useState<boolean>(false);
   const [passedMessage, updateMessage] = useState<string>("");
-  const [taskAction, changAction] = useState<() => void>(() => {});
+  const [taskAction, changeAction] = useState<() => void>(() => {});
 
   return (
     <div
@@ -102,6 +117,7 @@ export default function TaskCards({
           <ValidationWindow
             changeConfirming={changeConfirming}
             message={passedMessage}
+            onSubmitFunction={taskAction}
           />
         )}
         <div>
@@ -115,6 +131,7 @@ export default function TaskCards({
             <ChangeStatusArea
               changeConfirming={changeConfirming}
               updateMessage={updateMessage}
+              changeAction={changeAction}
             />
           )}
         </div>

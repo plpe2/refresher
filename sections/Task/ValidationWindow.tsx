@@ -1,11 +1,11 @@
 export default function ValidationWindow({
   changeConfirming,
   message,
-  // onSubmitFunction,
+  onSubmitFunction,
 }: {
   changeConfirming: React.Dispatch<React.SetStateAction<boolean>>;
   message: string;
-  // onSubmitFunction: () => void;
+  onSubmitFunction: () => void;
 }) {
   return (
     <div
@@ -22,7 +22,12 @@ export default function ValidationWindow({
         Are you sure you want to
         <br /> put Task into {message}?
       </h3>
-      <button onClick={() => changeConfirming((prev) => !prev)}>
+      <button
+        onClick={() => {
+          onSubmitFunction();
+          changeConfirming((prev) => !prev);
+        }}
+      >
         Yes, put <br /> Task into {message}
       </button>
       <button onClick={() => changeConfirming((prev) => !prev)}>
