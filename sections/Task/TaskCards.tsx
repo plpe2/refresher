@@ -1,63 +1,7 @@
 import { UpdatingTaskType, Task, taskCardState } from "@/types/Tasks";
 import React, { SetStateAction, useState } from "react";
 import ValidationWindow from "./ValidationWindow";
-import {
-  TaskintoCancel,
-  TaskintoFinished,
-  TaskintoOngoing,
-} from "@/hooks/api/task/statusChange";
-
-const ChangeStatusArea = ({
-  setCardValues,
-}: {
-  setCardValues: React.Dispatch<SetStateAction<taskCardState>>;
-}) => {
-  return (
-    <div style={{ position: "absolute", display: "grid" }}>
-      <button
-        style={{ padding: "10px", width: "150%" }}
-        onClick={() => {
-          setCardValues((prev) => ({
-            ...prev,
-            isConfirming: !prev.isConfirming,
-            passedMessage: "Ongoing",
-            taskAction: TaskintoOngoing,
-          }));
-        }}
-      >
-        Ongoing
-      </button>
-      <button
-        style={{ padding: "10px", width: "150%" }}
-        onClick={() => {
-          {
-            setCardValues((prev) => ({
-              ...prev,
-              isConfirming: !prev.isConfirming,
-              passedMessage: "Finished",
-              taskAction: TaskintoFinished,
-            }));
-          }
-        }}
-      >
-        Finished
-      </button>
-      <button
-        style={{ padding: "10px", width: "150%" }}
-        onClick={() => {
-          setCardValues((prev) => ({
-            ...prev,
-            isConfirming: !prev.isConfirming,
-            passedMessage: "Cancel",
-            taskAction: TaskintoCancel,
-          }));
-        }}
-      >
-        Cancel
-      </button>
-    </div>
-  );
-};
+import { ChangeStatusArea } from "./ChangeStatusArea";
 
 export default function TaskCards({
   task,
@@ -70,11 +14,6 @@ export default function TaskCards({
   UpdatingTask: UpdatingTaskType;
   setTaskDetails: React.Dispatch<SetStateAction<Partial<Task>>>;
 }) {
-  // const [isConfirming, changeConfirming] = useState<boolean>(false);
-  // const [isStatusChanging, changeDisplayStatus] = useState<boolean>(false);
-  // const [passedMessage, updateMessage] = useState<string>("");
-  // const [taskAction, changeAction] = useState<() => void>(() => {});
-
   const [taskCardValues, setCardValues] = useState<taskCardState>({
     isConfirming: false,
     isStatusChanging: false,
