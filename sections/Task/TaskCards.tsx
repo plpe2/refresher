@@ -1,60 +1,69 @@
 import { UpdatingTaskType, Task } from "@/types/Tasks";
 import React, { SetStateAction, useState } from "react";
 import ValidationWindow from "./ValidationWindow";
-import { ChangeStatusFunction } from "@/hooks/api/task/statusChange";
+import {
+  TaskintoCancel,
+  TaskintoFinished,
+  TaskintoOngoing,
+} from "@/hooks/api/task/statusChange";
 
 const ChangeStatusArea = ({
-  changeConfirming,
-  updateMessage,
-  changeAction,
+  setCardValues,
 }: {
-  changeConfirming: React.Dispatch<SetStateAction<boolean>>;
-  updateMessage: React.Dispatch<SetStateAction<string>>;
-  changeAction: React.Dispatch<SetStateAction<() => void>>;
+  setCardValues: React.Dispatch<SetStateAction<taskCardState>>;
 }) => {
   return (
     <div style={{ position: "absolute", display: "grid" }}>
       <button
         style={{ padding: "10px", width: "150%" }}
-        onClick={() =>
-          ChangeStatusFunction({
-            changeConfirming,
-            updateMessage,
-            DisplayedMessage: "Ongoing",
-            changeAction: changeAction,
-          })
-        }
+        onClick={() => {
+          setCardValues((prev) => ({
+            ...prev,
+            isConfirming: !prev.isConfirming,
+            passedMessage: "Ongoing",
+            taskAction: TaskintoOngoing,
+          }));
+        }}
       >
         Ongoing
       </button>
       <button
         style={{ padding: "10px", width: "150%" }}
-        onClick={() =>
-          ChangeStatusFunction({
-            changeConfirming,
-            updateMessage,
-            DisplayedMessage: "Finished",
-            changeAction: changeAction,
-          })
-        }
+        onClick={() => {
+          {
+            setCardValues((prev) => ({
+              ...prev,
+              isConfirming: !prev.isConfirming,
+              passedMessage: "Finished",
+              taskAction: TaskintoFinished,
+            }));
+          }
+        }}
       >
         Finished
       </button>
       <button
         style={{ padding: "10px", width: "150%" }}
-        onClick={() =>
-          ChangeStatusFunction({
-            changeConfirming,
-            updateMessage,
-            DisplayedMessage: "Cancel",
-            changeAction: changeAction,
-          })
-        }
+        onClick={() => {
+          setCardValues((prev) => ({
+            ...prev,
+            isConfirming: !prev.isConfirming,
+            passedMessage: "Cancel",
+            taskAction: TaskintoCancel,
+          }));
+        }}
       >
         Cancel
       </button>
     </div>
   );
+};
+
+export type taskCardState = {
+  isConfirming: boolean;
+  isStatusChanging: boolean;
+  passedMessage: string;
+  taskAction: () => void;
 };
 
 export default function TaskCards({
@@ -68,10 +77,17 @@ export default function TaskCards({
   UpdatingTask: UpdatingTaskType;
   setTaskDetails: React.Dispatch<SetStateAction<Partial<Task>>>;
 }) {
-  const [isConfirming, changeConfirming] = useState<boolean>(false);
-  const [isStatusChanging, changeDisplayStatus] = useState<boolean>(false);
-  const [passedMessage, updateMessage] = useState<string>("");
-  const [taskAction, changeAction] = useState<() => void>(() => {});
+  // const [isConfirming, changeConfirming] = useState<boolean>(false);
+  // const [isStatusChanging, changeDisplayStatus] = useState<boolean>(false);
+  // const [passedMessage, updateMessage] = useState<string>("");
+  // const [taskAction, changeAction] = useState<() => void>(() => {});
+
+  const [taskCardValues, setCardValues] = useState<taskCardState>({
+    isConfirming: false,
+    isStatusChanging: false,
+    passedMessage: "",
+    taskAction: () => {},
+  });
 
   return (
     <div
@@ -91,13 +107,6 @@ export default function TaskCards({
       <p>Time Added: {new Date(task.timeAdded).toLocaleTimeString()}</p>
       <p>Finished: {task.timeFinished.toString()}</p>
       <div style={{ display: "flex" }}>
-        {/* <button
-          type="button"
-          style={{ padding: "10px" }}
-          onClick={() => setStatus((prev) => !prev)}
-        >
-          Done
-        </button> */}
         <button
           style={{ padding: "10px" }}
           onClick={() => {
@@ -113,26 +122,26 @@ export default function TaskCards({
         >
           Update
         </button>
-        {isConfirming && (
+        {taskCardValues.isConfirming && (
           <ValidationWindow
-            changeConfirming={changeConfirming}
-            message={passedMessage}
-            onSubmitFunction={taskAction}
+            taskCardValues={taskCardValues}
+            setCardValues={setCardValues}
           />
         )}
         <div>
           <button
             style={{ padding: "10px" }}
-            onClick={() => changeDisplayStatus((prev) => !prev)}
+            onClick={() =>
+              setCardValues((prev) => ({
+                ...prev,
+                isStatusChanging: !taskCardValues.isStatusChanging,
+              }))
+            }
           >
             Change Status
           </button>
-          {isStatusChanging && (
-            <ChangeStatusArea
-              changeConfirming={changeConfirming}
-              updateMessage={updateMessage}
-              changeAction={changeAction}
-            />
+          {taskCardValues.isStatusChanging && (
+            <ChangeStatusArea setCardValues={setCardValues} />
           )}
         </div>
       </div>

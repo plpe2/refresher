@@ -1,11 +1,12 @@
+import { SetStateAction } from "react";
+import { taskCardState } from "./TaskCards";
+
 export default function ValidationWindow({
-  changeConfirming,
-  message,
-  onSubmitFunction,
+  taskCardValues,
+  setCardValues,
 }: {
-  changeConfirming: React.Dispatch<React.SetStateAction<boolean>>;
-  message: string;
-  onSubmitFunction: () => void;
+  taskCardValues: taskCardState;
+  setCardValues: React.Dispatch<SetStateAction<taskCardState>>;
 }) {
   return (
     <div
@@ -20,18 +21,28 @@ export default function ValidationWindow({
     >
       <h3>
         Are you sure you want to
-        <br /> put Task into {message}?
+        <br /> put Task into {taskCardValues.passedMessage}?
       </h3>
       <button
         onClick={() => {
-          onSubmitFunction();
-          changeConfirming((prev) => !prev);
+          taskCardValues.taskAction();
+          setCardValues((prev) => ({
+            ...prev,
+            isConfirming: !prev.isConfirming,
+          }));
         }}
       >
-        Yes, put <br /> Task into {message}
+        Yes, put <br /> Task into {taskCardValues.passedMessage}
       </button>
-      <button onClick={() => changeConfirming((prev) => !prev)}>
-        Do not put <br /> Task into {message}
+      <button
+        onClick={() =>
+          setCardValues((prev) => ({
+            ...prev,
+            isConfirming: !prev.isConfirming,
+          }))
+        }
+      >
+        Do not put <br /> Task into {taskCardValues.passedMessage}
       </button>
     </div>
   );
