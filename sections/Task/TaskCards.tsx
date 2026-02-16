@@ -73,7 +73,10 @@ export default function TaskCards({
             Change Status
           </button>
           {taskCardValues.isStatusChanging && (
-            <ChangeStatusArea setCardValues={setCardValues} />
+            <ChangeStatusArea
+              setCardValues={setCardValues}
+              taskId={task.taskId}
+            />
           )}
         </div>
       </div>

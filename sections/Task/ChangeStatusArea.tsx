@@ -7,8 +7,10 @@ import { taskCardState } from "@/types/Tasks";
 import { SetStateAction } from "react";
 
 export const ChangeStatusArea = ({
+  taskId,
   setCardValues,
 }: {
+  taskId: number;
   setCardValues: React.Dispatch<SetStateAction<taskCardState>>;
 }) => {
   return (
@@ -20,7 +22,7 @@ export const ChangeStatusArea = ({
             ...prev,
             isConfirming: !prev.isConfirming,
             passedMessage: "Ongoing",
-            taskAction: TaskintoOngoing,
+            taskAction: () => TaskintoOngoing({ taskId: taskId }),
           }));
         }}
       >
