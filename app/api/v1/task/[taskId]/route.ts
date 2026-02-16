@@ -1,5 +1,4 @@
 import getConnection from "@/lib/db_connection";
-import { redirect } from "next/dist/server/api-utils";
 import { NextResponse } from "next/server";
 
 export async function GET(
@@ -38,19 +37,50 @@ export async function PATCH(
   req: Request,
   { params }: { params: Promise<{ taskId: string }> },
 ) {
-  const { taskId, newTaskTitle, newTaskBody } = await req.json();
+  const { request, status, newTaskTitle, newTaskBody } = await req.json();
+  const taskId = (await params).taskId;
   const conn = await getConnection();
-  const updateTask = await conn.query(
-    "UPDATE `tasktbl` SET `taskTitle`=?, `taskDesc`=? WHERE `taskId`=?",
-    [newTaskTitle, newTaskBody, taskId],
-  );
 
-  if (!updateTask) {
-    return NextResponse.json({ status: false });
+  if (request == "UpdatingStatus") {
+    // Handles Updating `status` of the Task
+    const updateStatus = await conn.query(
+      "UPDATE `tasktbl` SET `status` = ? WHERE `taskId` = ?",
+      [status, taskId],
+    );
+
+    if (!updateStatus) {
+      return NextResponse.json({
+        status: false,
+        message: "Failed Updating Task",
+      });
+    }
+
+    return NextResponse.json({
+      status: true,
+      message: `Successfully updated status into ${status}`,
+    });
+  } else if (request == "UpdatingTask") {
+    // Handles Updating `overall details` of the Task
+    const updateTask = await conn.query(
+      "UPDATE `tasktbl` SET `taskTitle`=?, `taskDesc`=? WHERE `taskId`=?",
+      [newTaskTitle, newTaskBody, taskId],
+    );
+
+    if (!updateTask) {
+      return NextResponse.json({
+        status: false,
+        message: "Failed Updating Task",
+      });
+    }
+
+    return NextResponse.json({
+      status: true,
+      redirect: "http://localhost:3000/task",
+    });
+  } else {
+    return NextResponse.json({
+      status: false,
+      message: "Failed Updating Task",
+    });
   }
-
-  return NextResponse.json({
-    status: true,
-    redirect: "http://localhost:3000/task",
-  });
 }

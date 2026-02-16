@@ -76,13 +76,17 @@ export async function handleUpdateTask({
   const newTaskBody = formData.get("newBody");
 
   const updateTaskRequest = await fetch(
-    `http://localhost:3000/api/v1/task/${userId}`,
+    `http://localhost:3000/api/v1/task/${taskId}`,
     {
       method: "PATCH",
       headers: {
         "Content-type": "application/json",
       },
-      body: JSON.stringify({ newTaskTitle, newTaskBody, taskId }),
+      body: JSON.stringify({
+        request: "UpdatingTask",
+        newTaskTitle,
+        newTaskBody,
+      }),
     },
   );
 
