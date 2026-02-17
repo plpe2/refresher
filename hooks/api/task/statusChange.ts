@@ -1,4 +1,10 @@
-export async function TaskintoOngoing({ taskId }: { taskId: number }) {
+export async function StatusChange({
+  taskId,
+  changeStatus,
+}: {
+  taskId: number;
+  changeStatus: string;
+}) {
   const updateToOngoingRequest = await fetch(
     `http://localhost:3000/api/v1/task/${taskId}`,
     {
@@ -6,7 +12,7 @@ export async function TaskintoOngoing({ taskId }: { taskId: number }) {
       headers: {
         "Content-type": "application/json",
       },
-      body: JSON.stringify({ request: "UpdatingStatus", status: "Ongoing" }),
+      body: JSON.stringify({ request: "UpdatingStatus", status: changeStatus }),
     },
   );
 
@@ -16,12 +22,4 @@ export async function TaskintoOngoing({ taskId }: { taskId: number }) {
   }
 
   console.log(updateStatusRespond.message);
-}
-
-export async function TaskintoFinished() {
-  console.log("Finished");
-}
-
-export async function TaskintoCancel() {
-  console.log("Cancel");
 }

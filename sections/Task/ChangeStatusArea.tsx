@@ -1,8 +1,4 @@
-import {
-  TaskintoOngoing,
-  TaskintoFinished,
-  TaskintoCancel,
-} from "@/hooks/api/task/statusChange";
+import { StatusChange } from "@/hooks/api/task/statusChange";
 import { taskCardState } from "@/types/Tasks";
 import { SetStateAction } from "react";
 
@@ -22,7 +18,8 @@ export const ChangeStatusArea = ({
             ...prev,
             isConfirming: !prev.isConfirming,
             passedMessage: "Ongoing",
-            taskAction: () => TaskintoOngoing({ taskId: taskId }),
+            taskAction: () =>
+              StatusChange({ taskId: taskId, changeStatus: "Ongoing" }),
           }));
         }}
       >
@@ -36,7 +33,8 @@ export const ChangeStatusArea = ({
               ...prev,
               isConfirming: !prev.isConfirming,
               passedMessage: "Finished",
-              taskAction: TaskintoFinished,
+              taskAction: () =>
+                StatusChange({ taskId: taskId, changeStatus: "Finished" }),
             }));
           }
         }}
@@ -50,7 +48,8 @@ export const ChangeStatusArea = ({
             ...prev,
             isConfirming: !prev.isConfirming,
             passedMessage: "Cancel",
-            taskAction: TaskintoCancel,
+            taskAction: () =>
+              StatusChange({ taskId: taskId, changeStatus: "Cancel" }),
           }));
         }}
       >
