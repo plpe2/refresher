@@ -61,7 +61,7 @@ export function AuthProvider({ children }: Props) {
             decoded: { id },
           } = callTokenVerifier;
           const userdataFetch = await fetch(
-            `http://localhost:3000/api/v1/users/${id}`
+            `http://localhost:3000/api/v1/users/${id}`,
           );
           const fetchedData = await userdataFetch.json();
           setUser(fetchedData);
@@ -82,6 +82,7 @@ export function AuthProvider({ children }: Props) {
         user,
         isAuthenticated,
         isLoading,
+        setLoading,
         logout: () => logout({ setUser, setStatus }),
       }}
     >

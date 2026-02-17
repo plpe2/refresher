@@ -1,6 +1,7 @@
 import { SetStateAction } from "react";
 import { taskCardState } from "@/types/Tasks";
 import { useRouter } from "next/navigation";
+import { useAuthProvider } from "@/context/jwt/auth-provider";
 
 export default function ValidationWindow({
   taskCardValues,
@@ -9,6 +10,7 @@ export default function ValidationWindow({
   taskCardValues: taskCardState;
   setCardValues: React.Dispatch<SetStateAction<taskCardState>>;
 }) {
+  const userData = useAuthProvider();
   const router = useRouter();
   return (
     <div
@@ -27,13 +29,24 @@ export default function ValidationWindow({
       </h3>
       <button
         onClick={async () => {
-          var result = await taskCardValues.taskAction();
-          setCardValues((prev) => ({
-            ...prev,
-            isConfirming: !prev.isConfirming,
-          }));
-          alert(result.message);
-          router.refresh();
+          try {
+            userData?.setLoading(true); // ✅ before request
+
+            const result = await taskCardValues.taskAction();
+
+            setCardValues((prev) => ({
+              ...prev,
+              isConfirming: !prev.isConfirming,
+            }));
+
+            alert(result.message);
+
+            if (result.status) {
+              router.refresh();
+            }
+          } finally {
+            userData?.setLoading(false); // ✅ always runs
+          }
         }}
       >
         Yes, put <br /> Task into {taskCardValues.passedMessage}
