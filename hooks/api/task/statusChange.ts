@@ -1,10 +1,12 @@
+import { StatusChangeReturnType } from "@/types/Tasks";
+
 export async function StatusChange({
   taskId,
   changeStatus,
 }: {
   taskId: number;
   changeStatus: string;
-}) {
+}): StatusChangeReturnType {
   const updateToOngoingRequest = await fetch(
     `http://localhost:3000/api/v1/task/${taskId}`,
     {
@@ -21,5 +23,5 @@ export async function StatusChange({
     console.log("Failed");
   }
 
-  console.log(updateStatusRespond.message);
+  return updateStatusRespond;
 }

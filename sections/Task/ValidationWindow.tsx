@@ -1,5 +1,6 @@
 import { SetStateAction } from "react";
 import { taskCardState } from "@/types/Tasks";
+import { useRouter } from "next/navigation";
 
 export default function ValidationWindow({
   taskCardValues,
@@ -8,6 +9,7 @@ export default function ValidationWindow({
   taskCardValues: taskCardState;
   setCardValues: React.Dispatch<SetStateAction<taskCardState>>;
 }) {
+  const router = useRouter();
   return (
     <div
       style={{
@@ -24,12 +26,14 @@ export default function ValidationWindow({
         <br /> put Task into {taskCardValues.passedMessage}?
       </h3>
       <button
-        onClick={() => {
-          taskCardValues.taskAction();
+        onClick={async () => {
+          var result = await taskCardValues.taskAction();
           setCardValues((prev) => ({
             ...prev,
             isConfirming: !prev.isConfirming,
           }));
+          alert(result.message);
+          router.refresh();
         }}
       >
         Yes, put <br /> Task into {taskCardValues.passedMessage}

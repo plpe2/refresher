@@ -12,9 +12,14 @@ export type UpdatingTaskType = Partial<Task>;
 
 export type CreatingTaskType = Partial<Task>;
 
+export type StatusChangeReturnType = Promise<{
+  status: boolean;
+  message: string;
+}>;
+
 export type taskCardState = {
   isConfirming: boolean;
   isStatusChanging: boolean;
   passedMessage: string;
-  taskAction: () => void;
+  taskAction: () => StatusChangeReturnType;
 };

@@ -18,7 +18,7 @@ export default function TaskCards({
     isConfirming: false,
     isStatusChanging: false,
     passedMessage: "",
-    taskAction: () => {},
+    taskAction: async () => ({ status: true, message: "" }),
   });
 
   return (
