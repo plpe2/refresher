@@ -1,6 +1,5 @@
 import React, { SetStateAction } from "react";
 import { Task } from "@/types/Tasks";
-import { useAuthProvider } from "@/context/jwt/auth-provider";
 
 //function that displays the task in Viewing Task page
 export async function fetchingTask({

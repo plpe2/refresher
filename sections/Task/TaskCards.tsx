@@ -37,7 +37,7 @@ export default function TaskCards({
       <p>Status: {task.status}</p>
       <p>Date Added: {new Date(task.timeAdded).toLocaleDateString()}</p>
       <p>Time Added: {new Date(task.timeAdded).toLocaleTimeString()}</p>
-      <p>Finished: {task.timeFinished.toString()}</p>
+      <p>Finished: {new Date(task.timeFinished).toLocaleDateString()}</p>
       <div style={{ display: "flex" }}>
         <button
           style={{ padding: "10px" }}
