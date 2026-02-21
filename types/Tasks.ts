@@ -1,3 +1,5 @@
+import { SetStateAction } from "react";
+
 export type Task = {
   taskId: number;
   taskTitle: string;
@@ -11,6 +13,13 @@ export type Task = {
 export type UpdatingTaskType = Partial<Task>;
 
 export type CreatingTaskType = Partial<Task>;
+
+export type StatusChangeProps = {
+  taskId: number;
+  changeStatus: string;
+  setLoading: React.Dispatch<SetStateAction<boolean>> | undefined;
+  setCardValues: React.Dispatch<SetStateAction<taskCardState>>;
+};
 
 export type StatusChangeReturnType = Promise<{
   status: boolean;

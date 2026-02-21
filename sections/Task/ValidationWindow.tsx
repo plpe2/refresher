@@ -30,22 +30,11 @@ export default function ValidationWindow({
       <button
         onClick={async () => {
           try {
-            userData?.setLoading(true); // ✅ before request
-
             const result = await taskCardValues.taskAction();
 
-            setCardValues((prev) => ({
-              ...prev,
-              isConfirming: !prev.isConfirming,
-            }));
-
             alert(result.message);
-
-            if (result.status) {
-              router.refresh();
-            }
           } finally {
-            userData?.setLoading(false); // ✅ always runs
+            router.refresh();
           }
         }}
       >
