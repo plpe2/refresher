@@ -4,6 +4,7 @@ import { useAuthProvider } from "@/context/jwt/auth-provider";
 import { fetchingTask } from "@/hooks/api/task/task";
 import { CreateWindow } from "@/sections/Task/CreateTask";
 import TaskCards from "@/sections/Task/TaskCards";
+import TaskContainer from "@/sections/Task/TaskContainer";
 import UpdateTask from "@/sections/Task/UpdateTask";
 import { CreatingTaskType, Task } from "@/types/Tasks";
 import { useEffect, useState } from "react";
@@ -20,6 +21,8 @@ export default function TaskView() {
     userId: 0,
   });
 
+  const [layout, changeLayout] = useState<"cards" | "list">("cards");
+
   // fetching task using hook
   useEffect(() => {
     var userId = userData?.user?.id;
@@ -33,22 +36,32 @@ export default function TaskView() {
 
       <p>Task View</p>
       <div>
+        <button
+          onClick={() =>
+            changeLayout((prev) => (prev == "cards" ? "list" : "cards"))
+          }
+        >
+          {layout == layout ? "Card" : "List"}
+        </button>
         <button>Manage</button>
         <button onClick={() => setStatusCreate((prev) => !prev)}>
           Create +{" "}
         </button>
       </div>
 
-      {/* TaskCards displaying using map function from TaskList values */}
-      {taskList.map((task) => (
-        <TaskCards
-          key={task.taskId}
-          task={task}
-          setStatusUpdate={setStatusUpdate}
-          UpdatingTask={UpdatingTask}
-          setTaskDetails={setTaskDetails}
-        />
-      ))}
+      <TaskContainer>
+        {/* TaskCards displaying using map function from TaskList values */}
+        {taskList.map((task) => (
+          <TaskCards
+            key={task.taskId}
+            task={task}
+            setStatusUpdate={setStatusUpdate}
+            UpdatingTask={UpdatingTask}
+            setTaskDetails={setTaskDetails}
+            layout={layout}
+          />
+        ))}
+      </TaskContainer>
 
       {/* 
         Update window displaying if update button is clicked

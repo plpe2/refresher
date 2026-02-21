@@ -2,17 +2,20 @@ import { UpdatingTaskType, Task, taskCardState } from "@/types/Tasks";
 import React, { SetStateAction, useState } from "react";
 import ValidationWindow from "./ValidationWindow";
 import { ChangeStatusArea } from "./ChangeStatusArea";
+import styles from "@/styles/Task/TaskCard.module.css";
 
 export default function TaskCards({
   task,
   setStatusUpdate,
   UpdatingTask,
   setTaskDetails,
+  layout,
 }: {
   task: Task;
   setStatusUpdate: React.Dispatch<SetStateAction<boolean>>;
   UpdatingTask: UpdatingTaskType;
   setTaskDetails: React.Dispatch<SetStateAction<Partial<Task>>>;
+  layout: "cards" | "list";
 }) {
   const [taskCardValues, setCardValues] = useState<taskCardState>({
     isConfirming: false,
@@ -22,16 +25,7 @@ export default function TaskCards({
   });
 
   return (
-    <div
-      style={{
-        backgroundColor: "gray",
-        display: "inline-block",
-        padding: "10px",
-        border: "1px solid black",
-        margin: "10px",
-        borderRadius: "10px 10px",
-      }}
-    >
+    <div className={layout === "cards" ? styles.taskCard : styles.taskList}>
       <h4>{task.taskTitle}</h4>
       <p>- {task.taskDesc}</p>
       <p>Status: {task.status}</p>

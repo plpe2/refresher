@@ -1,0 +1,19 @@
+.taskCard {
+    background-color: gray;
+    display: inline-block;
+    padding: 10px;
+    border: 1px solid black;
+    margin: 10px;
+    border-radius: 10px 10px;
+    width: 16%;
+}
+
+.taskList {
+    background-color: gainsboro;
+    display: inline-block;
+    padding: 10px;
+    border: 1px solid black;
+    margin: 10px;
+    border-radius: 10px 10px;
+    width: 97%;
+}
