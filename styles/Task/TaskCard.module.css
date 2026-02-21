@@ -1,16 +1,32 @@
 .taskCard {
-    background-color: gray;
-    display: inline-block;
-    padding: 10px;
-    border: 1px solid black;
-    margin: 10px;
-    border-radius: 10px 10px;
-    width: 16%;
+  background-color: gray;
+  padding: 10px;
+  border: 1px solid black;
+  margin: 10px;
+  border-radius: 10px;
+  width: 17%;
+  overflow-y: auto;   /* 👈 Add this */
+  display: inline-block;
+  height: 350px;
 }
+
+.taskCard p {
+  word-break: break-word;     /* break long words */
+  overflow-wrap: break-word;  /* fallback for older browsers */
+}
+
+.taskCard button {
+  padding: 10px;
+}
+
+.buttonContainer{
+     display: flex;
+}
+
+
 
 .taskList {
     background-color: gainsboro;
-    display: inline-block;
     padding: 10px;
     border: 1px solid black;
     margin: 10px;
