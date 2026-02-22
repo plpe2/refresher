@@ -3,13 +3,22 @@ import { RowDataPacket } from "mysql2";
 import { NextResponse } from "next/server";
 
 // api being called on fetchingTask function
-export async function POST(req: Request) {
-  const { userId } = await req.json();
+export async function GET(req: Request) {
+  const { searchParams } = new URL(req.url);
   const conn = await getConnection();
-  const [getTask] = await conn.query<RowDataPacket[]>(
-    "SELECT * FROM tasktbl WHERE userId = ?",
-    userId,
-  );
+
+  const filter = searchParams.get("filter")?.toString();
+  const searchValue = searchParams.get("searchValue")?.toString();
+
+  var queryString = "SELECT * FROM tasktbl WHERE 1 = 1 ";
+  const queryValues: any[] = [];
+
+  if (filter && searchValue) {
+    queryString += `AND ${filter} LIKE ?`;
+    queryValues.push(`%${searchValue}%`);
+  }
+
+  const [getTask] = await conn.query<RowDataPacket[]>(queryString, queryValues);
 
   if (getTask.length == 0) {
     return NextResponse.json({ status: false });

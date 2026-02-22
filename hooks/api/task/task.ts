@@ -11,8 +11,7 @@ export async function fetchingTask({
 }) {
   if (!userId) return;
   const taskRequest = await fetch(`http://localhost:3000/api/v1/task/`, {
-    method: "POST",
-    body: JSON.stringify({ userId: userId }),
+    method: "GET",
   });
 
   const fetchedTasks = await taskRequest.json();
@@ -98,4 +97,34 @@ export async function handleUpdateTask({
 
   // Handle Displaying of Toast before relocating the page
   window.location.href = updateTaskResponse.redirect;
+}
+
+export async function handleSearchTask({
+  e,
+  setTask,
+}: {
+  e: React.FormEvent<HTMLFormElement>;
+  setTask: React.Dispatch<SetStateAction<Task[]>>;
+}) {
+  e.preventDefault();
+
+  const formData = new FormData(e.currentTarget);
+
+  const filter = formData.get("filter")?.toString();
+  const searchValue = formData.get("searchValue")?.toString();
+
+  const urlParams = new URLSearchParams({
+    filter: filter || "",
+    searchValue: searchValue || "",
+  });
+
+  const searchRequest = await fetch(
+    `http://localhost:3000/api/v1/task?${urlParams.toString()}`,
+    {
+      method: "GET",
+    },
+  );
+
+  const searchRespond = await searchRequest.json();
+  setTask(searchRespond.taskList);
 }

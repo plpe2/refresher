@@ -1,7 +1,7 @@
 "use client";
 
 import { useAuthProvider } from "@/context/jwt/auth-provider";
-import { fetchingTask } from "@/hooks/api/task/task";
+import { fetchingTask, handleSearchTask } from "@/hooks/api/task/task";
 import { CreateWindow } from "@/sections/Task/CreateTask";
 import TaskCards from "@/sections/Task/TaskCards";
 import TaskContainer from "@/sections/Task/TaskContainer";
@@ -47,6 +47,17 @@ export default function TaskView() {
         <button onClick={() => setStatusCreate((prev) => !prev)}>
           Create +{" "}
         </button>
+
+        <form onSubmit={(e) => handleSearchTask({ e, setTask: setTasks })}>
+          <p>Search</p>
+          <select name="filter">
+            <option value="taskTitle">Title</option>
+            <option value="taskDesc">Body</option>
+            <option value="Status">Status</option>
+          </select>
+          <input type="text" name="searchValue" />
+          <button type="submit">Go</button>
+        </form>
       </div>
 
       <TaskContainer>
