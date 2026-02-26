@@ -21,7 +21,7 @@ export async function GET(req: Request) {
   const [getTask] = await conn.query<RowDataPacket[]>(queryString, queryValues);
 
   if (getTask.length == 0) {
-    return NextResponse.json({ status: false });
+    return NextResponse.json({ status: false, taskList: [] });
   }
 
   return NextResponse.json({ status: true, taskList: getTask });

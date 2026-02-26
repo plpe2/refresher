@@ -60,19 +60,25 @@ export default function TaskView() {
         </form>
       </div>
 
-      <TaskContainer>
-        {/* TaskCards displaying using map function from TaskList values */}
-        {taskList.map((task) => (
-          <TaskCards
-            key={task.taskId}
-            task={task}
-            setStatusUpdate={setStatusUpdate}
-            UpdatingTask={UpdatingTask}
-            setTaskDetails={setTaskDetails}
-            layout={layout}
-          />
-        ))}
-      </TaskContainer>
+      {
+        <TaskContainer>
+          {/* TaskCards displaying using map function from TaskList values */}
+          {taskList.length > 0 ? (
+            taskList.map((task) => (
+              <TaskCards
+                key={task.taskId}
+                task={task}
+                setStatusUpdate={setStatusUpdate}
+                UpdatingTask={UpdatingTask}
+                setTaskDetails={setTaskDetails}
+                layout={layout}
+              />
+            ))
+          ) : (
+            <p>No Task to show</p>
+          )}
+        </TaskContainer>
+      }
 
       {/* 
         Update window displaying if update button is clicked
