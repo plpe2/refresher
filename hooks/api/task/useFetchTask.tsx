@@ -13,5 +13,5 @@ export default function useFetchTask() {
     fetchingTask({ userId: userId, setTask: setTasks });
   }, [userData]);
 
-  return { taskList, setTasks };
+  return { taskList, setTasks, isCreating, setStatusCreate };
 }
