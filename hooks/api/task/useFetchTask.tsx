@@ -6,6 +6,7 @@ import { Task } from "@/types/Tasks";
 export default function useFetchTask() {
   const userData = useAuthProvider();
   const [taskList, setTasks] = useState<Task[]>([]);
+  const [isCreating, setStatusCreate] = useState<boolean>(false);
 
   useEffect(() => {
     var userId = userData?.user?.id;

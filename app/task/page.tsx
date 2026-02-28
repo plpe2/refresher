@@ -11,11 +11,10 @@ import UpdateTask from "@/sections/Task/UpdateTask";
 import { useState } from "react";
 
 export default function TaskView() {
-  const { taskList, setTasks } = useFetchTask();
+  const { taskList, setTasks, isCreating, setStatusCreate } = useFetchTask();
   const { updateValues, setUpdateState } = useUpdatingTask();
   const { selectStatus, selectTransform } = useSelectStatus();
 
-  const [isCreating, setStatusCreate] = useState<boolean>(false);
   const [layout, changeLayout] = useState<"cards" | "list">("cards");
 
   return (
