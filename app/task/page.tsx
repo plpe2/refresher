@@ -3,27 +3,20 @@
 import { handleSearchTask } from "@/hooks/api/task/task";
 import useFetchTask from "@/hooks/api/task/useFetchTask";
 import useSelectStatus from "@/hooks/api/task/useSelectStatus";
+import useUpdatingTask from "@/hooks/api/task/useUpdatingTask";
 import { CreateWindow } from "@/sections/Task/CreateTask";
 import TaskCards from "@/sections/Task/TaskCards";
 import TaskContainer from "@/sections/Task/TaskContainer";
 import UpdateTask from "@/sections/Task/UpdateTask";
-import { CreatingTaskType } from "@/types/Tasks";
 import { useState } from "react";
 
 export default function TaskView() {
   const { taskList, setTasks } = useFetchTask();
-  const [isCreating, setStatusCreate] = useState<boolean>(false);
-  const [isUpdating, setStatusUpdate] = useState<boolean>(false);
-  const [UpdatingTask, setTaskDetails] = useState<CreatingTaskType>({
-    taskId: 0,
-    taskTitle: "",
-    taskDesc: "",
-    userId: 0,
-  });
-
-  const [layout, changeLayout] = useState<"cards" | "list">("cards");
-
+  const { updateValues, setUpdateState } = useUpdatingTask();
   const { selectStatus, selectTransform } = useSelectStatus();
+
+  const [isCreating, setStatusCreate] = useState<boolean>(false);
+  const [layout, changeLayout] = useState<"cards" | "list">("cards");
 
   return (
     <div>
@@ -72,9 +65,7 @@ export default function TaskView() {
               <TaskCards
                 key={task.taskId}
                 task={task}
-                setStatusUpdate={setStatusUpdate}
-                UpdatingTask={UpdatingTask}
-                setTaskDetails={setTaskDetails}
+                setUpdateState={setUpdateState}
                 layout={layout}
               />
             ))
@@ -88,10 +79,10 @@ export default function TaskView() {
         Update window displaying if update button is clicked
         passedTask comes from the TaskCard viewing
       */}
-      {isUpdating && (
+      {updateValues.isUpdating && (
         <UpdateTask
-          passedTask={UpdatingTask}
-          setStatusUpdate={setStatusUpdate}
+          passedTask={updateValues.UpdatingTaskValue}
+          setUpdateState={setUpdateState}
         />
       )}
     </div>

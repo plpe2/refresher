@@ -32,3 +32,8 @@ export type taskCardState = {
   passedMessage: string;
   taskAction: () => StatusChangeReturnType;
 };
+
+export type updateTaskProps = {
+  isUpdating: boolean;
+  UpdatingTaskValue: CreatingTaskType;
+};

@@ -1,15 +1,15 @@
 import { useAuthProvider } from "@/context/jwt/auth-provider";
 import { handleUpdateTask } from "@/hooks/api/task/task";
-import { UpdatingTaskType } from "@/types/Tasks";
+import { updateTaskProps, UpdatingTaskType } from "@/types/Tasks";
 import { Task } from "@/types/Tasks";
 import React, { SetStateAction, useState } from "react";
 
 export default function UpdateTask({
   passedTask,
-  setStatusUpdate,
+  setUpdateState,
 }: {
   passedTask: UpdatingTaskType;
-  setStatusUpdate: React.Dispatch<SetStateAction<boolean>>;
+  setUpdateState: React.Dispatch<SetStateAction<updateTaskProps>>;
 }) {
   const [taskDetails, setDetails] = useState<UpdatingTaskType>(passedTask);
   const userData = useAuthProvider();
@@ -35,7 +35,7 @@ export default function UpdateTask({
       >
         <button
           onClick={() => {
-            setStatusUpdate((prev) => !prev);
+            setUpdateState((prev) => ({ ...prev, isUpdating: false }));
             setDetails({
               ...taskDetails,
               taskId: 0,

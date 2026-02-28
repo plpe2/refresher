@@ -1,4 +1,4 @@
-import { UpdatingTaskType, Task, taskCardState } from "@/types/Tasks";
+import { Task, taskCardState, updateTaskProps } from "@/types/Tasks";
 import React, { SetStateAction, useState } from "react";
 import ValidationWindow from "./ValidationWindow";
 import { ChangeStatusArea } from "./ChangeStatusArea";
@@ -6,15 +6,11 @@ import styles from "@/styles/Task/TaskCard.module.css";
 
 export default function TaskCards({
   task,
-  setStatusUpdate,
-  UpdatingTask,
-  setTaskDetails,
+  setUpdateState,
   layout,
 }: {
   task: Task;
-  setStatusUpdate: React.Dispatch<SetStateAction<boolean>>;
-  UpdatingTask: UpdatingTaskType;
-  setTaskDetails: React.Dispatch<SetStateAction<Partial<Task>>>;
+  setUpdateState: React.Dispatch<SetStateAction<updateTaskProps>>;
   layout: "cards" | "list";
 }) {
   const [taskCardValues, setCardValues] = useState<taskCardState>({
@@ -36,14 +32,16 @@ export default function TaskCards({
         <button
           style={{ padding: "10px" }}
           onClick={() => {
-            setStatusUpdate((prev) => !prev);
-            setTaskDetails({
-              ...UpdatingTask,
-              taskId: task.taskId,
-              taskTitle: task.taskTitle,
-              taskDesc: task.taskDesc,
-              userId: task.userId,
-            });
+            setUpdateState((prev) => ({
+              ...prev,
+              isUpdating: !prev.isUpdating,
+              UpdatingTaskValue: {
+                taskId: task.taskId,
+                taskTitle: task.taskTitle,
+                taskDesc: task.taskDesc,
+                userId: task.userId,
+              },
+            }));
           }}
         >
           Update
