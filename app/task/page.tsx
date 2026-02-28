@@ -1,18 +1,17 @@
 "use client";
 
-import { useAuthProvider } from "@/context/jwt/auth-provider";
-import { fetchingTask, handleSearchTask } from "@/hooks/api/task/task";
+import { handleSearchTask } from "@/hooks/api/task/task";
+import useFetchTask from "@/hooks/api/task/useFetchTask";
 import useSelectStatus from "@/hooks/api/task/useSelectStatus";
 import { CreateWindow } from "@/sections/Task/CreateTask";
 import TaskCards from "@/sections/Task/TaskCards";
 import TaskContainer from "@/sections/Task/TaskContainer";
 import UpdateTask from "@/sections/Task/UpdateTask";
-import { CreatingTaskType, Task } from "@/types/Tasks";
-import React, { FormEvent, useEffect, useState } from "react";
+import { CreatingTaskType } from "@/types/Tasks";
+import { useState } from "react";
 
 export default function TaskView() {
-  const userData = useAuthProvider();
-  const [taskList, setTasks] = useState<Task[]>([]);
+  const { taskList, setTasks } = useFetchTask();
   const [isCreating, setStatusCreate] = useState<boolean>(false);
   const [isUpdating, setStatusUpdate] = useState<boolean>(false);
   const [UpdatingTask, setTaskDetails] = useState<CreatingTaskType>({
@@ -24,13 +23,7 @@ export default function TaskView() {
 
   const [layout, changeLayout] = useState<"cards" | "list">("cards");
 
-  const { selectStatus, setStatus, selectTransform } = useSelectStatus();
-
-  // fetching task using hook
-  useEffect(() => {
-    var userId = userData?.user?.id;
-    fetchingTask({ userId: userId, setTask: setTasks });
-  }, [userData]);
+  const { selectStatus, selectTransform } = useSelectStatus();
 
   return (
     <div>
