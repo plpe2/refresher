@@ -2,12 +2,13 @@
 
 import { useAuthProvider } from "@/context/jwt/auth-provider";
 import { fetchingTask, handleSearchTask } from "@/hooks/api/task/task";
+import useSelectStatus from "@/hooks/api/task/useSelectStatus";
 import { CreateWindow } from "@/sections/Task/CreateTask";
 import TaskCards from "@/sections/Task/TaskCards";
 import TaskContainer from "@/sections/Task/TaskContainer";
 import UpdateTask from "@/sections/Task/UpdateTask";
 import { CreatingTaskType, Task } from "@/types/Tasks";
-import { useEffect, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 
 export default function TaskView() {
   const userData = useAuthProvider();
@@ -22,6 +23,8 @@ export default function TaskView() {
   });
 
   const [layout, changeLayout] = useState<"cards" | "list">("cards");
+
+  const { selectStatus, setStatus, selectTransform } = useSelectStatus();
 
   // fetching task using hook
   useEffect(() => {
@@ -50,12 +53,20 @@ export default function TaskView() {
 
         <form onSubmit={(e) => handleSearchTask({ e, setTask: setTasks })}>
           <p>Search</p>
-          <select name="filter">
+          <select name="filter" onChange={(e) => selectTransform(e)}>
             <option value="taskTitle">Title</option>
             <option value="taskDesc">Body</option>
             <option value="Status">Status</option>
           </select>
-          <input type="text" name="searchValue" />
+          {selectStatus ? (
+            <select name="taskStatus">
+              <option value="Ongoing">Ongoing</option>
+              <option value="Finished">Finished</option>
+              <option value="Cancel">Cancelled</option>
+            </select>
+          ) : (
+            <input type="text" name="searchValue" />
+          )}
           <button type="submit">Go</button>
         </form>
       </div>

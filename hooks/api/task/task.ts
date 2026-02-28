@@ -109,9 +109,20 @@ export async function handleSearchTask({
   e.preventDefault();
 
   const formData = new FormData(e.currentTarget);
+  var filter;
+  var searchValue;
 
-  const filter = formData.get("filter")?.toString();
-  const searchValue = formData.get("searchValue")?.toString();
+  const formFilterValue = formData.get("filter")?.toString();
+  const formsearchValue = formData.get("searchValue")?.toString();
+  const formTaskStatus = formData.get("taskStatus")?.toString();
+
+  if (formTaskStatus && formTaskStatus.length > 0) {
+    filter = "status";
+    searchValue = formTaskStatus;
+  } else {
+    filter = formFilterValue;
+    searchValue = formsearchValue;
+  }
 
   const urlParams = new URLSearchParams({
     filter: filter || "",
