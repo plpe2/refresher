@@ -5,6 +5,7 @@ import useFetchTask from "@/hooks/api/task/useFetchTask";
 import useSelectStatus from "@/hooks/api/task/useSelectStatus";
 import useUpdatingTask from "@/hooks/api/task/useUpdatingTask";
 import { CreateWindow } from "@/sections/Task/CreateTask";
+import SearchFilters from "@/sections/Task/SearchFilters";
 import TaskCards from "@/sections/Task/TaskCards";
 import TaskContainer from "@/sections/Task/TaskContainer";
 import UpdateTask from "@/sections/Task/UpdateTask";
@@ -13,7 +14,6 @@ import { useState } from "react";
 export default function TaskView() {
   const { taskList, setTasks, isCreating, setStatusCreate } = useFetchTask();
   const { updateValues, setUpdateState } = useUpdatingTask();
-  const { selectStatus, selectTransform } = useSelectStatus();
 
   const [layout, changeLayout] = useState<"cards" | "list">("cards");
 
@@ -33,27 +33,10 @@ export default function TaskView() {
         </button>
         <button>Manage</button>
         <button onClick={() => setStatusCreate((prev) => !prev)}>
-          Create +{" "}
+          Create +
         </button>
 
-        <form onSubmit={(e) => handleSearchTask({ e, setTask: setTasks })}>
-          <p>Search</p>
-          <select name="filter" onChange={(e) => selectTransform(e)}>
-            <option value="taskTitle">Title</option>
-            <option value="taskDesc">Body</option>
-            <option value="Status">Status</option>
-          </select>
-          {selectStatus ? (
-            <select name="taskStatus">
-              <option value="Ongoing">Ongoing</option>
-              <option value="Finished">Finished</option>
-              <option value="Cancel">Cancelled</option>
-            </select>
-          ) : (
-            <input type="text" name="searchValue" />
-          )}
-          <button type="submit">Go</button>
-        </form>
+        <SearchFilters setTasks={setTasks} />
       </div>
 
       {
