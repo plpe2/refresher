@@ -1,0 +1,46 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: refresher-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_database}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+    networks:
+      - refresher-network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: refresher-app
+    environment:
+      NODE_ENV: production
+      DB_host: mysql
+      DB_user: ${DB_user}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_database: ${DB_database}
+      SECRET_KEY: ${SECRET_KEY}
+    ports:
+      - "3000:3000"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - refresher-network
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  refresher-network:
+    driver: bridge

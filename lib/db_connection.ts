@@ -4,7 +4,7 @@ export default async function getConnection() {
   return await mysql2.createConnection({
     host: process.env.DB_host,
     user: process.env.DB_user,
-    password: "",
+    password: process.env.DB_PASSWORD,
     port: 3306,
     database: process.env.DB_database,
   });

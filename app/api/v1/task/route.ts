@@ -13,10 +13,13 @@ export async function GET(req: Request) {
   var queryString = "SELECT * FROM tasktbl WHERE 1 = 1 ";
   const queryValues: any[] = [];
 
+  // Checking for available filters on Fetching
   if (filter && searchValue) {
-    queryString += `AND ${filter} LIKE ?`;
+    queryString += ` AND ${filter} LIKE ?`;
     queryValues.push(`%${searchValue}%`);
   }
+
+  // LIMIT 10 OFFSET 0
 
   const [getTask] = await conn.query<RowDataPacket[]>(queryString, queryValues);
 
