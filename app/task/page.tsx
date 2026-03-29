@@ -15,21 +15,20 @@ export default function TaskView() {
   const { taskList, setTasks, isCreating, setStatusCreate } = useFetchTask();
   const { updateValues, setUpdateState } = useUpdatingTask();
 
-  const [layout, changeLayout] = useState<"cards" | "list">("cards");
+  const [layout, changeLayout] = useState<"Cards" | "List">("Cards");
 
   return (
     <div>
       {/* Create Window to displayed if button is clicked */}
       {isCreating && <CreateWindow setStatusCreate={setStatusCreate} />}
 
-      <p>Task View</p>
       <div>
         <button
           onClick={() =>
-            changeLayout((prev) => (prev == "cards" ? "list" : "cards"))
+            changeLayout((prev) => (prev == "Cards" ? "List" : "Cards"))
           }
         >
-          {layout == layout ? "Card" : "List"}
+          {layout}
         </button>
         <button>Manage</button>
         <button onClick={() => setStatusCreate((prev) => !prev)}>
@@ -39,23 +38,21 @@ export default function TaskView() {
         <SearchFilters setTasks={setTasks} />
       </div>
 
-      {
-        <TaskContainer>
-          {/* TaskCards displaying using map function from TaskList values */}
-          {taskList.length > 0 ? (
-            taskList.map((task) => (
-              <TaskCards
-                key={task.taskId}
-                task={task}
-                setUpdateState={setUpdateState}
-                layout={layout}
-              />
-            ))
-          ) : (
-            <p>No Task to show</p>
-          )}
-        </TaskContainer>
-      }
+      <TaskContainer>
+        {/* TaskCards displaying using map function from TaskList values */}
+        {taskList.length > 0 ? (
+          taskList.map((task) => (
+            <TaskCards
+              key={task.taskId}
+              task={task}
+              setUpdateState={setUpdateState}
+              layout={layout}
+            />
+          ))
+        ) : (
+          <p>No Task to show</p>
+        )}
+      </TaskContainer>
 
       {/* 
         Update window displaying if update button is clicked

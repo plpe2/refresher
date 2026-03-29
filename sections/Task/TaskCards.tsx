@@ -11,7 +11,7 @@ export default function TaskCards({
 }: {
   task: Task;
   setUpdateState: React.Dispatch<SetStateAction<updateTaskProps>>;
-  layout: "cards" | "list";
+  layout: "Cards" | "List";
 }) {
   const [taskCardValues, setCardValues] = useState<taskCardState>({
     isConfirming: false,
@@ -21,7 +21,7 @@ export default function TaskCards({
   });
 
   return (
-    <div className={layout === "cards" ? styles.taskCard : styles.taskList}>
+    <div className={layout === "Cards" ? styles.taskCard : styles.taskList}>
       <h4>{task.taskTitle}</h4>
       <p>- {task.taskDesc}</p>
       <p>Status: {task.status}</p>
