@@ -1,7 +1,7 @@
 "use client";
 import React, { SetStateAction, useState } from "react";
 import RegisterInput from "./components/RegisterInput";
-import { handleRegister } from "@/hooks/api/users";
+import { handleRegister } from "@/hooks/api/users/users";
 
 export const RegisterFields = ({
   setDisplay,

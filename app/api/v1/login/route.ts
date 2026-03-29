@@ -8,7 +8,7 @@ export async function POST(req: Request) {
   const { name, password } = await req.json();
   const [LoginRequest] = await conn.query<RowDataPacket[]>(
     "SELECT id, name, password FROM users WHERE name = ?",
-    [name]
+    [name],
   );
 
   if (LoginRequest.length <= 0 || !(password === LoginRequest[0].password))
@@ -18,7 +18,7 @@ export async function POST(req: Request) {
 
   return NextResponse.json({
     status: "success",
-    redirect: "http://localhost:3000/userslist",
+    redirect: "http://localhost:3000/task",
     token: token,
   });
 }

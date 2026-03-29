@@ -1,46 +1,72 @@
 "use client";
 
-import { useAuthProvider } from "@/context/jwt/auth-provider";
-import { Task } from "@/types/Tasks";
-import { useEffect, useState } from "react";
+import { handleSearchTask } from "@/hooks/api/task/task";
+import useFetchTask from "@/hooks/api/task/useFetchTask";
+import useSelectStatus from "@/hooks/api/task/useSelectStatus";
+import useUpdatingTask from "@/hooks/api/task/useUpdatingTask";
+import { CreateWindow } from "@/sections/Task/CreateTask";
+import SearchFilters from "@/sections/Task/SearchFilters";
+import TaskCards from "@/sections/Task/TaskCards";
+import TaskContainer from "@/sections/Task/TaskContainer";
+import UpdateTask from "@/sections/Task/UpdateTask";
+import { useState } from "react";
 
 export default function TaskView() {
-  const userData = useAuthProvider();
-  const [taskList, setTasks] = useState<Task[]>([]);
-  const fetchingTask = async () => {
-    if (!userData?.user?.id) return;
-    const taskRequest = await fetch(`http://localhost:3000/api/v1/task/`, {
-      method: "POST",
-      body: JSON.stringify({ id: userData?.user?.id }),
-    });
+  const { taskList, setTasks, isCreating, setStatusCreate } = useFetchTask();
+  const { updateValues, setUpdateState } = useUpdatingTask();
 
-    const fetchedTasks = await taskRequest.json();
-    setTasks(fetchedTasks.taskList);
-  };
-  useEffect(() => {
-    fetchingTask();
-  }, [userData]);
+  const [layout, changeLayout] = useState<"cards" | "list">("cards");
+
   return (
     <div>
-      TaskView
-      {taskList.map((task) => (
-        <div
-          key={task.taskId}
-          style={{
-            backgroundColor: "gray",
-            display: "inline-block",
-            padding: "10px",
-            border: "1px solid black",
-            margin: "10px",
-            borderRadius: "10px 10px",
-          }}
+      {/* Create Window to displayed if button is clicked */}
+      {isCreating && <CreateWindow setStatusCreate={setStatusCreate} />}
+
+      <p>Task View</p>
+      <div>
+        <button
+          onClick={() =>
+            changeLayout((prev) => (prev == "cards" ? "list" : "cards"))
+          }
         >
-          <h4>{task.taskTitle}</h4>
-          <p>- {task.taskDesc}</p>
-          <p>Status: {task.status}</p>
-          <p>{task.timeAdded.toString()}</p>
-        </div>
-      ))}
+          {layout == layout ? "Card" : "List"}
+        </button>
+        <button>Manage</button>
+        <button onClick={() => setStatusCreate((prev) => !prev)}>
+          Create +
+        </button>
+
+        <SearchFilters setTasks={setTasks} />
+      </div>
+
+      {
+        <TaskContainer>
+          {/* TaskCards displaying using map function from TaskList values */}
+          {taskList.length > 0 ? (
+            taskList.map((task) => (
+              <TaskCards
+                key={task.taskId}
+                task={task}
+                setUpdateState={setUpdateState}
+                layout={layout}
+              />
+            ))
+          ) : (
+            <p>No Task to show</p>
+          )}
+        </TaskContainer>
+      }
+
+      {/* 
+        Update window displaying if update button is clicked
+        passedTask comes from the TaskCard viewing
+      */}
+      {updateValues.isUpdating && (
+        <UpdateTask
+          passedTask={updateValues.UpdatingTaskValue}
+          setUpdateState={setUpdateState}
+        />
+      )}
     </div>
   );
 }

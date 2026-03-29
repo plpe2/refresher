@@ -1,5 +1,5 @@
 "use client";
-import { handleDelete } from "@/hooks/api/users";
+import { handleDelete } from "@/hooks/api/users/users";
 import { UserTypes } from "@/types/Users";
 import Link from "next/link";
 import { SetStateAction, useState } from "react";

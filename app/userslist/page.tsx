@@ -1,7 +1,7 @@
 export default function UserList() {
   return (
     <div>
-      <p>Hello User</p>
+      <p>User List page</p>
     </div>
   );
 }
