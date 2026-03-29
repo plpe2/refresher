@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 
 export async function DELETE(
   req: Request,
-  { params }: { params: Promise<{ usersId: number }> }
+  { params }: { params: Promise<{ usersId: string }> },
 ) {
   const usersId = (await params).usersId;
   const conn = await getConnection();
@@ -21,7 +21,7 @@ export async function DELETE(
 
 export async function POST(
   req: Request,
-  { params }: { params: Promise<{ usersId: string }> }
+  { params }: { params: Promise<{ usersId: string }> },
 ) {
   const usersId = (await params).usersId;
   const { name, age, password } = await req.json();
@@ -29,7 +29,7 @@ export async function POST(
   const conn = await getConnection();
   const updateUser = await conn.query(
     "UPDATE users SET name = ?, age = ?, password = ? WHERE id = ?",
-    [name, age, password, usersId]
+    [name, age, password, usersId],
   );
 
   if (updateUser)
@@ -42,13 +42,13 @@ export async function POST(
 
 export async function GET(
   req: Request,
-  { params }: { params: Promise<{ usersId: string }> }
+  { params }: { params: Promise<{ usersId: string }> },
 ) {
   const usersId = (await params).usersId;
   const conn = await getConnection();
   const [data] = await conn.query<RowDataPacket[]>(
     "SELECT * FROM users WHERE id = ?",
-    [usersId]
+    [usersId],
   );
 
   if (data.length <= 0)
