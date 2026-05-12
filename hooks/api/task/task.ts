@@ -21,7 +21,7 @@ export async function fetchingTask({
   setTask(fetchedTasks.taskList);
 }
 
-//----------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------
 
 // function that calls when creating Task
 export async function handleCreateTask({
@@ -56,7 +56,7 @@ export async function handleCreateTask({
   window.location.href = "http://localhost:3000/task";
 }
 
-//----------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------
 
 // function that handles the updates the task
 export async function handleUpdateTask({
@@ -99,6 +99,9 @@ export async function handleUpdateTask({
   window.location.href = updateTaskResponse.redirect;
 }
 
+//--------------------------------------------------------------------------------------------------------------------------------------------
+
+// function that handles Searching Task
 export async function handleSearchTask({
   e,
   setTask,
@@ -138,4 +141,24 @@ export async function handleSearchTask({
 
   const searchRespond = await searchRequest.json();
   setTask(searchRespond.taskList);
+}
+
+//--------------------------------------------------------------------------------------------------------------------------------------------
+
+// function that handles Pagination on displayed Task
+export async function handlePaginationTask(
+  {
+    // e,
+    // setPaginationValue,
+  }: {
+    // e: React.FormEvent<HTMLFormElement>;
+    // setPaginationValue: React.Dispatch<SetStateAction<number>>;
+  },
+) {
+  // e.preventDefault();
+
+  // const formData = new FormData(e.currentTarget);
+  // const PaginationValue = formData.get("PaginationValue")?.toString();
+
+  console.log("hello");
 }
