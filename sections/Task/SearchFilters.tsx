@@ -1,8 +1,8 @@
-import { handleSearchTask } from "@/hooks/api/task/task";
+import { handlePaginationTask, handleSearchTask } from "@/hooks/api/task/task";
 import useFetchTask from "@/hooks/api/task/useFetchTask";
 import useSelectStatus from "@/hooks/api/task/useSelectStatus";
 import { Task } from "@/types/Tasks";
-import React, { SetStateAction } from "react";
+import React, { SetStateAction, useEffect, useState } from "react";
 
 export default function SearchFilters({
   setTasks,
@@ -10,6 +10,15 @@ export default function SearchFilters({
   setTasks: React.Dispatch<SetStateAction<Task[]>>;
 }) {
   const { selectTransform, selectStatus } = useSelectStatus();
+  const [pagination, setPaginationValue] = useState<number>(1);
+
+  const decreasePagination = () => {
+    setPaginationValue((prev) => prev - 1);
+  };
+
+  useEffect(() => {
+    handlePaginationTask;
+  }, [pagination]);
 
   return (
     <div>
@@ -30,6 +39,27 @@ export default function SearchFilters({
           <input type="text" name="searchValue" />
         )}
         <button type="submit">Go</button>
+      </form>
+
+      {pagination}
+      <form
+      // onSubmit={(e) => {
+      //   handlePaginationTask({ e, setPaginationValue });
+      // }}
+      >
+        <button type="submit">{pagination <= 1 ? 1 : pagination - 10}</button>
+        <input
+          type="text"
+          defaultValue={pagination}
+          name="PaginationValue"
+          onSubmit={(e) => {
+            setPaginationValue(parseInt(e.currentTarget.value));
+            e.preventDefault();
+          }}
+        />
+        <button type="submit" name="increasePagination" value={pagination + 1}>
+          {pagination + 1}
+        </button>
       </form>
     </div>
   );
