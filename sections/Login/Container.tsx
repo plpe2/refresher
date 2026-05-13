@@ -2,7 +2,7 @@ import { SetStateAction } from "react";
 import { LoginFields } from "./Login";
 import { RegisterFields } from "./Register";
 import Container from '@mui/material/Container'
-import { Paper } from "@mui/material";
+import { Box, Paper, Typography } from "@mui/material";
 
 export const LogRegContainer = ({
   loginDisplay,
@@ -20,18 +20,19 @@ export const LogRegContainer = ({
   return (
     <Container maxWidth="lg" >
       <Paper elevation={4} sx={{
-        backgroundColor: loginDisplay.isLogin ? "green" : "teal",
+        backgroundColor: loginDisplay.isLogin ? "green" : "whitesmoke",
         width: {
           xs: "90%",
           sm: "60%",
           md: "35%",
         },
         textAlign: "center",
-        display: modalDisplay.isShown ? "block" : "none",
-        color: "white",
+        display: modalDisplay.isShown ? "flex" : "none",
+        color: "black",
         position: "fixed",
         justifySelf: "center",
         padding: 10,
+        flexDirection: "column",
       }}>
         <button
           style={{ padding: "1%" }}
@@ -41,9 +42,10 @@ export const LogRegContainer = ({
         </button>
         {!loginDisplay.isLogin ? (
           <>
-            <h2>Login</h2>
+            <Typography variant="h4" color="initial">Login</Typography>
             <LoginFields setDisplay={loginDisplay.setDisplay} />
           </>
+
         ) : (
           <>
             <h2>Register</h2>
