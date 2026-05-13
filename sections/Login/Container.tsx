@@ -1,6 +1,8 @@
 import { SetStateAction } from "react";
 import { LoginFields } from "./Login";
 import { RegisterFields } from "./Register";
+import Container from '@mui/material/Container'
+import { Paper } from "@mui/material";
 
 export const LogRegContainer = ({
   loginDisplay,
@@ -16,35 +18,41 @@ export const LogRegContainer = ({
   };
 }) => {
   return (
-    <div
-      style={{
+    <Container maxWidth="lg" >
+      <Paper elevation={4} sx={{
         backgroundColor: loginDisplay.isLogin ? "green" : "teal",
-        width: "30%",
+        width: {
+          xs: "90%",
+          sm: "60%",
+          md: "35%",
+        },
         textAlign: "center",
-        padding: "10px",
         display: modalDisplay.isShown ? "block" : "none",
         color: "white",
         position: "fixed",
-        margin: "2% 35% 0 35% ",
-      }}
-    >
-      <button
-        style={{ padding: "1%" }}
-        onClick={() => modalDisplay.setStatus(!modalDisplay.isShown)}
-      >
-        x
-      </button>
-      {!loginDisplay.isLogin ? (
-        <>
-          <h2>Login</h2>
-          <LoginFields setDisplay={loginDisplay.setDisplay} />
-        </>
-      ) : (
-        <>
-          <h2>Register</h2>
-          <RegisterFields setDisplay={loginDisplay.setDisplay} />
-        </>
-      )}
-    </div>
+        justifySelf: "center",
+        padding: 10,
+      }}>
+        <button
+          style={{ padding: "1%" }}
+          onClick={() => modalDisplay.setStatus(!modalDisplay.isShown)}
+        >
+          x
+        </button>
+        {!loginDisplay.isLogin ? (
+          <>
+            <h2>Login</h2>
+            <LoginFields setDisplay={loginDisplay.setDisplay} />
+          </>
+        ) : (
+          <>
+            <h2>Register</h2>
+            <RegisterFields setDisplay={loginDisplay.setDisplay} />
+          </>
+        )}
+      </Paper>
+    </Container>
+
+
   );
 };
