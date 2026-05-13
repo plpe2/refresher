@@ -2,6 +2,8 @@
 import React, { SetStateAction, useState } from "react";
 import RegisterInput from "./components/RegisterInput";
 import { handleRegister } from "@/hooks/api/users/users";
+import TextField from '@mui/material/TextField'
+import Button from '@mui/material/Button'
 
 export const RegisterFields = ({
   setDisplay,
@@ -19,31 +21,45 @@ export const RegisterFields = ({
     <form
       method="POST"
       onSubmit={(e) => {
-        handleRegister({ e, setStatus });
+        // handleRegister({ e, setStatus });
+        e.preventDefault()
+        alert("HEllo")
+      }}
+
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 12
       }}
     >
-      <RegisterInput
-        type="Name"
-        inputValidation={inputValidation}
-        setStatus={setStatus}
+      <TextField
+        label="Name"
+        name=""
+        variant="outlined"
+        fullWidth
       />
-      <RegisterInput
-        type="Age"
-        inputValidation={inputValidation}
-        setStatus={setStatus}
+      <TextField
+        label="Age"
+        name=""
+        variant="outlined"
+        fullWidth
       />
-      <RegisterInput
-        type="Password"
-        inputValidation={inputValidation}
-        setStatus={setStatus}
+      <TextField
+        label="Password"
+        name=""
+        variant="outlined"
+        fullWidth
       />
-      <RegisterInput
-        type="CPassword"
-        inputValidation={inputValidation}
-        setStatus={setStatus}
+      <TextField
+        label="Confirm Password"
+        name=""
+        variant="outlined"
+        fullWidth
       />
       <div style={{ margin: "10px" }}>
-        <button type="submit">Register</button>
+        <Button variant="contained" color="success" type="submit">
+          Register
+        </Button>
         <hr />
         <p>
           No account yet?{" "}

@@ -31,7 +31,7 @@ export const LogRegContainer = ({
         color: "black",
         position: "fixed",
         justifySelf: "center",
-        padding: 10,
+        padding: 6,
         flexDirection: "column",
       }}>
         <button
@@ -48,7 +48,7 @@ export const LogRegContainer = ({
 
         ) : (
           <>
-            <h2>Register</h2>
+            <Typography variant="h4" color="initial">Registration</Typography>
             <RegisterFields setDisplay={loginDisplay.setDisplay} />
           </>
         )}
