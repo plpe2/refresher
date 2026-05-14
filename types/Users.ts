@@ -11,3 +11,7 @@ export type inputValidationTypes = {
   Password: boolean;
   CPassword: boolean;
 };
+
+export type UserRegValues = Omit<UserTypes, "id"> & {
+  cpassword: string;
+};

@@ -1,31 +1,26 @@
 "use client";
-import React, { SetStateAction, useState } from "react";
-import RegisterInput from "./components/RegisterInput";
-import { handleRegister } from "@/hooks/api/users/users";
+import React, { SetStateAction } from "react";
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
+import { useForm } from "react-hook-form";
+import { UserRegValues } from "@/types/Users";
 
 export const RegisterFields = ({
   setDisplay,
 }: {
   setDisplay: React.Dispatch<SetStateAction<boolean>>;
 }) => {
-  const [inputValidation, setStatus] = useState({
-    Name: true,
-    Age: true,
-    Password: true,
-    CPassword: true,
-  });
+
+  const { register, handleSubmit } = useForm<UserRegValues>()
+
+  const sampleReg = (data: UserRegValues) => {
+    console.log(data)
+  }
 
   return (
     <form
       method="POST"
-      onSubmit={(e) => {
-        // handleRegister({ e, setStatus });
-        e.preventDefault()
-        alert("HEllo")
-      }}
-
+      onSubmit={handleSubmit(sampleReg)}
       style={{
         display: "flex",
         flexDirection: "column",
@@ -34,27 +29,27 @@ export const RegisterFields = ({
     >
       <TextField
         label="Name"
-        name=""
         variant="outlined"
         fullWidth
+        {...register("name")}
       />
       <TextField
         label="Age"
-        name=""
         variant="outlined"
         fullWidth
+        {...register("age")}
       />
       <TextField
         label="Password"
-        name=""
         variant="outlined"
         fullWidth
+        {...register("password")}
       />
       <TextField
         label="Confirm Password"
-        name=""
         variant="outlined"
         fullWidth
+        {...register("cpassword")}
       />
       <div style={{ margin: "10px" }}>
         <Button variant="contained" color="success" type="submit">
