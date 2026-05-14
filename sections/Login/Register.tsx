@@ -57,7 +57,7 @@ export const RegisterFields = ({
         </Button>
         <hr />
         <p>
-          No account yet?{" "}
+          Already have an account? {" "}
           <button
             type="button"
             style={{
@@ -72,7 +72,7 @@ export const RegisterFields = ({
               setDisplay((prev) => !prev);
             }}
           >
-            Already have an account?
+            Login here
           </button>
         </p>
       </div>

@@ -2,7 +2,7 @@ import { SetStateAction } from "react";
 import { LoginFields } from "./Login";
 import { RegisterFields } from "./Register";
 import Container from '@mui/material/Container'
-import { Box, Paper, Typography } from "@mui/material";
+import { Paper, Typography, Button } from "@mui/material";
 
 export const LogRegContainer = ({
   loginDisplay,
@@ -20,11 +20,12 @@ export const LogRegContainer = ({
   return (
     <Container maxWidth="lg" >
       <Paper elevation={4} sx={{
-        backgroundColor: loginDisplay.isLogin ? "green" : "whitesmoke",
+        // backgroundColor: loginDisplay.isLogin ? "whitesmoke" : "whitesmoke",
+        backgroundColor: "whitesmoke",
         width: {
-          xs: "90%",
-          sm: "60%",
-          md: "35%",
+          xs: "80%",
+          sm: "50%",
+          md: "25%",
         },
         textAlign: "center",
         display: modalDisplay.isShown ? "flex" : "none",
@@ -34,12 +35,9 @@ export const LogRegContainer = ({
         padding: 6,
         flexDirection: "column",
       }}>
-        <button
-          style={{ padding: "1%" }}
-          onClick={() => modalDisplay.setStatus(!modalDisplay.isShown)}
-        >
-          x
-        </button>
+        <Button variant="contained" color="error" sx={{ width: "5%", alignSelf: "flex-end", borderRadius: "50%" }}>
+          X
+        </Button>
         {!loginDisplay.isLogin ? (
           <>
             <Typography variant="h4" color="initial">Login</Typography>
