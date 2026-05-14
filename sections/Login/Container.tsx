@@ -2,7 +2,7 @@ import { SetStateAction } from "react";
 import { LoginFields } from "./Login";
 import { RegisterFields } from "./Register";
 import Container from '@mui/material/Container'
-import { Paper, Typography, Button } from "@mui/material";
+import { Paper, Typography, Button, Box, Avatar } from "@mui/material";
 
 export const LogRegContainer = ({
   loginDisplay,
@@ -35,18 +35,28 @@ export const LogRegContainer = ({
         padding: 6,
         flexDirection: "column",
       }}>
-        <Button variant="contained" color="error" sx={{ width: "5%", alignSelf: "flex-end", borderRadius: "50%" }}>
+        <Button variant="contained" color="error" sx={{ width: "5%", alignSelf: "flex-end", borderRadius: "50%" }} onClick={(prev) => modalDisplay.setStatus(!prev)}>
           X
         </Button>
         {!loginDisplay.isLogin ? (
           <>
-            <Typography variant="h4" color="initial">Login</Typography>
+            <Box sx={{ margin: 3, alignItems: "center", display: "flex", flexDirection: "column", gap: 3 }}>
+              <Avatar>
+                <img src="https://images.dog.ceo/breeds/bouvier/n02106382_1470.jpg" alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              </Avatar>
+              <Typography variant="h4" color="initial">Login</Typography>
+            </Box>
             <LoginFields setDisplay={loginDisplay.setDisplay} />
           </>
 
         ) : (
           <>
-            <Typography variant="h4" color="initial">Registration</Typography>
+            <Box sx={{ margin: 3, alignItems: "center", display: "flex", flexDirection: "column", gap: 3 }}>
+              <Avatar>
+                <img src="https://images.dog.ceo/breeds/labradoodle/labradoodle-forrest.jpg" alt="Dog" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              </Avatar>
+              <Typography variant="h4" color="initial">Registration</Typography>
+            </Box>
             <RegisterFields setDisplay={loginDisplay.setDisplay} />
           </>
         )}
