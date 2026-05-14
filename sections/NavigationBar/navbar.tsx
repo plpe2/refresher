@@ -8,7 +8,7 @@ import { AuthContext } from "@/context/auth-context";
 export default function Navbar() {
   const userData = useContext(AuthContext);
   const [isShown, setStatus] = useState<boolean>(true);
-  const [isLogin, setDisplay] = useState<boolean>(true);
+  const [isLogin, setDisplay] = useState<boolean>(false);
 
   const btnDisplay = () => {
     if (!userData?.isAuthenticated) {

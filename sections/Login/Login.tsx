@@ -2,6 +2,8 @@ import { handleLogin } from "@/hooks/api/users/users";
 import React, { SetStateAction, useState } from "react";
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
+import { useForm } from "react-hook-form";
+import { LoginValues } from "@/types/Users";
 
 
 
@@ -10,12 +12,14 @@ export const LoginFields = ({
 }: {
   setDisplay: React.Dispatch<SetStateAction<boolean>>;
 }) => {
-  const [logStatus, setStatus] = useState<boolean>(false);
+  const { register, handleSubmit } = useForm<LoginValues>()
+
+  const handleLogin = (data: LoginValues) => {
+    console.log(data)
+  }
   return (
     <form
-      onSubmit={(e) => {
-        handleLogin({ e, setStatus });
-      }}
+      onSubmit={handleSubmit(handleLogin)}
 
       style={{
         display: "flex",
@@ -23,23 +27,15 @@ export const LoginFields = ({
         gap: 12
       }}
     >
-      <p style={{ color: "red" }}>
-        {logStatus ? "Email or Password is incorrect" : ""}
-      </p>
       <TextField
-        id=""
-        name="Name"
         label="Email"
-        variant="outlined"
         fullWidth
+        {...register("name")}
       />
       <TextField
         label="Password"
-        name="Password"
-        onFocus={() => {
-          setStatus(false);
-        }}
         fullWidth
+        {...register("password")}
       />
       <div style={{ margin: "10px" }}>
         <Button variant="contained" color="primary" type="submit" sx={{}}>
