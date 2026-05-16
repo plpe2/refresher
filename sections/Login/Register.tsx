@@ -4,23 +4,22 @@ import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import { useForm } from "react-hook-form";
 import { UserRegValues } from "@/types/Users";
+import { handleRegister } from "@/hooks/api/users/users";
+import { useRouter } from "next/navigation";
 
 export const RegisterFields = ({
   setDisplay,
 }: {
   setDisplay: React.Dispatch<SetStateAction<boolean>>;
 }) => {
-
+  const router = useRouter()
   const { register, handleSubmit } = useForm<UserRegValues>()
 
-  const sampleReg = (data: UserRegValues) => {
-    console.log(data)
-  }
 
   return (
     <form
       method="POST"
-      onSubmit={handleSubmit(sampleReg)}
+      onSubmit={handleSubmit((data) => handleRegister(data, router))}
       style={{
         display: "flex",
         flexDirection: "column",
