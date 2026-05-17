@@ -7,6 +7,13 @@ import { LoginValues } from "@/types/Users";
 import { handleLogin } from "@/hooks/api/users/users";
 import Typography from '@mui/material/Typography'
 import { Box } from "@mui/material";
+import { email, string, z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod";
+
+export const LoginZodSchema = z.object({
+  name: email("Enter a valid email address"),
+  password: string().min(1, "Enter your password.")
+})
 
 export const LoginFields = ({
   setDisplay,
@@ -15,7 +22,7 @@ export const LoginFields = ({
   setDisplay: React.Dispatch<SetStateAction<boolean>>,
   setStatus: React.Dispatch<SetStateAction<boolean>>
 }) => {
-  const { register, handleSubmit } = useForm<LoginValues>()
+  const { register, handleSubmit, formState: { errors } } = useForm<LoginValues>({ resolver: zodResolver(LoginZodSchema) })
   const [loginAttempt, setAttempt] = useState<boolean>(true)
 
   return (
@@ -42,11 +49,15 @@ export const LoginFields = ({
         label="Email"
         fullWidth
         {...register("name")}
+        error={!!errors.name}
+        helperText={errors.name?.message}
       />
       <TextField
         label="Password"
         fullWidth
         {...register("password")}
+        error={!!errors.password}
+        helperText={errors.password?.message}
       />
       <div style={{ margin: "10px" }}>
         <Button variant="contained" color="primary" type="submit" sx={{}}>
