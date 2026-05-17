@@ -3,22 +3,22 @@ import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import { useForm } from "react-hook-form";
 import { LoginValues } from "@/types/Users";
+import { handleLogin } from "@/hooks/api/users/users";
 
 
 
 export const LoginFields = ({
   setDisplay,
+  setStatus,
 }: {
-  setDisplay: React.Dispatch<SetStateAction<boolean>>;
+  setDisplay: React.Dispatch<SetStateAction<boolean>>,
+  setStatus: React.Dispatch<SetStateAction<boolean>>
 }) => {
   const { register, handleSubmit } = useForm<LoginValues>()
 
-  const handleLogin = (data: LoginValues) => {
-    console.log(data)
-  }
   return (
     <form
-      onSubmit={handleSubmit(handleLogin)}
+      onSubmit={handleSubmit(((data) => handleLogin({ data: data, setStatus: setStatus })))}
 
       style={{
         display: "flex",

@@ -1,6 +1,5 @@
-import { inputValidationTypes, UserRegValues } from "@/types/Users";
+import { LoginValues, UserRegValues } from "@/types/Users";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { useRouter } from "next/router";
 
 export const handleDelete = async (
   e: React.FormEvent<HTMLFormElement>,
@@ -67,35 +66,20 @@ export const handleRegister = async (
 };
 
 export const handleLogin = async ({
-  e,
+  data,
   setStatus,
 }: {
-  e: React.FormEvent<HTMLFormElement>;
+  data: LoginValues;
   setStatus: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  e.preventDefault();
-
-  const formData = new FormData(e.currentTarget);
-
-  const name = formData.get("Name")?.valueOf() as string;
-  const password = formData.get("Password")?.valueOf() as string;
-
-  const nameValue = name.length <= 0;
-  const passValue = password.length <= 0;
-
-  if (nameValue || passValue) {
-    setStatus(true);
-  }
-
   const loginRequest = await fetch("http://localhost:3000/api/v1/login/", {
     method: "POST",
-    body: JSON.stringify({ name, password }),
+    body: JSON.stringify(data),
   });
 
   const loginResponse = await loginRequest.json();
   if (loginResponse.status != "success") {
     setStatus(true);
-    return console.log("gello");
   }
 
   setStatus(false);

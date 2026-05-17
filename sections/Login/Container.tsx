@@ -46,7 +46,7 @@ export const LogRegContainer = ({
               </Avatar>
               <Typography variant="h4" color="initial">Login</Typography>
             </Box>
-            <LoginFields setDisplay={loginDisplay.setDisplay} />
+            <LoginFields setDisplay={loginDisplay.setDisplay} setStatus={modalDisplay.setStatus} />
           </>
 
         ) : (
