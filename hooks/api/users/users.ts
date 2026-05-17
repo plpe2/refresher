@@ -1,8 +1,9 @@
-import { inputValidationTypes } from "@/types/Users";
+import { LoginValues, UserRegValues } from "@/types/Users";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 export const handleDelete = async (
   e: React.FormEvent<HTMLFormElement>,
-  id: number
+  id: number,
 ) => {
   e.preventDefault();
 
@@ -11,7 +12,7 @@ export const handleDelete = async (
     {
       method: "DELETE",
       body: JSON.stringify(id),
-    }
+    },
   );
 
   const response = await delSelectedUser.json();
@@ -47,95 +48,38 @@ export const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
   window.location.href = response.redirect;
 };
 
-export const handleRegister = async ({
-  e,
-  setStatus,
-}: {
-  e: React.FormEvent<HTMLFormElement>;
-  setStatus: React.Dispatch<React.SetStateAction<inputValidationTypes>>;
-}) => {
-  e.preventDefault();
+export const handleRegister = async (
+  data: UserRegValues,
+  router: AppRouterInstance,
+) => {
+  const registerRequest = await fetch(`http://localhost:3000/api/v1/users`, {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-type": "application/json",
+    },
+  });
+  const registerResponse = await registerRequest.json();
 
-  const formData = new FormData(e.currentTarget);
-
-  const nameValue = formData.get("Name")?.valueOf() as string;
-  const ageValue = formData.get("Age")?.valueOf() as number;
-  const passwordValue = formData.get("Password")?.valueOf() as string;
-  const cpasswordValue = formData.get("CPassword")?.valueOf() as string;
-
-  const nameValidation = nameValue === "" || nameValue.length <= 6;
-  const ageValidation = ageValue <= 0;
-  const passwordValidation = passwordValue.length <= 7;
-  const cpasswordValidation =
-    cpasswordValue !== passwordValue || cpasswordValue === "";
-
-  if (cpasswordValidation) {
-    setStatus((prev) => ({ ...prev, CPassword: false }));
-  }
-
-  if (passwordValidation) {
-    setStatus((prev) => ({ ...prev, Password: false }));
-  }
-
-  if (ageValidation) {
-    setStatus((prev) => ({ ...prev, Age: false }));
-  }
-
-  if (nameValidation) {
-    setStatus((prev) => ({ ...prev, Name: false }));
-  }
-
-  if (
-    !(
-      nameValidation ||
-      ageValidation ||
-      passwordValidation ||
-      cpasswordValidation
-    )
-  ) {
-    const registerRequest = await fetch(`http://localhost:3000/api/v1/users`, {
-      method: "POST",
-      body: JSON.stringify({ nameValue, ageValue, passwordValue }),
-    });
-    const registerResponse = await registerRequest.json();
-
-    alert(registerResponse.message);
-    window.location.href = registerResponse.redirect;
-  }
-
-  // return console.log({ name: inputValidation.Name, namefield: nameValue });
+  alert(registerResponse.message);
+  router.replace(registerResponse.redirect);
 };
 
 export const handleLogin = async ({
-  e,
+  data,
   setStatus,
 }: {
-  e: React.FormEvent<HTMLFormElement>;
+  data: LoginValues;
   setStatus: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  e.preventDefault();
-
-  const formData = new FormData(e.currentTarget);
-
-  const name = formData.get("Name")?.valueOf() as string;
-  const password = formData.get("Password")?.valueOf() as string;
-
-  const nameValue = name.length <= 0;
-  const passValue = password.length <= 0;
-
-  if (nameValue || passValue) {
-    setStatus(true);
-  }
-
   const loginRequest = await fetch("http://localhost:3000/api/v1/login/", {
     method: "POST",
-    body: JSON.stringify({ name, password }),
+    body: JSON.stringify(data),
   });
 
   const loginResponse = await loginRequest.json();
   if (loginResponse.status != "success") {
     setStatus(true);
-    return console.log("gello");
   }
 
   setStatus(false);

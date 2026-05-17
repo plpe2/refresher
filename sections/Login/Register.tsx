@@ -1,52 +1,62 @@
 "use client";
-import React, { SetStateAction, useState } from "react";
-import RegisterInput from "./components/RegisterInput";
+import React, { SetStateAction } from "react";
+import TextField from '@mui/material/TextField'
+import Button from '@mui/material/Button'
+import { useForm } from "react-hook-form";
+import { UserRegValues } from "@/types/Users";
 import { handleRegister } from "@/hooks/api/users/users";
+import { useRouter } from "next/navigation";
 
 export const RegisterFields = ({
   setDisplay,
 }: {
   setDisplay: React.Dispatch<SetStateAction<boolean>>;
 }) => {
-  const [inputValidation, setStatus] = useState({
-    Name: true,
-    Age: true,
-    Password: true,
-    CPassword: true,
-  });
+  const router = useRouter()
+  const { register, handleSubmit } = useForm<UserRegValues>()
+
 
   return (
     <form
       method="POST"
-      onSubmit={(e) => {
-        handleRegister({ e, setStatus });
+      onSubmit={handleSubmit((data) => handleRegister(data, router))}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 12
       }}
     >
-      <RegisterInput
-        type="Name"
-        inputValidation={inputValidation}
-        setStatus={setStatus}
+      <TextField
+        label="Name"
+        variant="outlined"
+        fullWidth
+        {...register("name")}
       />
-      <RegisterInput
-        type="Age"
-        inputValidation={inputValidation}
-        setStatus={setStatus}
+      <TextField
+        label="Age"
+        variant="outlined"
+        fullWidth
+        {...register("age")}
       />
-      <RegisterInput
-        type="Password"
-        inputValidation={inputValidation}
-        setStatus={setStatus}
+      <TextField
+        label="Password"
+        variant="outlined"
+        fullWidth
+        {...register("password")}
       />
-      <RegisterInput
-        type="CPassword"
-        inputValidation={inputValidation}
-        setStatus={setStatus}
+      <TextField
+        label="Confirm Password"
+        variant="outlined"
+        fullWidth
+        {...register("cpassword")}
       />
       <div style={{ margin: "10px" }}>
-        <button type="submit">Register</button>
+        <Button variant="contained" color="success" type="submit">
+          Register
+        </Button>
         <hr />
         <p>
-          No account yet?{" "}
+          Already have an account? {" "}
           <button
             type="button"
             style={{
@@ -61,7 +71,7 @@ export const RegisterFields = ({
               setDisplay((prev) => !prev);
             }}
           >
-            Already have an account?
+            Login here
           </button>
         </p>
       </div>

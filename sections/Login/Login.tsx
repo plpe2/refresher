@@ -1,39 +1,45 @@
+import React, { SetStateAction } from "react";
+import TextField from '@mui/material/TextField'
+import Button from '@mui/material/Button'
+import { useForm } from "react-hook-form";
+import { LoginValues } from "@/types/Users";
 import { handleLogin } from "@/hooks/api/users/users";
-import React, { SetStateAction, useState } from "react";
+
+
 
 export const LoginFields = ({
   setDisplay,
+  setStatus,
 }: {
-  setDisplay: React.Dispatch<SetStateAction<boolean>>;
+  setDisplay: React.Dispatch<SetStateAction<boolean>>,
+  setStatus: React.Dispatch<SetStateAction<boolean>>
 }) => {
-  const [logStatus, setStatus] = useState<boolean>(false);
+  const { register, handleSubmit } = useForm<LoginValues>()
+
   return (
     <form
-      onSubmit={(e) => {
-        handleLogin({ e, setStatus });
+      onSubmit={handleSubmit(((data) => handleLogin({ data: data, setStatus: setStatus })))}
+
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 12
       }}
     >
-      <p style={{ color: "red" }}>
-        {logStatus ? "Email or Password is incorrect" : ""}
-      </p>
-      <p>Email:</p>
-      <input
-        type="text"
-        name="Name"
-        onFocus={() => {
-          setStatus(false);
-        }}
+      <TextField
+        label="Email"
+        fullWidth
+        {...register("name")}
       />
-      <p>Password:</p>
-      <input
-        type="text"
-        name="Password"
-        onFocus={() => {
-          setStatus(false);
-        }}
+      <TextField
+        label="Password"
+        fullWidth
+        {...register("password")}
       />
       <div style={{ margin: "10px" }}>
-        <button type="submit">Login</button>
+        <Button variant="contained" color="primary" type="submit" sx={{}}>
+          Login
+        </Button>
         <hr />
         <p>
           No account yet?{" "}
@@ -54,6 +60,7 @@ export const LoginFields = ({
           >
             Register
           </button>
+
         </p>
       </div>
     </form>

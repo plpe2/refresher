@@ -11,3 +11,9 @@ export type inputValidationTypes = {
   Password: boolean;
   CPassword: boolean;
 };
+
+export type UserRegValues = Omit<UserTypes, "id"> & {
+  cpassword: string;
+};
+
+export type LoginValues = Pick<UserTypes, "name" | "password">;

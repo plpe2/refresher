@@ -9,16 +9,16 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  const { nameValue, ageValue, passwordValue } = await req.json();
+  const { name, age, password } = await req.json();
   const conn = await getConnection();
   const [registerRequest] = await conn.query(
     "INSERT INTO users (`name`, `age`, `password`) VALUES (?, ?, ?)",
-    [nameValue, ageValue, passwordValue]
+    [name, age, password],
   );
 
   if (registerRequest)
     return NextResponse.json({
-      redirect: "http://localhost:3000/",
+      redirect: "http://google.com/",
       message: "Successfully Registered",
     });
 }
