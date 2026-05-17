@@ -68,9 +68,11 @@ export const handleRegister = async (
 export const handleLogin = async ({
   data,
   setStatus,
+  setAttempt,
 }: {
   data: LoginValues;
   setStatus: React.Dispatch<React.SetStateAction<boolean>>;
+  setAttempt: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const loginRequest = await fetch("http://localhost:3000/api/v1/login/", {
     method: "POST",
@@ -78,8 +80,9 @@ export const handleLogin = async ({
   });
 
   const loginResponse = await loginRequest.json();
-  if (loginResponse.status != "success") {
-    setStatus(true);
+  if (!loginResponse.status) {
+    setAttempt(false);
+    return;
   }
 
   setStatus(false);
