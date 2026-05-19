@@ -1,4 +1,5 @@
-import { LoginValues, UserRegValues } from "@/types/Users";
+import { RegValType } from "@/sections/Login/Register";
+import { LoginValues } from "@/types/Users";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 export const handleDelete = async (
@@ -49,7 +50,7 @@ export const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 };
 
 export const handleRegister = async (
-  data: UserRegValues,
+  data: RegValType,
   router: AppRouterInstance,
 ) => {
   const registerRequest = await fetch(`http://localhost:3000/api/v1/users`, {
