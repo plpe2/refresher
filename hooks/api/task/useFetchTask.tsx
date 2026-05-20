@@ -6,10 +6,10 @@ import { Task } from "@/types/Tasks";
 export default function useFetchTask() {
   const userData = useAuthProvider();
   const [taskList, setTasks] = useState<Task[]>([]);
-  const [isCreating, setStatusCreate] = useState<boolean>(false);
+  const [isCreating, setStatusCreate] = useState<boolean>(true);
 
   useEffect(() => {
-    var userId = userData?.user?.id;
+    const userId = userData?.user?.id;
     fetchingTask({ userId: userId, setTask: setTasks });
   }, [userData]);
 

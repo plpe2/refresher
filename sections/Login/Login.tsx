@@ -7,11 +7,12 @@ import { LoginValues } from "@/types/Users";
 import { handleLogin } from "@/hooks/api/users/users";
 import Typography from '@mui/material/Typography'
 import { Box } from "@mui/material";
-import { email, string, z } from "zod"
+import { string, z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod";
 
 export const LoginZodSchema = z.object({
-  name: email("Enter a valid email address"),
+  // name: email("Enter a valid email address"),
+  name: string().min(1, "Enter your email"),
   password: string().min(1, "Enter your password.")
 })
 
