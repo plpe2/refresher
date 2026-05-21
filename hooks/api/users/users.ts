@@ -1,4 +1,5 @@
-import { LoginValues, UserRegValues } from "@/types/Users";
+import { RegValType } from "@/sections/Login/Register";
+import { LoginValues } from "@/types/Users";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 export const handleDelete = async (
@@ -49,7 +50,7 @@ export const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 };
 
 export const handleRegister = async (
-  data: UserRegValues,
+  data: RegValType,
   router: AppRouterInstance,
 ) => {
   const registerRequest = await fetch(`http://localhost:3000/api/v1/users`, {
@@ -68,9 +69,11 @@ export const handleRegister = async (
 export const handleLogin = async ({
   data,
   setStatus,
+  setAttempt,
 }: {
   data: LoginValues;
   setStatus: React.Dispatch<React.SetStateAction<boolean>>;
+  setAttempt: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const loginRequest = await fetch("http://localhost:3000/api/v1/login/", {
     method: "POST",
@@ -78,8 +81,9 @@ export const handleLogin = async ({
   });
 
   const loginResponse = await loginRequest.json();
-  if (loginResponse.status != "success") {
-    setStatus(true);
+  if (!loginResponse.status) {
+    setAttempt(false);
+    return;
   }
 
   setStatus(false);

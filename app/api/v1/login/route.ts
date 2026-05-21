@@ -12,7 +12,7 @@ export async function POST(req: Request) {
   );
 
   if (LoginRequest.length <= 0 || !(password === LoginRequest[0].password))
-    return NextResponse.json({ status: "failed" });
+    return NextResponse.json({ status: false });
 
   const token = await jwtSign({ id: LoginRequest[0].id });
 

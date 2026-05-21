@@ -1,53 +1,56 @@
+"use client";
 import { useAuthProvider } from "@/context/jwt/auth-provider";
 import { handleCreateTask } from "@/hooks/api/task/task";
 import { SetStateAction } from "react";
+import Container from '@mui/material/Container'
+import { Paper, TextField, Typography } from "@mui/material";
+import { string, z } from "zod"
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+
+const taskValSchema = z.object({
+  title: string().min(1, "Enter the Task title."),
+  body: string().min(1, "Enter Task Description."),
+})
+
+export type taskValTypes = z.infer<typeof taskValSchema>
 
 export const CreateWindow = ({
   setStatusCreate,
 }: {
   setStatusCreate: React.Dispatch<SetStateAction<boolean>>;
 }) => {
+  const router = useRouter();
   const userData = useAuthProvider();
   const id = userData?.user?.id;
+  const { register, handleSubmit, formState: { errors } } = useForm<taskValTypes>()
+
   return (
-    <div
-      style={{
-        display: "flex",
-        padding: "100px",
-        margin: "10px",
-        backgroundColor: "red",
-        width: "auto",
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
-      }}
-    >
-      <form
-        onSubmit={(e) =>
-          handleCreateTask({
-            e,
-            id: id!,
-          })
-        }
-      >
-        <button
-          type="button"
-          style={{ float: "right" }}
-          onClick={() => setStatusCreate((prev) => !prev)}
+    <Container maxWidth="lg" sx={{
+      width: "auto",
+      position: "absolute",
+      justifySelf: "center",
+    }}>
+      <Paper elevation={4} sx={{ padding: 4 }}>
+        <form
+          style={{ display: "flex", flexDirection: "column", gap: 12 }}
+          onSubmit={handleSubmit(async (data) => handleCreateTask(id!, data, router))}
         >
-          x
-        </button>
-        <p>Create Task</p>
-        <p>Title:</p>
-        <input name="Title" type="text" autoFocus />
-        <br />
-        <p>Description:</p>
-        <input name="Body" type="text" />
-        <br />
-        <br />
-        <button type="submit">Create</button>
-      </form>
-    </div>
+          <button
+            type="button"
+            style={{ float: "right" }}
+            onClick={() => setStatusCreate((prev) => !prev)}
+          >
+            x
+          </button>
+          <Typography variant="body1" color="initial">Create Task</Typography>
+          <TextField label="Task Name" variant="outlined" {...register("title")} error={!!errors.title} helperText={errors.title?.message} fullWidth />
+          <TextField label="Task Description" variant="outlined" {...register("body")} error={!!errors.body} helperText={errors.body?.message} fullWidth />
+          <br />
+          <br />
+          <button type="submit">Create</button>
+        </form>
+      </Paper>
+    </Container>
   );
 };

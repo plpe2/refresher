@@ -1,11 +1,20 @@
-import React, { SetStateAction } from "react";
+"use client"
+import React, { SetStateAction, useState } from "react";
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import { useForm } from "react-hook-form";
 import { LoginValues } from "@/types/Users";
 import { handleLogin } from "@/hooks/api/users/users";
+import Typography from '@mui/material/Typography'
+import { Box } from "@mui/material";
+import { string, z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod";
 
-
+export const LoginZodSchema = z.object({
+  // name: email("Enter a valid email address"),
+  name: string().min(1, "Enter your email"),
+  password: string().min(1, "Enter your password.")
+})
 
 export const LoginFields = ({
   setDisplay,
@@ -14,11 +23,12 @@ export const LoginFields = ({
   setDisplay: React.Dispatch<SetStateAction<boolean>>,
   setStatus: React.Dispatch<SetStateAction<boolean>>
 }) => {
-  const { register, handleSubmit } = useForm<LoginValues>()
+  const { register, handleSubmit, formState: { errors } } = useForm<LoginValues>({ resolver: zodResolver(LoginZodSchema) })
+  const [loginAttempt, setAttempt] = useState<boolean>(true)
 
   return (
     <form
-      onSubmit={handleSubmit(((data) => handleLogin({ data: data, setStatus: setStatus })))}
+      onSubmit={handleSubmit(((data) => handleLogin({ data: data, setStatus: setStatus, setAttempt: setAttempt })))}
 
       style={{
         display: "flex",
@@ -26,15 +36,29 @@ export const LoginFields = ({
         gap: 12
       }}
     >
+      <Box sx={{ display: loginAttempt ? "none" : "flex", width: "95%", backgroundColor: "#FFDCE0", padding: 1, alignSelf: "center", border: "1px solid #df889e", alignItems: "center", justifyContent: "flex-end" }}>
+        <Typography variant="body2" color="initial" sx={{
+          position: "absolute",
+          left: "50%",
+          transform: "translateX(-50%)",
+        }}>Incorrect email or password</Typography>
+        <Button variant="text" color="primary" sx={{ borderRadius: "50%" }} onClick={() => { setAttempt(true) }} >
+          x
+        </Button>
+      </Box>
       <TextField
         label="Email"
         fullWidth
         {...register("name")}
+        error={!!errors.name}
+        helperText={errors.name?.message}
       />
       <TextField
         label="Password"
         fullWidth
         {...register("password")}
+        error={!!errors.password}
+        helperText={errors.password?.message}
       />
       <div style={{ margin: "10px" }}>
         <Button variant="contained" color="primary" type="submit" sx={{}}>

@@ -1,5 +1,8 @@
+"use client";
 import React, { SetStateAction } from "react";
 import { Task } from "@/types/Tasks";
+import { taskValTypes } from "@/sections/Task/CreateTask";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 //function that displays the task in Viewing Task page
 export async function fetchingTask({
@@ -24,36 +27,28 @@ export async function fetchingTask({
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
 // function that calls when creating Task
-export async function handleCreateTask({
-  e,
-  id,
-}: {
-  e: React.FormEvent<HTMLFormElement>;
-  id: number;
-}) {
-  e.preventDefault();
-
-  const formData = new FormData(e.currentTarget);
-  const taskTitle = formData.get("Title");
-  const taskBody = formData.get("Body");
-
+export async function handleCreateTask(
+  id: number,
+  data: taskValTypes,
+  router: AppRouterInstance,
+) {
   const createRequest = await fetch(`http://localhost:3000/api/v1/task/${id}`, {
     method: "POST",
     headers: {
       "Content-type": "application/json",
     },
-    body: JSON.stringify({ title: taskTitle, body: taskBody }),
+    body: JSON.stringify(data),
   });
 
   const createResponse = await createRequest.json();
 
   if (!createResponse.status) {
     console.log("Error creating task");
-  } else {
-    console.log("Created");
   }
+  console.log("Created");
 
-  window.location.href = "http://localhost:3000/task";
+  // router.replace("/task");
+  window.location.href = "/task";
 }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
@@ -112,8 +107,8 @@ export async function handleSearchTask({
   e.preventDefault();
 
   const formData = new FormData(e.currentTarget);
-  var filter;
-  var searchValue;
+  let filter;
+  let searchValue;
 
   const formFilterValue = formData.get("filter")?.toString();
   const formsearchValue = formData.get("searchValue")?.toString();
@@ -146,15 +141,13 @@ export async function handleSearchTask({
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
 // function that handles Pagination on displayed Task
-export async function handlePaginationTask(
-  {
-    // e,
-    // setPaginationValue,
-  }: {
-    // e: React.FormEvent<HTMLFormElement>;
-    // setPaginationValue: React.Dispatch<SetStateAction<number>>;
-  },
-) {
+export async function handlePaginationTask({
+  e,
+  setPaginationValue,
+}: {
+  e: React.FormEvent<HTMLFormElement>;
+  setPaginationValue: React.Dispatch<SetStateAction<number>>;
+}) {
   // e.preventDefault();
 
   // const formData = new FormData(e.currentTarget);
