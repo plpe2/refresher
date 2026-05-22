@@ -6,7 +6,7 @@ import { Task, updateTaskProps } from "@/types/Tasks";
 export default function useFetchTask() {
   const userData = useAuthProvider();
   const [taskList, setTasks] = useState<Task[]>([]);
-  const [isCreating, setStatusCreate] = useState<boolean>(true);
+  const [isCreating, setStatusCreate] = useState<boolean>(false);
   const [updateValues, setUpdateState] = useState<updateTaskProps>({
     isUpdating: false,
     UpdatingTaskValue: {
