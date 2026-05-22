@@ -7,6 +7,7 @@ import { Paper, TextField, Typography } from "@mui/material";
 import { string, z } from "zod"
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const taskValSchema = z.object({
   title: string().min(1, "Enter the Task title."),
@@ -23,7 +24,7 @@ export const CreateWindow = ({
   const router = useRouter();
   const userData = useAuthProvider();
   const id = userData?.user?.id;
-  const { register, handleSubmit, formState: { errors } } = useForm<taskValTypes>()
+  const { register, handleSubmit, formState: { errors } } = useForm<taskValTypes>({ resolver: zodResolver(taskValSchema) })
 
   return (
     <Container maxWidth="lg" sx={{
