@@ -12,8 +12,7 @@ import UpdateTask from "@/features/Task/UpdateTask";
 import { useState } from "react";
 
 export default function TaskView() {
-  const { taskList, setTasks, isCreating, setStatusCreate } = useFetchTask();
-  const { updateValues, setUpdateState } = useUpdatingTask();
+  const { taskList, setTasks, isCreating, setStatusCreate, updateValues, setUpdateState } = useFetchTask();
 
   const [layout, changeLayout] = useState<"cards" | "list">("cards");
 
