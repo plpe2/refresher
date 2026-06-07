@@ -25,7 +25,7 @@ export const CreateWindow = ({
   const router = useRouter();
   const userData = useAuthProvider();
   const id = userData?.user?.id;
-  const { register, control, handleSubmit, formState: { errors } } = useForm<taskValTypes>({ defaultValues: { title: "", body: "" }, resolver: zodResolver(taskValSchema) })
+  const { control, handleSubmit } = useForm<taskValTypes>({ defaultValues: { title: "", body: "" }, resolver: zodResolver(taskValSchema) })
 
   return (
     <ClickAwayListener onClickAway={() => setStatusCreate((prev) => !prev)}>
