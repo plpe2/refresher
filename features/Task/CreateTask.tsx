@@ -8,6 +8,7 @@ import { string, z } from "zod"
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { ControlledTextField } from "@/components/Input-Fields/rhf-TextFields";
 
 const taskValSchema = z.object({
   title: string().min(1, "Enter the Task title."),
@@ -24,7 +25,7 @@ export const CreateWindow = ({
   const router = useRouter();
   const userData = useAuthProvider();
   const id = userData?.user?.id;
-  const { register, handleSubmit, formState: { errors } } = useForm<taskValTypes>({ resolver: zodResolver(taskValSchema) })
+  const { register, control, handleSubmit, formState: { errors } } = useForm<taskValTypes>({ defaultValues: { title: "", body: "" }, resolver: zodResolver(taskValSchema) })
 
   return (
     <ClickAwayListener onClickAway={() => setStatusCreate((prev) => !prev)}>
@@ -41,7 +42,8 @@ export const CreateWindow = ({
           >
             <Avatar sx={{ alignSelf: "center" }}></Avatar>
             <Typography variant="h5" color="initial">Create Task</Typography>
-            <TextField label="Task Name" variant="outlined" {...register("title")} error={!!errors.title} helperText={errors.title?.message} fullWidth />
+            {/* <TextField label="Task Name" variant="outlined" {...register("title")} error={!!errors.title} helperText={errors.title?.message} fullWidth /> */}
+            <ControlledTextField control={control} name="title" label="Task Title" autoFocus />
             <TextField label="Task Description" variant="outlined" {...register("body")} error={!!errors.body} helperText={errors.body?.message} fullWidth />
             <Box sx={{ display: "flex" }}>
               <Button sx={{ width: "70%" }} type="submit" variant="contained" color="primary" fullWidth>
