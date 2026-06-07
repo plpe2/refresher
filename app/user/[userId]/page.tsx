@@ -1,4 +1,4 @@
-import Userprofile from "@/sections/UserProfile/userprofile";
+import Userprofile from "@/features/UserProfile/userprofile";
 
 export default async function UserProfile({
   params,
