@@ -42,9 +42,8 @@ export const CreateWindow = ({
           >
             <Avatar sx={{ alignSelf: "center" }}></Avatar>
             <Typography variant="h5" color="initial">Create Task</Typography>
-            {/* <TextField label="Task Name" variant="outlined" {...register("title")} error={!!errors.title} helperText={errors.title?.message} fullWidth /> */}
             <ControlledTextField control={control} name="title" label="Task Title" autoFocus />
-            <TextField label="Task Description" variant="outlined" {...register("body")} error={!!errors.body} helperText={errors.body?.message} fullWidth />
+            <ControlledTextField name="body" control={control} label="Task Description" />
             <Box sx={{ display: "flex" }}>
               <Button sx={{ width: "70%" }} type="submit" variant="contained" color="primary" fullWidth>
                 Create
