@@ -8,7 +8,7 @@ export default async function getConnection() {
     host: process.env.DB_host,
     user: process.env.DB_user,
     password: process.env.DB_PASSWORD,
-    port: 3307,
+    port: 3306,
     database: process.env.DB_database,
   });
 }

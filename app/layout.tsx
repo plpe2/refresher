@@ -1,6 +1,6 @@
 import AuthGuard from "@/context/auth-guard";
 import { AuthProvider } from "@/context/jwt/auth-provider";
-import Navbar from "@/sections/NavigationBar/navbar";
+import Navbar from "@/features/NavigationBar/navbar";
 
 export default function RootLayout({
   children,

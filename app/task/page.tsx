@@ -4,11 +4,11 @@ import { handleSearchTask } from "@/hooks/api/task/task";
 import useFetchTask from "@/hooks/api/task/useFetchTask";
 import useSelectStatus from "@/hooks/api/task/useSelectStatus";
 import useUpdatingTask from "@/hooks/api/task/useUpdatingTask";
-import { CreateWindow } from "@/sections/Task/CreateTask";
-import SearchFilters from "@/sections/Task/SearchFilters";
-import TaskCards from "@/sections/Task/TaskCards";
-import TaskContainer from "@/sections/Task/TaskContainer";
-import UpdateTask from "@/sections/Task/UpdateTask";
+import { CreateWindow } from "@/features/Task/CreateTask";
+import SearchFilters from "@/features/Task/SearchFilters";
+import TaskCards from "@/features/Task/TaskCards";
+import TaskContainer from "@/features/Task/TaskContainer";
+import UpdateTask from "@/features/Task/UpdateTask";
 import { useState } from "react";
 
 export default function TaskView() {

@@ -1,7 +1,7 @@
 "use client";
 import React, { SetStateAction } from "react";
 import { Task } from "@/types/Tasks";
-import { taskValTypes } from "@/sections/Task/CreateTask";
+import { taskValTypes } from "@/features/Task/CreateTask";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 //function that displays the task in Viewing Task page

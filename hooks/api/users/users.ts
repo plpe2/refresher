@@ -1,4 +1,4 @@
-import { RegValType } from "@/sections/Login/Register";
+import { RegValType } from "@/features/Login/Register";
 import { LoginValues } from "@/types/Users";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
