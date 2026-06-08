@@ -12,7 +12,6 @@ export default function RootLayout({
       <body style={{ margin: 0, padding: 0 }}>
         <AuthProvider>
           <AuthGuard>
-            <Navbar />
             {children}
           </AuthGuard>
         </AuthProvider>

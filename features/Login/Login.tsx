@@ -18,17 +18,15 @@ export const LoginZodSchema = z.object({
 
 export const LoginFields = ({
   setDisplay,
-  setStatus,
 }: {
   setDisplay: React.Dispatch<SetStateAction<boolean>>,
-  setStatus: React.Dispatch<SetStateAction<boolean>>
 }) => {
   const { register, handleSubmit, formState: { errors } } = useForm<LoginValues>({ resolver: zodResolver(LoginZodSchema) })
   const [loginAttempt, setAttempt] = useState<boolean>(true)
 
   return (
     <form
-      onSubmit={handleSubmit(((data) => handleLogin({ data: data, setStatus: setStatus, setAttempt: setAttempt })))}
+      onSubmit={handleSubmit(((data) => handleLogin({ data: data, setAttempt: setAttempt })))}
 
       style={{
         display: "flex",

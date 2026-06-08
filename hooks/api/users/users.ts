@@ -68,11 +68,9 @@ export const handleRegister = async (
 
 export const handleLogin = async ({
   data,
-  setStatus,
   setAttempt,
 }: {
   data: LoginValues;
-  setStatus: React.Dispatch<React.SetStateAction<boolean>>;
   setAttempt: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const loginRequest = await fetch("http://localhost:3000/api/v1/login/", {
@@ -86,7 +84,6 @@ export const handleLogin = async ({
     return;
   }
 
-  setStatus(false);
   localStorage.setItem("token", loginResponse.token);
   window.location.href = loginResponse.redirect;
 };
