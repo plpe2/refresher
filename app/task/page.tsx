@@ -21,6 +21,17 @@ export default function TaskView() {
       {/* Create Window to displayed if button is clicked */}
       {isCreating && <CreateWindow setStatusCreate={setStatusCreate} />}
 
+      {/* 
+        Update window displaying if update button is clicked
+        passedTask comes from the TaskCard viewing
+      */}
+      {updateValues.isUpdating && (
+        <UpdateTask
+          passedTask={updateValues.UpdatingTaskValue}
+          setUpdateState={setUpdateState}
+        />
+      )}
+
       <p>Task View</p>
       <div>
         <button
@@ -56,16 +67,7 @@ export default function TaskView() {
         </TaskContainer>
       }
 
-      {/* 
-        Update window displaying if update button is clicked
-        passedTask comes from the TaskCard viewing
-      */}
-      {updateValues.isUpdating && (
-        <UpdateTask
-          passedTask={updateValues.UpdatingTaskValue}
-          setUpdateState={setUpdateState}
-        />
-      )}
+
     </div>
   );
 }
