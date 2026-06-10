@@ -1,6 +1,6 @@
+import { ParentContainer } from "@/components/parent-container";
 import AuthGuard from "@/context/auth-guard";
 import { AuthProvider } from "@/context/jwt/auth-provider";
-import Navbar from "@/features/NavigationBar/navbar";
 
 export default function RootLayout({
   children,
@@ -12,7 +12,9 @@ export default function RootLayout({
       <body style={{ margin: 0, padding: 0 }}>
         <AuthProvider>
           <AuthGuard>
-            {children}
+            <ParentContainer>
+              {children}
+            </ParentContainer>
           </AuthGuard>
         </AuthProvider>
       </body>
