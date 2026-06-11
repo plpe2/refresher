@@ -1,14 +1,11 @@
 "use client";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 
-import { LogRegContainer } from "../Login/Container";
 import Link from "next/link";
 import { AuthContext } from "@/context/auth-context";
 
 export default function Navbar() {
   const userData = useContext(AuthContext);
-  const [isShown, setStatus] = useState<boolean>(false);
-  const [isLogin, setDisplay] = useState<boolean>(false);
 
   const btnDisplay = () => {
     if (!userData?.isAuthenticated) {
@@ -16,7 +13,6 @@ export default function Navbar() {
         <button
           style={{ padding: "10px" }}
           type="button"
-          onClick={() => setStatus((prev) => !prev)}
         >
           Login/Register
         </button>
@@ -69,10 +65,6 @@ export default function Navbar() {
           </div>
         </div>
       </div>
-      <LogRegContainer
-        loginDisplay={{ isLogin, setDisplay }}
-        modalDisplay={{ isShown, setStatus }}
-      />
     </>
   );
 }

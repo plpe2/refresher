@@ -1,9 +1,6 @@
 "use client";
 
-import { handleSearchTask } from "@/hooks/api/task/task";
 import useFetchTask from "@/hooks/api/task/useFetchTask";
-import useSelectStatus from "@/hooks/api/task/useSelectStatus";
-import useUpdatingTask from "@/hooks/api/task/useUpdatingTask";
 import { CreateWindow } from "@/features/Task/CreateTask";
 import SearchFilters from "@/features/Task/SearchFilters";
 import TaskCards from "@/features/Task/TaskCards";
