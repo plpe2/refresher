@@ -7,9 +7,9 @@ export const ParentContainer = ({ children }: { children: React.ReactNode }) => 
     return (
         <Box sx={{ display: "flex", bgcolor: "blue", width: "100%", minHeight: "100vh" }}>
             <SideBar />
-            <Box sx={{ flexGrow: 4 }}>
+            <Box sx={{ flexGrow: 4, bgcolor: "green" }}>
                 <Navbar />
-                {children}
+                <Box sx={{ padding: 5, marginTop: -5 }}>{children}</Box>
             </Box>
         </Box>
     )
