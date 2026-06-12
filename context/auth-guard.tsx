@@ -3,18 +3,13 @@
 import React, { useEffect } from "react";
 import { useAuthProvider } from "./jwt/auth-provider";
 import { useRouter } from "next/navigation";
-import Navbar from "@/features/NavigationBar/navbar";
-
 type AuthGuardProps = { children: React.ReactNode };
 
 export default function AuthGuard({ children }: AuthGuardProps) {
   const { isAuthenticated, isLoading } = useAuthProvider()!;
   const router = useRouter();
-  useEffect(() => {
-    if (isLoading) {
-      return;
-    }
 
+  useEffect(() => {
     if (!isAuthenticated && !isLoading) {
       router.replace("/");
     }
@@ -37,5 +32,10 @@ export default function AuthGuard({ children }: AuthGuardProps) {
       </div>
     );
   }
-  return <>{children}</>;
+
+  if (!isAuthenticated) {
+    return null;
+  }
+
+  return <> {children}</>;
 }

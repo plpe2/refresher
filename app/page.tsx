@@ -2,19 +2,32 @@
 
 import { useAuthProvider } from "@/context/jwt/auth-provider";
 import { LogRegContainer } from "@/features/Login/Container";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const userData = useAuthProvider();
+  const router = useRouter();
+
   const [isLogin, setDisplay] = useState<boolean>(false);
 
-  if (!userData?.isAuthenticated) {
-    return <LogRegContainer loginDisplay={{ isLogin, setDisplay }} />
+  useEffect(() => {
+    if (!userData.isLoading && userData.isAuthenticated) {
+      router.replace("/");
+    }
+  }, [userData?.isLoading, userData.isAuthenticated, router]);
+
+  if (userData.isLoading) {
+    return <div>Loading...</div>;
   }
 
-  return (
-    <>
-      <p>Dashboard</p>
-    </>
-  );
+  if (!userData.isAuthenticated) {
+    return (
+      <LogRegContainer
+        loginDisplay={{ isLogin, setDisplay }}
+      />
+    )
+  }
+
+  return <>Dashboard</>
 }
