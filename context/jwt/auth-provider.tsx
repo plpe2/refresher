@@ -32,12 +32,7 @@ export function logout({
 }
 
 export function AuthProvider({ children }: Props) {
-  const [user, setUser] = useState<UserTypes | null>({
-    id: 0,
-    name: "",
-    age: 0,
-    password: "",
-  });
+  const [user, setUser] = useState<UserTypes | null>(null);
   const [isAuthenticated, setStatus] = useState<boolean>(false);
   const [isLoading, setLoading] = useState<boolean>(true);
 
@@ -50,11 +45,8 @@ export function AuthProvider({ children }: Props) {
       return;
     }
 
-    // console.log("Has Token"); If has token
-
     const decode = async () => {
       const callTokenVerifier = await getDecodedToken(LocalToken);
-      setLoading(true);
       try {
         if (!(callTokenVerifier?.status == 401)) {
           const {
@@ -73,6 +65,7 @@ export function AuthProvider({ children }: Props) {
         setLoading(false);
       }
     };
+
     decode();
   }, []);
 
@@ -94,7 +87,7 @@ export function AuthProvider({ children }: Props) {
 export function useAuthProvider() {
   const context = useContext(AuthContext);
   if (!context) {
-    Error("This should be used inside the children");
+    throw new Error("This should be used inside the children");
   }
 
   return context;
