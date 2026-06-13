@@ -4,6 +4,7 @@ import { useAuthProvider } from "@/context/jwt/auth-provider";
 import { LogRegContainer } from "@/features/Login/Container";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import Dashboard from "../features/Dashboard/Dashboard";
 
 export default function Home() {
   const userData = useAuthProvider();
@@ -29,5 +30,5 @@ export default function Home() {
     )
   }
 
-  return <>Dashboard</>
+  return <><Dashboard /></>
 }
