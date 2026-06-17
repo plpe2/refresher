@@ -8,7 +8,8 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 
 export default function Navbar() {
   const userData = useContext(AuthContext);
-  const [isOpen, setOpen] = useState<boolean>(false)
+  const [isOpenOption, setOption] = useState<boolean>(false)
+  const [isOpenNotif, setNotif] = useState<boolean>(false)
 
   return (
     <>
@@ -25,24 +26,9 @@ export default function Navbar() {
           justifyItems: "center",
         }}
       >
-        <Box sx={{ display: "flex" }}>
-          <IconButton
-            sx={{
-              width: 40,
-              height: 40,
-              p: 3
-            }}
-            aria-label="show 4 unread messages"
+        <Box sx={{ display: "flex", width: "100%" }}>
 
-          >
-            <Badge badgeContent={4} color="primary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-
-
-
-          <Box>
+          <Box sx={{ textAlign: "center" }}>
             <IconButton
               sx={{
                 width: 40,
@@ -50,13 +36,48 @@ export default function Navbar() {
                 p: 3
               }}
               aria-label="show 4 unread messages"
-              onClick={() => setOpen(prev => !prev)}
+              onClick={() => setNotif(prev => !prev)}
+            >
+              <Badge badgeContent={4} color="primary">
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
+            <Collapse in={isOpenNotif} timeout="auto" orientation="vertical">
+              <Box
+                component="div"
+                sx={{
+                  mt: 1,
+                  p: 2,
+                  border: '1px solid #ccc',
+                  borderRadius: '4px',
+                  backgroundColor: '#f9f9f9',
+                  gap: 2,
+                  display: "flex",
+                  flexDirection: "column"
+                }}
+              >
+                <Typography variant="body1" color="initial">Sample Notif1</Typography>
+                <Typography variant="body1" color="initial">Sample Notif2</Typography>
+                <Typography variant="body1" color="initial">Sample Notif3</Typography>
+              </Box>
+            </Collapse>
+          </Box>
+
+          <Box sx={{ textAlign: "center" }}>
+            <IconButton
+              sx={{
+                width: 40,
+                height: 40,
+                p: 3
+              }}
+              aria-label="show 4 unread messages"
+              onClick={() => setOption(prev => !prev)}
             >
               <Badge color="primary">
                 <MoreHorizIcon />
               </Badge>
             </IconButton>
-            <Collapse in={isOpen} timeout="auto" sx={{ position: "absolute" }} orientation="vertical">
+            <Collapse in={isOpenOption} timeout="auto" orientation="vertical">
               <Box
                 component="div"
                 sx={{
