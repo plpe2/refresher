@@ -1,13 +1,14 @@
 "use client";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 import { AuthContext } from "@/context/auth-context";
-import { Badge, Box, IconButton } from "@mui/material";
+import { Badge, Box, Collapse, IconButton, Typography, Button } from "@mui/material";
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 
 export default function Navbar() {
   const userData = useContext(AuthContext);
+  const [isOpen, setOpen] = useState<boolean>(false)
 
   return (
     <>
@@ -21,10 +22,10 @@ export default function Navbar() {
           justifySelf: "right",
           // position: "absolute",
           padding: "10px",
-          justifyItems: "center"
+          justifyItems: "center",
         }}
       >
-        <Box>
+        <Box sx={{ display: "flex" }}>
           <IconButton
             sx={{
               width: 40,
@@ -32,25 +33,55 @@ export default function Navbar() {
               p: 3
             }}
             aria-label="show 4 unread messages"
-            onClick={() => console.log("haha1")}
+
           >
             <Badge badgeContent={4} color="primary">
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <IconButton
-            sx={{
-              width: 40,
-              height: 40,
-              p: 3
-            }}
-            aria-label="show 4 unread messages"
-            onClick={() => userData?.logout()}
-          >
-            <Badge color="primary">
-              <MoreHorizIcon />
-            </Badge>
-          </IconButton>
+
+
+
+          <Box>
+            <IconButton
+              sx={{
+                width: 40,
+                height: 40,
+                p: 3
+              }}
+              aria-label="show 4 unread messages"
+              onClick={() => setOpen(prev => !prev)}
+            >
+              <Badge color="primary">
+                <MoreHorizIcon />
+              </Badge>
+            </IconButton>
+            <Collapse in={isOpen} timeout="auto" sx={{ position: "absolute" }} orientation="vertical">
+              <Box
+                component="div"
+                sx={{
+                  mt: 1,
+                  p: 2,
+                  border: '1px solid #ccc',
+                  borderRadius: '4px',
+                  backgroundColor: '#f9f9f9',
+                  gap: 2,
+                  display: "flex",
+                  flexDirection: "column"
+                }}
+              >
+                <Button variant="contained" color="success" onClick={() => alert("Profile")} fullWidth>
+                  Profile
+                </Button>
+                <Button variant="contained" color="primary" onClick={() => alert("Settings")} fullWidth>
+                  Settings
+                </Button>
+                <Button variant="contained" color="error" onClick={() => userData?.logout()} fullWidth>
+                  Logout
+                </Button>
+              </Box>
+            </Collapse>
+          </Box>
         </Box>
       </div>
     </>

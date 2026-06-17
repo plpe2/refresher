@@ -4,7 +4,7 @@ import { ParentContainer } from '@/components/parent-container'
 export default function Dashboard() {
     return (
         <ParentContainer>
-            <Box>
+            <Box sx={{}}>
                 Dashboard
             </Box>
         </ParentContainer>
