@@ -24,6 +24,8 @@ export default function Navbar() {
           // position: "absolute",
           padding: "10px",
           justifyItems: "center",
+          position: "sticky",
+          top: 0
         }}
       >
         <Box sx={{ display: "flex", width: "100%" }}>
