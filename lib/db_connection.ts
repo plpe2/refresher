@@ -4,7 +4,7 @@ import { MongoClient, ServerApiVersion } from "mongodb";
 const client = Promise<MongoClient>;
 
 export default async function getConnection() {
-  return await mysql2.createConnection({
+  return await mysql2.createPool({
     host: process.env.DB_host,
     user: process.env.DB_user,
     password: process.env.DB_PASSWORD,

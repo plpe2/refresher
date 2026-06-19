@@ -1,69 +1,111 @@
 "use client";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
-import Link from "next/link";
 import { AuthContext } from "@/context/auth-context";
+import { Badge, Box, Collapse, IconButton, Typography, Button } from "@mui/material";
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 
 export default function Navbar() {
   const userData = useContext(AuthContext);
+  const [isOpenOption, setOption] = useState<boolean>(false)
+  const [isOpenNotif, setNotif] = useState<boolean>(false)
 
-  const btnDisplay = () => {
-    if (!userData?.isAuthenticated) {
-      return (
-        <button
-          style={{ padding: "10px" }}
-          type="button"
-        >
-          Login/Register
-        </button>
-      );
-    } else {
-      return (
-        <button
-          style={{ padding: "10px" }}
-          type="button"
-          onClick={userData.logout}
-        >
-          Logout
-        </button>
-      );
-    }
-  };
   return (
     <>
       <div
         style={{
           backgroundColor: "gray",
-          height: "8vh",
+          height: "6vh",
           marginBottom: "1.5%",
           borderRadius: "0 0 10px 10px",
-          display: "flex",
-          justifyContent: "center",
-          textAlign: "center",
-          color: "white",
+          width: "20%",
+          justifySelf: "right",
+          // position: "absolute",
+          padding: "10px",
+          justifyItems: "center",
+          position: "sticky",
+          top: 0
         }}
       >
-        <div style={{ display: "flex", width: "90%" }}>
-          <div style={{ display: "flex" }}>
-            <Link href={`http://localhost:3000/`}>
-              <p>Home</p>
-            </Link>
-          </div>
-          <div style={{ flexGrow: 1 }}></div>
-          <div style={{ display: "flex" }}>
-            <ul>
-              <button style={{ padding: "10px" }} type="button">
-                About Us
-              </button>
-            </ul>
-            <ul>
-              <button style={{ padding: "10px" }} type="button">
-                Contact Us
-              </button>
-            </ul>
-            <ul>{btnDisplay()}</ul>
-          </div>
-        </div>
+        <Box sx={{ display: "flex", width: "100%" }}>
+
+          <Box sx={{ textAlign: "center" }}>
+            <IconButton
+              sx={{
+                width: 40,
+                height: 40,
+                p: 3
+              }}
+              aria-label="show 4 unread messages"
+              onClick={() => setNotif(prev => !prev)}
+            >
+              <Badge badgeContent={4} color="primary">
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
+            <Collapse in={isOpenNotif} timeout="auto" orientation="vertical">
+              <Box
+                component="div"
+                sx={{
+                  mt: 1,
+                  p: 2,
+                  border: '1px solid #ccc',
+                  borderRadius: '4px',
+                  backgroundColor: '#f9f9f9',
+                  gap: 2,
+                  display: "flex",
+                  flexDirection: "column"
+                }}
+              >
+                <Typography variant="body1" color="initial">Sample Notif1</Typography>
+                <Typography variant="body1" color="initial">Sample Notif2</Typography>
+                <Typography variant="body1" color="initial">Sample Notif3</Typography>
+              </Box>
+            </Collapse>
+          </Box>
+
+          <Box sx={{ textAlign: "center" }}>
+            <IconButton
+              sx={{
+                width: 40,
+                height: 40,
+                p: 3
+              }}
+              aria-label="show 4 unread messages"
+              onClick={() => setOption(prev => !prev)}
+            >
+              <Badge color="primary">
+                <MoreHorizIcon />
+              </Badge>
+            </IconButton>
+            <Collapse in={isOpenOption} timeout="auto" orientation="vertical">
+              <Box
+                component="div"
+                sx={{
+                  mt: 1,
+                  p: 2,
+                  border: '1px solid #ccc',
+                  borderRadius: '4px',
+                  backgroundColor: '#f9f9f9',
+                  gap: 2,
+                  display: "flex",
+                  flexDirection: "column"
+                }}
+              >
+                <Button variant="contained" color="success" onClick={() => alert("Profile")} fullWidth>
+                  Profile
+                </Button>
+                <Button variant="contained" color="primary" onClick={() => alert("Settings")} fullWidth>
+                  Settings
+                </Button>
+                <Button variant="contained" color="error" onClick={() => userData?.logout()} fullWidth>
+                  Logout
+                </Button>
+              </Box>
+            </Collapse>
+          </Box>
+        </Box>
       </div>
     </>
   );
