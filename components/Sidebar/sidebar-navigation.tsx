@@ -9,7 +9,17 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined';
 import { SidebarLinks } from "./sidebar-link.component";
 
+const LinkValues = [
+    { label: "Task Board", href: "/", icon: <GridViewIcon /> },
+    { label: "My Task", href: "/task", icon: <CheckBoxOutlinedIcon /> },
+    { label: "Inbox", href: "/", icon: <InboxIcon /> },
+    { label: "Calendar", href: "/", icon: <CalendarTodayIcon /> },
+    { label: "Team", href: "/userslist", icon: <PeopleAltIcon /> },
+    { label: "Settings", href: "/", icon: <SettingsIcon /> },
+]
+
 export const SideBar = () => {
+    LinkValues.map((data) => console.log(data.label))
     return <Container
         maxWidth="lg"
         sx={{
@@ -30,12 +40,7 @@ export const SideBar = () => {
         </Box>
 
         <Box sx={{ height: "50%", display: "flex", flexDirection: "column", gap: 3, bgcolor: "yellow" }}>
-            <SidebarLinks icon={<GridViewIcon />} label="Task Board" href="/" />
-            <SidebarLinks icon={<CheckBoxOutlinedIcon />} label="My Task" href="/" />
-            <SidebarLinks icon={<InboxIcon />} label="Inbox" href="/" />
-            <SidebarLinks icon={<CalendarTodayIcon />} label="Calendar" href="/" />
-            <SidebarLinks icon={<PeopleAltIcon />} label="Team" href="/" />
-            <SidebarLinks icon={<SettingsIcon />} label="Settings" href="/" />
+            {LinkValues.map((data, key) => <SidebarLinks key={key} icon={data.icon} label={data.label} href={data.href} />)}
         </Box >
         <Box sx={{ height: "20%" }}>
 
