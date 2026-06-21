@@ -33,7 +33,7 @@ export const SideBar = () => {
             <Link href={"/task"} style={{ textDecoration: "none", color: "black" }}>
                 <Box sx={{ display: "flex" }}>
                     <GridViewIcon />
-                    <Typography variant="body1" color="initial"> Task Board</Typography>
+                    <Typography variant="body1" color="initial" sx={{ display: { xs: "none", md: "block" } }}> Task Board</Typography>
                 </Box>
             </Link>
 
@@ -41,7 +41,7 @@ export const SideBar = () => {
             <Link href={"/task"} style={{ textDecoration: "none", color: "black" }}>
                 <Box sx={{ display: "flex" }}>
                     <CheckBoxOutlinedIcon />
-                    <Typography variant="body1" color="initial">My Task</Typography>
+                    <Typography variant="body1" color="initial" sx={{ display: { xs: "none", md: "block" } }}>My Task</Typography>
                 </Box>
             </Link>
 
@@ -49,7 +49,7 @@ export const SideBar = () => {
             <Link href={"/task"} style={{ textDecoration: "none", color: "black" }}>
                 <Box sx={{ display: "flex" }}>
                     <InboxIcon />
-                    <Typography variant="body1" color="initial">Inbox</Typography>
+                    <Typography variant="body1" color="initial" sx={{ display: { xs: "none", md: "block" } }}>Inbox</Typography>
                 </Box>
             </Link>
 
@@ -57,7 +57,7 @@ export const SideBar = () => {
             <Link href={"/task"} style={{ textDecoration: "none", color: "black" }}>
                 <Box sx={{ display: "flex" }}>
                     <CalendarTodayIcon />
-                    <Typography variant="body1" color="initial">Calendar</Typography>
+                    <Typography variant="body1" color="initial" sx={{ display: { xs: "none", md: "block" } }}>Calendar</Typography>
                 </Box>
             </Link>
 
@@ -65,7 +65,7 @@ export const SideBar = () => {
             <Link href={"/userslist"} style={{ textDecoration: "none", color: "black" }}>
                 <Box sx={{ display: "flex" }}>
                     <PeopleAltIcon />
-                    <Typography variant="body1" color="initial">Team</Typography>
+                    <Typography variant="body1" color="initial" sx={{ display: { xs: "none", md: "block" } }}>Team</Typography>
                 </Box>
             </Link>
 
@@ -73,16 +73,16 @@ export const SideBar = () => {
             <Link href={"/task"} style={{ textDecoration: "none", color: "black" }}>
                 <Box sx={{ display: "flex" }}>
                     <SettingsIcon />
-                    <Typography variant="body1" color="initial">Settings</Typography>
+                    <Typography variant="body1" color="initial" sx={{ display: { xs: "none", md: "block" } }}>Settings</Typography>
                 </Box>
             </Link>
         </Box >
         <Box sx={{ height: "20%" }}>
 
         </Box>
-        <Box sx={{ height: "10%", display: "flex" }}>
+        <Box sx={{ height: "10%", display: "flex", borderTop: "1px solid black", pt: 5 }}>
             <ArrowBackIosOutlinedIcon />
-            <Typography variant="body1" color="initial">Collapse</Typography>
+            <Typography variant="body1" color="initial" sx={{ display: { xs: "none", md: "block" } }}>Collapse</Typography>
         </Box>
     </Container >
 }

@@ -7,6 +7,7 @@ import TaskCards from "@/features/Task/TaskCards";
 import TaskContainer from "@/features/Task/TaskContainer";
 import UpdateTask from "@/features/Task/UpdateTask";
 import { useState } from "react";
+import { Box } from "@mui/material";
 
 export default function TaskView() {
   const { taskList, setTasks, isCreating, setStatusCreate, updateValues, setUpdateState } = useFetchTask();
@@ -14,7 +15,7 @@ export default function TaskView() {
   const [layout, changeLayout] = useState<"cards" | "list">("cards");
 
   return (
-    <div>
+    <Box>
       {/* Create Window to displayed if button is clicked */}
       {isCreating && <CreateWindow setStatusCreate={setStatusCreate} />}
 
@@ -65,6 +66,6 @@ export default function TaskView() {
       }
 
 
-    </div>
+    </Box>
   );
 }
