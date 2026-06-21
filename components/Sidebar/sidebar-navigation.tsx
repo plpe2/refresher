@@ -19,7 +19,6 @@ const LinkValues = [
 ]
 
 export const SideBar = () => {
-    LinkValues.map((data) => console.log(data.label))
     return <Container
         maxWidth="lg"
         sx={{
@@ -31,6 +30,7 @@ export const SideBar = () => {
             position: "sticky",
             top: 0
         }}>
+        {/* Title Link */}
         <Box sx={{ height: "20%" }}>
             <Typography variant="body1" color="initial" >
                 <Link href={"/"} >
@@ -39,15 +39,42 @@ export const SideBar = () => {
             </Typography>
         </Box>
 
-        <Box sx={{ height: "50%", display: "flex", flexDirection: "column", gap: 3, bgcolor: "yellow" }}>
-            {LinkValues.map((data, key) => <SidebarLinks key={key} icon={data.icon} label={data.label} href={data.href} />)}
+        {/* Displaying of Link from LinkValues */}
+        <Box
+            sx={{
+                height: "50%",
+                display: "flex",
+                flexDirection: "column",
+                gap: 3,
+                bgcolor: "yellow"
+            }}>
+            {LinkValues.map((data, key) =>
+                <SidebarLinks key={key} icon={data.icon} label={data.label} href={data.href} />)
+            }
         </Box >
-        <Box sx={{ height: "20%" }}>
 
+        <Box sx={{ height: "20%" }}>
         </Box>
-        <Box sx={{ height: "10%", display: "flex", borderTop: "1px solid black", pt: 5 }}>
+
+        {/* Collapse button */}
+        <Box
+            sx={{
+                height: "10%",
+                display: "flex",
+                borderTop: "1px solid black",
+                pt: 5,
+                "&:hover": { bgcolor: "blue", color: "white" }
+            }}>
             <ArrowBackIosOutlinedIcon />
-            <Typography variant="body1" color="initial" sx={{ display: { xs: "none", md: "block" } }}>Collapse</Typography>
+            <Typography variant="body1" color="initial"
+                sx={{
+                    display: {
+                        xs: "none",
+                        md: "block"
+                    }
+                }}>
+                Collapse
+            </Typography>
         </Box>
     </Container >
 }
