@@ -10,21 +10,6 @@ type SidebarLinkProps = {
 }
 
 export const SidebarLinks = ({ icon, label, href, isCollapsed }: SidebarLinkProps) => {
-    let typographStyle = {}
-    if (isCollapsed) {
-        typographStyle = {
-            display: {
-                xs: "none"
-            }
-        }
-    } else {
-        typographStyle = {
-            display: {
-                xs: "none", md: "block"
-            }
-        }
-    }
-
     return <Link
         href={href}
         style={{
@@ -40,7 +25,7 @@ export const SidebarLinks = ({ icon, label, href, isCollapsed }: SidebarLinkProp
                 },
             }}>
             {icon}
-            <Typography variant="body1" color="initial" sx={typographStyle}>
+            <Typography variant="body1" color="initial" sx={isCollapsed ? { display: "none" } : { display: { xs: "none", md: "block" } }}>
                 {label}
             </Typography>
         </Box>

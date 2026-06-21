@@ -74,12 +74,7 @@ export const SideBar = () => {
             }}>
             <ArrowBackIosOutlinedIcon />
             <Typography variant="body1" color="initial"
-                sx={{
-                    display: {
-                        xs: "none",
-                        md: "block"
-                    }
-                }}>
+                sx={isCollapsed ? { display: "none" } : { display: { xs: "none", md: "block" } }}>
                 Collapse
             </Typography>
         </Box>
