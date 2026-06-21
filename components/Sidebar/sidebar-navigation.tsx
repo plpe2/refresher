@@ -7,6 +7,7 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined';
+import { SidebarLinks } from "./sidebar-link.component";
 
 export const SideBar = () => {
     return <Container
@@ -29,53 +30,12 @@ export const SideBar = () => {
         </Box>
 
         <Box sx={{ height: "50%", display: "flex", flexDirection: "column", gap: 3, bgcolor: "yellow" }}>
-
-            <Link href={"/task"} style={{ textDecoration: "none", color: "black" }}>
-                <Box sx={{ display: "flex" }}>
-                    <GridViewIcon />
-                    <Typography variant="body1" color="initial" sx={{ display: { xs: "none", md: "block" } }}> Task Board</Typography>
-                </Box>
-            </Link>
-
-
-            <Link href={"/task"} style={{ textDecoration: "none", color: "black" }}>
-                <Box sx={{ display: "flex" }}>
-                    <CheckBoxOutlinedIcon />
-                    <Typography variant="body1" color="initial" sx={{ display: { xs: "none", md: "block" } }}>My Task</Typography>
-                </Box>
-            </Link>
-
-
-            <Link href={"/task"} style={{ textDecoration: "none", color: "black" }}>
-                <Box sx={{ display: "flex" }}>
-                    <InboxIcon />
-                    <Typography variant="body1" color="initial" sx={{ display: { xs: "none", md: "block" } }}>Inbox</Typography>
-                </Box>
-            </Link>
-
-
-            <Link href={"/task"} style={{ textDecoration: "none", color: "black" }}>
-                <Box sx={{ display: "flex" }}>
-                    <CalendarTodayIcon />
-                    <Typography variant="body1" color="initial" sx={{ display: { xs: "none", md: "block" } }}>Calendar</Typography>
-                </Box>
-            </Link>
-
-
-            <Link href={"/userslist"} style={{ textDecoration: "none", color: "black" }}>
-                <Box sx={{ display: "flex" }}>
-                    <PeopleAltIcon />
-                    <Typography variant="body1" color="initial" sx={{ display: { xs: "none", md: "block" } }}>Team</Typography>
-                </Box>
-            </Link>
-
-
-            <Link href={"/task"} style={{ textDecoration: "none", color: "black" }}>
-                <Box sx={{ display: "flex" }}>
-                    <SettingsIcon />
-                    <Typography variant="body1" color="initial" sx={{ display: { xs: "none", md: "block" } }}>Settings</Typography>
-                </Box>
-            </Link>
+            <SidebarLinks icon={<GridViewIcon />} label="Task Board" href="/" />
+            <SidebarLinks icon={<CheckBoxOutlinedIcon />} label="My Task" href="/" />
+            <SidebarLinks icon={<InboxIcon />} label="Inbox" href="/" />
+            <SidebarLinks icon={<CalendarTodayIcon />} label="Calendar" href="/" />
+            <SidebarLinks icon={<PeopleAltIcon />} label="Team" href="/" />
+            <SidebarLinks icon={<SettingsIcon />} label="Settings" href="/" />
         </Box >
         <Box sx={{ height: "20%" }}>
 
