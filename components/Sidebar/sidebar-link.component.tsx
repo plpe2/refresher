@@ -5,10 +5,26 @@ import React from "react";
 type SidebarLinkProps = {
     icon: React.JSX.Element,
     label: string,
-    href: string
+    href: string,
+    isCollapsed: boolean
 }
 
-export const SidebarLinks = ({ icon, label, href }: SidebarLinkProps) => {
+export const SidebarLinks = ({ icon, label, href, isCollapsed }: SidebarLinkProps) => {
+    let typographStyle = {}
+    if (isCollapsed) {
+        typographStyle = {
+            display: {
+                xs: "none"
+            }
+        }
+    } else {
+        typographStyle = {
+            display: {
+                xs: "none", md: "block"
+            }
+        }
+    }
+
     return <Link
         href={href}
         style={{
@@ -24,7 +40,7 @@ export const SidebarLinks = ({ icon, label, href }: SidebarLinkProps) => {
                 },
             }}>
             {icon}
-            <Typography variant="body1" color="initial" sx={{ display: { xs: "none", md: "block" } }}>
+            <Typography variant="body1" color="initial" sx={typographStyle}>
                 {label}
             </Typography>
         </Box>

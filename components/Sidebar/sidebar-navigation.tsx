@@ -1,3 +1,4 @@
+"use client"
 import { Box, Container, Typography } from "@mui/material"
 import Link from "next/link"
 import GridViewIcon from '@mui/icons-material/GridView';
@@ -8,6 +9,7 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined';
 import { SidebarLinks } from "./sidebar-link.component";
+import { useState } from "react";
 
 const LinkValues = [
     { label: "Task Board", href: "/", icon: <GridViewIcon /> },
@@ -19,10 +21,12 @@ const LinkValues = [
 ]
 
 export const SideBar = () => {
+    const [isCollapsed, setWidth] = useState<boolean>(false)
+
     return <Container
         maxWidth="lg"
         sx={{
-            width: "10%",
+            width: isCollapsed ? "15%" : "15%",
             bgcolor: "red",
             display: "flex",
             flexDirection: "column",
@@ -49,7 +53,7 @@ export const SideBar = () => {
                 bgcolor: "yellow"
             }}>
             {LinkValues.map((data, key) =>
-                <SidebarLinks key={key} icon={data.icon} label={data.label} href={data.href} />)
+                <SidebarLinks key={key} icon={data.icon} label={data.label} href={data.href} isCollapsed={isCollapsed} />)
             }
         </Box >
 
@@ -58,6 +62,9 @@ export const SideBar = () => {
 
         {/* Collapse button */}
         <Box
+            component="button"
+            type="button"
+            onClick={() => setWidth(prev => !prev)}
             sx={{
                 height: "10%",
                 display: "flex",
