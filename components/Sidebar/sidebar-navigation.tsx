@@ -26,7 +26,7 @@ export const SideBar = () => {
     return <Container
         maxWidth="lg"
         sx={{
-            width: isCollapsed ? "15%" : "15%",
+            width: isCollapsed ? { xs: "15%", md: "8%" } : "15%",
             bgcolor: "red",
             display: "flex",
             flexDirection: "column",
@@ -50,10 +50,11 @@ export const SideBar = () => {
                 display: "flex",
                 flexDirection: "column",
                 gap: 3,
-                bgcolor: "yellow"
+                bgcolor: "yellow",
+                textAlign: "center",
             }}>
             {LinkValues.map((data, key) =>
-                <SidebarLinks key={key} icon={data.icon} label={data.label} href={data.href} isCollapsed={isCollapsed} />)
+                <SidebarLinks key={key} Icon={data.icon} label={data.label} href={data.href} isCollapsed={isCollapsed} />)
             }
         </Box >
 

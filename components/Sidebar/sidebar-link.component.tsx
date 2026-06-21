@@ -3,13 +3,13 @@ import Link from "next/link"
 import React from "react";
 
 type SidebarLinkProps = {
-    icon: React.JSX.Element,
+    Icon: React.JSX.Element,
     label: string,
     href: string,
     isCollapsed: boolean
 }
 
-export const SidebarLinks = ({ icon, label, href, isCollapsed }: SidebarLinkProps) => {
+export const SidebarLinks = ({ Icon, label, href, isCollapsed }: SidebarLinkProps) => {
     return <Link
         href={href}
         style={{
@@ -24,10 +24,16 @@ export const SidebarLinks = ({ icon, label, href, isCollapsed }: SidebarLinkProp
                     color: "primary.contrastText",
                 },
             }}>
-            {icon}
-            <Typography variant="body1" color="initial" sx={isCollapsed ? { display: "none" } : { display: { xs: "none", md: "block" } }}>
-                {label}
-            </Typography>
+            <Box sx={{
+                width: isCollapsed ? "100%" : "30%",
+            }}>
+                {Icon}
+            </Box>
+            {!isCollapsed && (
+                <Box sx={{ width: "70%" }}>
+                    <Typography>{label}</Typography>
+                </Box>
+            )}
         </Box>
     </Link>
 }
