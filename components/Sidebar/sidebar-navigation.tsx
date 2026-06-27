@@ -8,8 +8,10 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined';
+import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import { SidebarLinks } from "./sidebar-link.component";
 import { useState } from "react";
+import { SideBarContainerStyle } from "@/styles/Sidebar/sidebar.styles";
 
 const LinkValues = [
     { label: "Task Board", href: "/", icon: <GridViewIcon /> },
@@ -25,22 +27,17 @@ export const SideBar = () => {
 
     return <Container
         maxWidth="lg"
-        sx={{
-            width: isCollapsed ? { xs: "15%", md: "8%" } : "15%",
-            bgcolor: "red",
-            display: "flex",
-            flexDirection: "column",
-            height: "100vh",
-            position: "sticky",
-            top: 0
-        }}>
+        sx={SideBarContainerStyle(isCollapsed)}>
         {/* Title Link */}
-        <Box sx={{ height: "20%" }}>
-            <Typography variant="body1" color="initial" >
-                <Link href={"/"} >
-                    Todo App
-                </Link>
-            </Typography>
+        <Box sx={{ height: "20%", display: "flex", justifyContent: "center" }}>
+            <Link href={"/"} style={{ textDecoration: "none", color: "black", display: "flex", marginTop: 20 }} >
+                <Box>
+                    <TaskAltIcon sx={{ textAlign: "center", fontSize: "2.5rem" }} />
+                </Box>
+                {!isCollapsed && <Box>
+                    <Typography variant="h4" color="initial">All Task</Typography>
+                </Box>}
+            </Link>
         </Box>
 
         {/* Displaying of Link from LinkValues */}
