@@ -1,5 +1,5 @@
 "use client"
-import { Box, Container, Typography } from "@mui/material"
+import { Box, Container, Typography, useMediaQuery, useTheme } from "@mui/material"
 import Link from "next/link"
 import GridViewIcon from '@mui/icons-material/GridView';
 import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
@@ -23,7 +23,12 @@ const LinkValues = [
 ]
 
 export const SideBar = () => {
-    const [isCollapsed, setWidth] = useState<boolean>(false)
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
+    const [desktopCollapsed, setCollapse] = useState<boolean>(false)
+
+    const isCollapsed = isMobile ? true : desktopCollapsed;
 
     return <Container
         maxWidth="lg"
@@ -62,7 +67,7 @@ export const SideBar = () => {
         <Box
             component="button"
             type="button"
-            onClick={() => setWidth(prev => !prev)}
+            onClick={() => setCollapse(prev => !prev)}
             sx={{
                 height: "10%",
                 display: "flex",
