@@ -25,13 +25,14 @@ export const SidebarLinks = ({ Icon, label, href, isCollapsed }: SidebarLinkProp
                 },
             }}>
             <Box sx={{
-                width: isCollapsed ? "100%" : "30%",
+                width: isCollapsed ? "100%" : "40%",
+                fontSize: "2rem"
             }}>
                 {Icon}
             </Box>
             {!isCollapsed && (
-                <Box sx={{ width: "70%" }}>
-                    <Typography>{label}</Typography>
+                <Box sx={{ width: "60%", textAlign: "center", justifyItems: "center" }}>
+                    <Typography variant="h6">{label}</Typography>
                 </Box>
             )}
         </Box>
