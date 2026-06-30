@@ -13,19 +13,23 @@ export default function Navbar() {
 
   return (
     <>
-      <div
-        style={{
+      <Box
+        sx={{
           backgroundColor: "gray",
           height: "6vh",
-          marginBottom: "1.5%",
+          mb: "1.5%",
           borderRadius: "0 0 10px 10px",
-          width: "20%",
-          justifySelf: "right",
-          // position: "absolute",
-          padding: "10px",
-          justifyItems: "center",
+          width: {
+            xs: "100%",
+            sm: "50%",
+            md: "30%",
+            lg: "20%",
+          },
+          p: 1,
           position: "sticky",
-          top: 0
+          marginLeft: "auto",
+          top: 0,
+          zIndex: 1000,
         }}
       >
         <Box sx={{ display: "flex", width: "100%" }}>
@@ -106,7 +110,7 @@ export default function Navbar() {
             </Collapse>
           </Box>
         </Box>
-      </div>
+      </Box>
     </>
   );
 }
