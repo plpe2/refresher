@@ -19,7 +19,7 @@ const LinkValues = [
     { label: "Inbox", href: "/", icon: <InboxIcon /> },
     { label: "Calendar", href: "/", icon: <CalendarTodayIcon /> },
     { label: "Team", href: "/userslist", icon: <PeopleAltIcon /> },
-    { label: "Settings", href: "/", icon: <SettingsIcon /> },
+    { label: "Settings", href: "/settings", icon: <SettingsIcon /> },
 ]
 
 export const SideBar = () => {
