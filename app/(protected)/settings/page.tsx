@@ -1,3 +1,4 @@
+"use client"
 import SettingsContainer from "@/features/Settings/settings-container"
 import SettingsItem from "@/features/Settings/settings-item"
 import { Container, Box, Button, Typography } from "@mui/material"
@@ -5,8 +6,21 @@ import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import PaletteOutlinedIcon from '@mui/icons-material/PaletteOutlined';
 import ShieldOutlinedIcon from '@mui/icons-material/ShieldOutlined';
+import { useAuthProvider } from "@/context/jwt/auth-provider";
 
 export default function SettingsPage() {
+    const userData = useAuthProvider();
+    const { user } = userData;
+    let DisplayedRole;
+
+    if (user?.role == "qa") {
+        DisplayedRole = "Quality Assurance"
+    } else if (user?.role == "dev") {
+        DisplayedRole = "Programm Developer"
+    } else if (user?.role == "manager") {
+        DisplayedRole = "Project Manager"
+    }
+
     return <Container maxWidth="lg">
         <Typography variant="h4" color="initial">Settings</Typography>
         <Typography variant="body1" color="initialtial">
@@ -15,19 +29,13 @@ export default function SettingsPage() {
         {/* Profile Container */}
         <SettingsContainer icon={<PersonOutlinedIcon />} title="Profile">
             <SettingsItem title="Full Name" >
-                <Button variant="contained" color="primary">
-                    asd
-                </Button>
+                <Typography variant="body1" color="initial">{user?.name}</Typography>
             </SettingsItem>
             <SettingsItem title="Email" >
-                <Button variant="contained" color="primary">
-                    asd
-                </Button>
+                <Typography variant="body1" color="initial">{user?.email}</Typography>
             </SettingsItem>
             <SettingsItem title="Role" >
-                <Button variant="contained" color="primary">
-                    asd
-                </Button>
+                <Typography variant="body1" color="initial">{DisplayedRole}</Typography>
             </SettingsItem>
         </SettingsContainer>
 
