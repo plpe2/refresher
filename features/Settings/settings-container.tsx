@@ -2,11 +2,12 @@ import { Box, Typography } from '@mui/material'
 import React from 'react'
 
 type SettingsContainerProps = {
+    icon: React.JSX.Element,
     title: string
     children: React.ReactNode
 }
 
-export default function SettingsContainer({ title, children }: SettingsContainerProps) {
+export default function SettingsContainer({ icon, title, children }: SettingsContainerProps) {
     return (
         <Box sx={{
             width: "90%",
@@ -20,9 +21,12 @@ export default function SettingsContainer({ title, children }: SettingsContainer
             mt: "10px",
             mb: "10px"
         }}>
-            <Typography variant="h6" color="initial">
-                {title}
-            </Typography>
+            <Box sx={{ display: "flex", }}>
+                {icon}
+                <Typography variant="h6" color="initial">
+                    {title}
+                </Typography>
+            </Box>
             {children}
         </Box>
     )

@@ -1,6 +1,10 @@
 import SettingsContainer from "@/features/Settings/settings-container"
 import SettingsItem from "@/features/Settings/settings-item"
 import { Container, Box, Button, Typography } from "@mui/material"
+import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import PaletteOutlinedIcon from '@mui/icons-material/PaletteOutlined';
+import ShieldOutlinedIcon from '@mui/icons-material/ShieldOutlined';
 
 export default function SettingsPage() {
     return <Container maxWidth="lg">
@@ -9,7 +13,7 @@ export default function SettingsPage() {
             Manage your account preferences and settings
         </Typography>
         {/* Profile Container */}
-        <SettingsContainer title="Profile">
+        <SettingsContainer icon={<PersonOutlinedIcon />} title="Profile">
             <SettingsItem title="Full Name" >
                 <Button variant="contained" color="primary">
                     asd
@@ -28,18 +32,23 @@ export default function SettingsPage() {
         </SettingsContainer>
 
         {/* Notification Container */}
-        <SettingsContainer title="Notification">
-            <SettingsItem title="Full Name" >
+        <SettingsContainer icon={<NotificationsIcon />} title="Notification">
+            <SettingsItem title="Email Notifications" >
                 <Button variant="contained" color="primary">
                     asd
                 </Button>
             </SettingsItem>
-            <SettingsItem title="Email" >
+            <SettingsItem title="Push Notifications" >
                 <Button variant="contained" color="primary">
                     asd
                 </Button>
             </SettingsItem>
-            <SettingsItem title="Role" >
+            <SettingsItem title="Task Updates" >
+                <Button variant="contained" color="primary">
+                    asd
+                </Button>
+            </SettingsItem>
+            <SettingsItem title="Weekly Digest" >
                 <Button variant="contained" color="primary">
                     asd
                 </Button>
@@ -47,18 +56,13 @@ export default function SettingsPage() {
         </SettingsContainer>
 
         {/* Appearance Container */}
-        <SettingsContainer title="Appearance">
-            <SettingsItem title="Full Name" >
+        <SettingsContainer icon={<PaletteOutlinedIcon />} title="Appearance">
+            <SettingsItem title="Theme" >
                 <Button variant="contained" color="primary">
                     asd
                 </Button>
             </SettingsItem>
-            <SettingsItem title="Email" >
-                <Button variant="contained" color="primary">
-                    asd
-                </Button>
-            </SettingsItem>
-            <SettingsItem title="Role" >
+            <SettingsItem title="Language" >
                 <Button variant="contained" color="primary">
                     asd
                 </Button>
@@ -66,18 +70,13 @@ export default function SettingsPage() {
         </SettingsContainer>
 
         {/* Security Container */}
-        <SettingsContainer title="Secutiry">
-            <SettingsItem title="Full Name" >
+        <SettingsContainer icon={<ShieldOutlinedIcon />} title="Security">
+            <SettingsItem title="Two-Factor Authentication" >
                 <Button variant="contained" color="primary">
                     asd
                 </Button>
             </SettingsItem>
-            <SettingsItem title="Email" >
-                <Button variant="contained" color="primary">
-                    asd
-                </Button>
-            </SettingsItem>
-            <SettingsItem title="Role" >
+            <SettingsItem title="Last Password Change" >
                 <Button variant="contained" color="primary">
                     asd
                 </Button>
@@ -92,5 +91,5 @@ export default function SettingsPage() {
                 Cancel
             </Button>
         </Box>
-    </Container>
+    </Container >
 }
