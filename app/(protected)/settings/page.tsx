@@ -1,12 +1,13 @@
 "use client"
 import SettingsContainer from "@/features/Settings/settings-container"
 import SettingsItem from "@/features/Settings/settings-item"
-import { Container, Box, Button, Typography } from "@mui/material"
+import { Container, Box, Button, Typography, Switch } from "@mui/material"
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import PaletteOutlinedIcon from '@mui/icons-material/PaletteOutlined';
 import ShieldOutlinedIcon from '@mui/icons-material/ShieldOutlined';
 import { useAuthProvider } from "@/context/jwt/auth-provider";
+import React, { useState } from "react";
 
 export default function SettingsPage() {
     const userData = useAuthProvider();
@@ -20,6 +21,12 @@ export default function SettingsPage() {
     } else if (user?.role == "manager") {
         DisplayedRole = "Project Manager"
     }
+
+    const [checked, setChecked] = useState(false);
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setChecked(event.target.checked);
+    };
+
 
     return <Container maxWidth="lg">
         <Typography variant="h4" color="initial">Settings</Typography>
@@ -42,24 +49,36 @@ export default function SettingsPage() {
         {/* Notification Container */}
         <SettingsContainer icon={<NotificationsIcon />} title="Notification">
             <SettingsItem title="Email Notifications" >
-                <Button variant="contained" color="primary">
-                    asd
-                </Button>
+                <Switch
+                    value={checked}
+                    checked={checked}
+                    onChange={handleChange}
+
+                />
             </SettingsItem>
             <SettingsItem title="Push Notifications" >
-                <Button variant="contained" color="primary">
-                    asd
-                </Button>
+                <Switch
+                    value={checked}
+                    checked={checked}
+                    onChange={handleChange}
+
+                />
             </SettingsItem>
             <SettingsItem title="Task Updates" >
-                <Button variant="contained" color="primary">
-                    asd
-                </Button>
+                <Switch
+                    value={checked}
+                    checked={checked}
+                    onChange={handleChange}
+
+                />
             </SettingsItem>
             <SettingsItem title="Weekly Digest" >
-                <Button variant="contained" color="primary">
-                    asd
-                </Button>
+                <Switch
+                    value={checked}
+                    checked={checked}
+                    onChange={handleChange}
+
+                />
             </SettingsItem>
         </SettingsContainer>
 
@@ -80,14 +99,14 @@ export default function SettingsPage() {
         {/* Security Container */}
         <SettingsContainer icon={<ShieldOutlinedIcon />} title="Security">
             <SettingsItem title="Two-Factor Authentication" >
-                <Button variant="contained" color="primary">
-                    asd
-                </Button>
+                <Typography variant="body1" color="initial">
+                    Enabled
+                </Typography>
             </SettingsItem>
             <SettingsItem title="Last Password Change" >
-                <Button variant="contained" color="primary">
-                    asd
-                </Button>
+                <Typography variant="body1" color="initial">
+                    30 days
+                </Typography>
             </SettingsItem>
         </SettingsContainer>
 
