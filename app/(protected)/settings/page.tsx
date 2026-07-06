@@ -8,6 +8,7 @@ import PaletteOutlinedIcon from '@mui/icons-material/PaletteOutlined';
 import ShieldOutlinedIcon from '@mui/icons-material/ShieldOutlined';
 import { useAuthProvider } from "@/context/jwt/auth-provider";
 import React, { useState } from "react";
+import SettingsIcon from '@mui/icons-material/Settings';
 
 export default function SettingsPage() {
     const userData = useAuthProvider();
@@ -29,7 +30,10 @@ export default function SettingsPage() {
 
 
     return <Container maxWidth="lg">
-        <Typography variant="h4" color="initial">Settings</Typography>
+        <Box sx={{ display: "flex" }}>
+            <SettingsIcon sx={{ fontSize: "40px" }} />
+            <Typography variant="h4" color="initial">Settings</Typography>
+        </Box>
         <Typography variant="body1" color="initialtial">
             Manage your account preferences and settings
         </Typography>

@@ -18,7 +18,7 @@ const LinkValues = [
     { label: "My Task", href: "/task", icon: <CheckBoxOutlinedIcon /> },
     { label: "Inbox", href: "/", icon: <InboxIcon /> },
     { label: "Calendar", href: "/", icon: <CalendarTodayIcon /> },
-    { label: "Team", href: "/userslist", icon: <PeopleAltIcon /> },
+    { label: "Team", href: "/team", icon: <PeopleAltIcon /> },
     { label: "Settings", href: "/settings", icon: <SettingsIcon /> },
 ]
 
