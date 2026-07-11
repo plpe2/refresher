@@ -44,18 +44,11 @@ export default function TeamPage() {
                 </Box>
             </Box>
             <Grid container spacing={2}>
-                <Grid size={6}>
-                    <MemberDisplay />
-                </Grid>
-                <Grid size={6}>
-                    <MemberDisplay />
-                </Grid>
-                <Grid size={6}>
-                    <MemberDisplay />
-                </Grid>
-                <Grid size={6}>
-                    <MemberDisplay />
-                </Grid>
+                {teamMember.map((member, key) => (
+                    <Grid key={key} size={{ xs: 12, sm: 12, md: 6 }}>
+                        <MemberDisplay member={member} />
+                    </Grid>
+                ))}
             </Grid>
         </Container>
     )

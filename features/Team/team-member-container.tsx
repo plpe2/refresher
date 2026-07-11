@@ -1,10 +1,13 @@
-import { Box, SxProps, Theme } from '@mui/material'
-import React from 'react'
+import { UserTypes } from '@/types/Users'
+import RoleTransform from '@/utils/RoleTransform'
+import { Box, SxProps, Theme, Typography } from '@mui/material'
 
-export default function MemberDisplay({ sx }: { sx?: SxProps<Theme> }) {
+export default function MemberDisplay({ sx, member }: { sx?: SxProps<Theme>, member: UserTypes }) {
     return (
         <Box sx={{ bgcolor: "beige" }}>
-            Hello
+            <Typography variant="h6" color="initial">{member.name}</Typography>
+            <Typography variant="body1" color="initial">{RoleTransform(member.role)}</Typography>
+            <Typography variant="body1" color="initial">{member.email}</Typography>
         </Box>
     )
 }

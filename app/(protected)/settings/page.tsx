@@ -9,19 +9,12 @@ import ShieldOutlinedIcon from '@mui/icons-material/ShieldOutlined';
 import { useAuthProvider } from "@/context/jwt/auth-provider";
 import React, { useState } from "react";
 import SettingsIcon from '@mui/icons-material/Settings';
+import RoleTransform from "@/utils/RoleTransform";
 
 export default function SettingsPage() {
     const userData = useAuthProvider();
     const { user } = userData;
-    let DisplayedRole;
-
-    if (user?.role == "qa") {
-        DisplayedRole = "Quality Assurance"
-    } else if (user?.role == "dev") {
-        DisplayedRole = "Programm Developer"
-    } else if (user?.role == "manager") {
-        DisplayedRole = "Project Manager"
-    }
+    const DisplayedRole = RoleTransform(user?.role as string);
 
     const [checked, setChecked] = useState(false);
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
