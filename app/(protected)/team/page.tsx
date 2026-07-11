@@ -20,7 +20,6 @@ const displayCountChild: SxProps<Theme> = {
 
 export default function TeamPage() {
     const { teamMember } = useTeamDisplay()
-    teamMember.map((member) => console.log(member.email))
     return (
         <Container maxWidth="lg">
             <Box>

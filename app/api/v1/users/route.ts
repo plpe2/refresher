@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   const conn = await getConnection();
-  const [data] = await conn.query("SELECT * FROM users");
+  const [data] = await conn.query("SELECT * FROM users LIMIT 4");
 
   return NextResponse.json(data);
 }
