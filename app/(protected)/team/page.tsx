@@ -1,4 +1,8 @@
-import { Box, Container, SxProps, Theme, Typography } from "@mui/material";
+"use client"
+import MemberDisplay from "@/features/Team/team-member-container";
+import { } from "@/hooks/api/users/users";
+import useTeamDisplay from "@/hooks/api/users/useTeamDisplay";
+import { Box, Container, Grid, SxProps, Theme, Typography } from "@mui/material";
 
 const displayCount: SxProps<Theme> = {
     display: "flex",
@@ -15,6 +19,8 @@ const displayCountChild: SxProps<Theme> = {
 }
 
 export default function TeamPage() {
+    const { teamMember } = useTeamDisplay()
+    teamMember.map((member) => console.log(member.email))
     return (
         <Container maxWidth="lg">
             <Box>
@@ -37,6 +43,20 @@ export default function TeamPage() {
                     <Typography variant="body1" color="initial">Total Active Tasks</Typography>
                 </Box>
             </Box>
+            <Grid container spacing={2}>
+                <Grid size={6}>
+                    <MemberDisplay />
+                </Grid>
+                <Grid size={6}>
+                    <MemberDisplay />
+                </Grid>
+                <Grid size={6}>
+                    <MemberDisplay />
+                </Grid>
+                <Grid size={6}>
+                    <MemberDisplay />
+                </Grid>
+            </Grid>
         </Container>
     )
 }
