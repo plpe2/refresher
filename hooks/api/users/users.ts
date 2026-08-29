@@ -1,6 +1,8 @@
 import { RegValType } from "@/features/Login/Register";
-import { LoginValues } from "@/types/Users";
+import { LoginValues, UserTypes } from "@/types/Users";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { NextResponse } from "next/server";
+import { Dispatch, SetStateAction } from "react";
 
 export const handleDelete = async (
   e: React.FormEvent<HTMLFormElement>,
@@ -87,3 +89,10 @@ export const handleLogin = async ({
   localStorage.setItem("token", loginResponse.token);
   window.location.href = loginResponse.redirect;
 };
+
+export const handleDisplayTeam = async (setTeamData: Dispatch<SetStateAction<UserTypes[]>>) => {
+  const reqTeamData = await fetch("http://localhost:3000/api/v1/users", { method : "GET"})
+
+  const resData = await reqTeamData.json();
+  setTeamData(resData)
+}

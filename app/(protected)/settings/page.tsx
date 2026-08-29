@@ -8,19 +8,13 @@ import PaletteOutlinedIcon from '@mui/icons-material/PaletteOutlined';
 import ShieldOutlinedIcon from '@mui/icons-material/ShieldOutlined';
 import { useAuthProvider } from "@/context/jwt/auth-provider";
 import React, { useState } from "react";
+import SettingsIcon from '@mui/icons-material/Settings';
+import RoleTransform from "@/utils/RoleTransform";
 
 export default function SettingsPage() {
     const userData = useAuthProvider();
     const { user } = userData;
-    let DisplayedRole;
-
-    if (user?.role == "qa") {
-        DisplayedRole = "Quality Assurance"
-    } else if (user?.role == "dev") {
-        DisplayedRole = "Programm Developer"
-    } else if (user?.role == "manager") {
-        DisplayedRole = "Project Manager"
-    }
+    const DisplayedRole = RoleTransform(user?.role as string);
 
     const [checked, setChecked] = useState(false);
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,7 +23,10 @@ export default function SettingsPage() {
 
 
     return <Container maxWidth="lg">
-        <Typography variant="h4" color="initial">Settings</Typography>
+        <Box sx={{ display: "flex" }}>
+            <SettingsIcon sx={{ fontSize: "40px" }} />
+            <Typography variant="h4" color="initial">Settings</Typography>
+        </Box>
         <Typography variant="body1" color="initialtial">
             Manage your account preferences and settings
         </Typography>
